@@ -432,6 +432,12 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 #mm-g .wc{width:auto;height:auto;min-width:0;aspect-ratio:1;padding:0;border:0;border-radius:6px;background:rgba(0,0,0,.22);font-family:inherit;font-size:1rem;font-weight:500;color:var(--ink)}#mm-g .wc.f{background:#8E525A;color:#FFF4EE}#mm-g .wc.sel{background:#F2C4B7;color:#5A2A30}
 .toast{pointer-events:none}.toast .undo{pointer-events:auto}
 .toast{pointer-events:none}.toast .undo{pointer-events:auto}
+.sndg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sndb{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 6px;min-height:0;border-radius:18px;border:2px solid #E8B9A5;background:linear-gradient(170deg,#5C3337,#3A2023);color:#FFF4EE;text-align:center;font-family:inherit}
+.sndb svg{width:34px;height:34px;fill:none;stroke:#F3CDB8;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sndb b{font-weight:500;font-size:.95rem}.sndb small{font-size:.74rem;color:#E0C2BB;line-height:1.2}
+.sndb[aria-pressed=true]{background:linear-gradient(170deg,#C98A8F,#965A61);box-shadow:0 0 0 3px rgba(243,205,184,.45);border-color:#FFE4D6}
+.sndb[aria-pressed=true] small{color:#FFF4EE}
 </style>
 <div class="wrap">
   <header class="top plate">
@@ -1228,13 +1234,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.2',date:'28 octobre 2026',
+const APP={version:'11.4',date:'28 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -1295,12 +1301,12 @@ function calLink(e){const st=e.time?new Date(e.date+'T'+e.time):new Date(e.date+
   return 'intent://#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title='+enc(e.title)+';S.eventLocation='+enc(e.lieu)+';S.description='+enc([e.who,e.notes].filter(Boolean).join(' – '))+';l.beginTime='+st.getTime()+';l.endTime='+en.getTime()+(e.time?'':';B.allDay=true')+';S.browser_fallback_url='+enc(gcal(e))+';end'}
 
 /* ===================== La Perle, compagnon ===================== */
-const VOICE0={rate:1,pitch:1.1,vol:1,voice:'',mute:false,quiet:true,qFrom:'22:00',qTo:'07:00',greet:true,gameHelp:true,roll:true,size:72,narr:true,engine:'auto',lang:'fr-FR',pause:0,allLang:false,nScreen:true,nPro:true,nToast:true,nAgenda:true};
+const VOICE0={rate:1,pitch:1.1,vol:1,voice:'',mute:false,quiet:true,qFrom:'22:00',qTo:'07:00',greet:true,gameHelp:true,roll:true,size:72,narr:true,showText:true,engine:'auto',lang:'fr-FR',pause:0,allLang:false,nScreen:true,nPro:true,nToast:true,nAgenda:true};
 const MOUTH={doux:'M-7 9 Q0 14 7 9',joie:'M-9 8 Q0 18 9 8',rire:'M-9 7 Q0 21 9 7 Q0 11 -9 7',surprise:'M-3.5 11 Q0 5 3.5 11 Q0 17 -3.5 11',clin:'M-8 9 Q1 16 9 7',pense:'M-6 11 Q0 10 6 12',dort:'M-4 11 Q0 13 4 11',fier:'M-8 8 Q2 15 9 6',calin:'M-6 9 Q0 15 6 9',ecoute:'M-5 10 Q0 13 5 10',desole:'M-7 13 Q0 8 7 13',curieuse:'M-5 10 Q2 14 7 9',talk:'M-6 8 Q0 18 6 8 Q0 10 -6 8'};
 const EXPR={doux:['open','doux',''],joie:['happy','joie','up'],rire:['happy','rire','up'],surprise:['open','surprise','up'],clin:['wink','clin',''],pense:['open','pense','tilt'],dort:['closed','dort',''],fier:['happy','fier','up'],calin:['closed','calin','',1],ecoute:['open','ecoute','up'],desole:['open','desole','sad'],curieuse:['open','curieuse','tilt']};
 const EYEPATH={happy:['M-16 -3 Q-11 -9 -6 -3','M6 -3 Q11 -9 16 -3'],closed:['M-16 -5 Q-11 0 -6 -5','M6 -5 Q11 0 16 -5']};
 const Pearl=(()=>{
-  let el,body,bub,menu=null,pos=null,vel={x:0,y:0},rot=0,phys=false,rest=0,raf=0,cur='doux',talkT=0,blinkT=0,tapT=0,lastTap=0,pressT=0,drag=null,down=null,tourS=null,gx=0,gy=1,sensor=false,greeted=false,bubT=0,voices=[];
+  let el,body,bub,menu=null,pos=null,vel={x:0,y:0},rot=0,phys=false,rest=0,raf=0,cur='doux',talkT=0,blinkT=0,tapT=0,lastTap=0,pressT=0,drag=null,down=null,tourS=null,tilted=false,rolled=false,rollV=0,compT=0,gx=0,gy=1,sensor=false,greeted=false,bubT=0,voices=[];
   const cfg=()=>Object.assign({},VOICE0,S.get('voice',{}));
   const visible=()=>S.get('pearlOn',true);
   const sz=()=>cfg().size;
@@ -1328,6 +1334,14 @@ const Pearl=(()=>{
     el.style.setProperty('--lx',(dx/d*k).toFixed(2));el.style.setProperty('--ly',(dy/d*k).toFixed(2))}
   /* ---- voix : essaie toutes les voix une à une, puis une voix de secours (petits sons) ---- */
   let keep=[],okT=0,vst='attente',unlocked=false,diag='',spokeFallback=false,actx=null,speakSeq=0;
+  /* voix native d'Android (celle des autres applications) : disponible dans l'APK */
+  const TTSN=(()=>{try{return NATIVE?Capacitor.registerPlugin('TextToSpeech'):null}catch(_){return null}})();let nvoices=[];
+  async function nLoad(){if(!TTSN)return;try{const r=await TTSN.getSupportedVoices();nvoices=(r&&r.voices||[]).map((v,i)=>({name:v.name||v.voiceURI||('Voix '+(i+1)),lang:v.lang||'',localService:v.localService!==false,idx:i,native:true}))}catch(_){nvoices=[]}}
+  if(TTSN){nLoad();setTimeout(nLoad,1500);setTimeout(nLoad,5000)}
+  const nIdx=c=>{const v=nvoices.find(x=>x.name===c.voice);return v?v.idx:undefined};
+  async function nativeSpeak(cs,c,id){try{try{await TTSN.stop()}catch(_){}talk(true);for(let i=0;i<cs.length;i++){if(id!==speakSeq)return true;const o={text:cs[i],lang:c.lang||'fr-FR',rate:c.rate,pitch:c.pitch,volume:c.vol,category:'ambient'};const ix=nIdx(c);if(ix!==undefined)o.voice=ix;
+        await TTSN.speak(o);if(i===0){vst='ok';diag='Voix native du téléphone'}if(c.pause&&i+1<cs.length)await new Promise(r=>setTimeout(r,c.pause))}
+      if(id===speakSeq)talk(false);return true}catch(e){if(id===speakSeq)talk(false);diag='Voix native indisponible : '+((e&&e.message)||e);return false}}
   function allVoices(){try{return speechSynthesis.getVoices()||[]}catch(_){return[]}}
   function loadVoices(){const all=allVoices();voices=all.filter(v=>/^fr/i.test(v.lang)).sort((a,b)=>(b.localService-a.localService)||((/fr-FR/i.test(b.lang))-(/fr-FR/i.test(a.lang))))}
   if('speechSynthesis' in window){loadVoices();try{speechSynthesis.onvoiceschanged=loadVoices}catch(_){}setTimeout(loadVoices,800);setTimeout(loadVoices,2500)}
@@ -1350,7 +1364,7 @@ const Pearl=(()=>{
     if(c.engine==='off'&&!force||(!force&&quietNow())){mouthOnly();return}
     const id=++speakSeq,cs=chunks(t);try{if(allVoices().length&&(speechSynthesis.speaking||speechSynthesis.pending))speechSynthesis.cancel()}catch(_){}
     if(c.engine==='sounds'){babble(t,id);return}
-    const give=()=>{if(id!==speakSeq)return;diag='Aucune voix du téléphone n\'a répondu.';if(c.engine==='auto')babble(t,id);else{vst='muette';talk(false)}
+    const webSpeak=()=>{const give=()=>{if(id!==speakSeq)return;diag='Aucune voix du téléphone n\'a répondu.';if(c.engine==='auto')babble(t,id);else{vst='muette';talk(false)}
       if(!spokeFallback){spokeFallback=true;setTimeout(()=>{if(el&&!el.hidden)bubble(c.engine==='auto'?"Désolé, ma vraie voix ne répond pas sur ce téléphone : je parle en petits sons. Réglages, « Voix et son », puis « Dépannage de la voix » pour réessayer.":"Ma voix du téléphone ne répond pas. Réglages, « Voix et son », puis « Dépannage de la voix ».",null,12000)},300)}};
     if(!('speechSynthesis' in window)){diag="Ce navigateur n'a pas de synthèse vocale.";give();return}
     const list=cands(c);let k=0;
@@ -1362,12 +1376,13 @@ const Pearl=(()=>{
         u.onerror=()=>{if(!started)next();else if(id===speakSeq)talk(false)};keep.push(u);return u};
       try{loadVoices();keep=[];speechSynthesis.speak(mk(0));try{speechSynthesis.resume()}catch(_){}}catch(_){next();return}
       clearTimeout(okT);okT=setTimeout(next,k===1?2200:1600)};
-    setTimeout(attempt,60)}
+    setTimeout(attempt,60)};
+    if(TTSN)nativeSpeak(cs,c,id).then(ok=>{if(!ok&&id===speakSeq)webSpeak()});else webSpeak()}
   /* essai d'une voix précise : répond « ok » si elle démarre, « non » sinon */
-  function testVoice(v,text,cb){if(!('speechSynthesis' in window)){cb('non');return}shut();const c=cfg();let done=false;const fin=r=>{if(done)return;done=true;clearTimeout(tm);cb(r)};
+  function testVoice(v,text,cb){if(v&&v.native&&TTSN){shut();const c=cfg();TTSN.speak({text,lang:v.lang||'fr-FR',rate:c.rate,pitch:c.pitch,volume:c.vol,voice:v.idx,category:'ambient'}).then(()=>cb('ok')).catch(()=>cb('non'));return}if(!('speechSynthesis' in window)){cb('non');return}shut();const c=cfg();let done=false;const fin=r=>{if(done)return;done=true;clearTimeout(tm);cb(r)};
     try{const u=new SpeechSynthesisUtterance(text);u.lang=(v&&v.lang)||'fr-FR';if(v)u.voice=v;u.rate=c.rate;u.pitch=c.pitch;u.volume=c.vol;u.onstart=()=>{talk(true);fin('ok')};u.onend=()=>talk(false);u.onerror=()=>{talk(false);fin('non')};keep=[u];speechSynthesis.speak(u);try{speechSynthesis.resume()}catch(_){}}catch(_){fin('non');return}
     const tm=setTimeout(()=>{try{speechSynthesis.cancel()}catch(_){}fin('non')},3000)}
-  function shut(){speakSeq++;clearTimeout(okT);try{speechSynthesis.cancel()}catch(_){}talk(false)}
+  function shut(){speakSeq++;clearTimeout(okT);try{speechSynthesis.cancel()}catch(_){}try{TTSN&&TTSN.stop()}catch(_){}talk(false)}
   /* ---- bulle ---- */
   function placeBub(){const w=Math.min(300,innerWidth-24);bub.style.width=w+'px';const h=bub.offsetHeight;let x=Math.max(12,Math.min(innerWidth-w-12,pos.x-w/2));
     let y=pos.y-sz()/2-h-12;if(y<12)y=pos.y+sz()/2+12;if(y+h>innerHeight-8)y=Math.max(8,innerHeight-h-8);bub.style.left=x+'px';bub.style.top=y+'px'}
@@ -1375,17 +1390,29 @@ const Pearl=(()=>{
     if(btns&&btns.length){const r=document.createElement('div');r.className='row';btns.forEach(([l,f,main])=>{const b=document.createElement('button');b.className=main?'pill btn-plum':'pill';b.textContent=l;b.onclick=e=>{e.stopPropagation();f()};r.appendChild(b)});bub.appendChild(r)}
     bub.hidden=false;placeBub();if(!btns||!btns.length)bubT=setTimeout(hideBub,ms||Math.max(3500,t.length*70))}
   function hideBub(){if(bub)bub.hidden=true}
-  function say(t,k,btns,force){if(!el||el.hidden){if(force)toast(t,5000);return}if(k)expr(k);bubble(t,btns,Math.max(4500,t.length*85));speak(t)}
+  function say(t,k,btns,force){if(!el||el.hidden){if(force)toast(t,5000);return}if(k)expr(k);const c=cfg();const noVoice=c.mute||c.engine==='off'||vst==='muette'||vst==='secours'||quietNow();
+    if(c.showText||noVoice||(btns&&btns.length))bubble(t,btns,Math.max(4500,t.length*85));else hideBub();speak(t)}
   /* ---- toucher, appui long, lancer ---- */
   function pd(e){e.preventDefault();try{el.setPointerCapture(e.pointerId)}catch(_){}down={x:e.clientX,y:e.clientY,t:performance.now()};stopPhys();
     pressT=setTimeout(()=>{drag={pts:[[e.clientX,e.clientY,performance.now()]]};el.classList.add('big');expr('surprise');try{navigator.vibrate&&navigator.vibrate(12)}catch(_){}hideBub();setTimeout(()=>drag&&expr('joie'),250)},700)}
+  const LINES={};
+  function pick(a,k){let i;do{i=Math.floor(Math.random()*a.length)}while(a.length>1&&LINES[k]===i);LINES[k]=i;return a[i]}
+  const TILT=["Oh là là, je suis de travers ! Faites-moi rouler : glissez le doigt sur moi.","Je vois tout penché… Aidez-moi à me redresser, s'il vous plaît.","Je n'aime pas être de travers. Un petit coup de doigt pour me faire rouler ?","Mes yeux ne sont plus droits ! Faites-moi rouler pour me remettre d'aplomb.","Euh… je suis sur le côté. Roulez-moi doucement, voulez-vous ?","Tout tourne un peu… Redressez-moi, je vous en prie."];
+  const THX=["Ah, enfin droite ! Merci beaucoup !","Quel soulagement, merci Élodie !","Voilà, je me sens bien mieux. Merci !","Parfait, bien d'aplomb. Vous êtes un amour.","Merci ! Je revois le monde à l'endroit.","Oh oui, comme ça ! Merci beaucoup.","Ça va mieux ! Merci de m'avoir redressée.","Ouf ! Droite et fière. Merci !"];
+  function norm(){rot=((rot%360)+360)%360;if(rot>180)rot-=360}
+  function scheduleComplain(){clearTimeout(compT);compT=setTimeout(()=>{if(!tilted||!el||el.hidden)return;if(menu||tourS||phys||drag){scheduleComplain();return}say(pick(TILT,'tilt'),pick(['desole','curieuse'],'te2'));scheduleComplain()},25000+Math.random()*20000)}
+  function settle(){norm();save();if(Math.abs(rot)<22){const was=tilted;tilted=false;clearTimeout(compT);body.style.transition='transform .5s cubic-bezier(.3,1.5,.5,1)';rot=0;place();setTimeout(()=>body.style.transition='',550);
+      if(was)say(pick(THX,'thx'),pick(['joie','calin','fier'],'thxe'));else expr('joie',1500)}
+    else{tilted=true;expr(pick(['desole','curieuse','surprise'],'te'));say(pick(TILT,'tilt'));scheduleComplain()}}
   function pm(e){if(!down)return;if(drag){pos.x=e.clientX;pos.y=e.clientY;clamp();place();drag.pts.push([e.clientX,e.clientY,performance.now()]);if(drag.pts.length>6)drag.pts.shift();return}
-    if(Math.hypot(e.clientX-down.x,e.clientY-down.y)>12)clearTimeout(pressT)}
-  function pu(e){clearTimeout(pressT);if(!down)return;const wasDrag=drag;down=null;
+    if(Math.hypot(e.clientX-down.x,e.clientY-down.y)>12&&!rolled){clearTimeout(pressT);rolled=true;down.lx=e.clientX;stopPhys();hideBub()}
+    if(rolled){const dx=e.clientX-down.lx;down.lx=e.clientX;rollV=dx;pos.x+=dx;rot+=dx/(sz()/2)*57.3;clamp();place();if(Math.abs(dx)>2)expr('rire')}}
+  function pu(e){clearTimeout(pressT);if(!down)return;if(rolled&&!drag){rolled=false;down=null;if(Math.abs(rollV)>7){vel={x:rollV,y:0};startPhys()}else settle();return}const wasDrag=drag;down=null;
     if(wasDrag){el.classList.remove('big');drag=null;const p=wasDrag.pts;if(p.length>1){const a=p[0],b=p[p.length-1],dt=Math.max(16,b[2]-a[2]);vel={x:(b[0]-a[0])/dt*16,y:(b[1]-a[1])/dt*16}}else vel={x:0,y:0};
       if(Math.hypot(vel.x,vel.y)>6){startPhys();expr('rire')}else{save();expr('joie',1500)}return}
     unlock();const now=performance.now();if(now-lastTap<320){clearTimeout(tapT);lastTap=0;if(menu)popBack();else openMenu()}else{lastTap=now;tapT=setTimeout(menu?bounce:single,320)}}
   function single(){const n=S.get('pearlTaps',0);S.set('pearlTaps',n+1);bounce();
+    if(tilted){vel={x:rot>0?-5:5,y:0};startPhys();say(pick(["Hihi ! Encore un peu, ou glissez le doigt sur moi.","Oh ! Ça roule ! Continuez.","Doucement… plus que quelques degrés."],'nudge'),'rire');return}
     if(n<4)bubble("Touchez-moi deux fois pour ouvrir mon menu. Restez appuyée pour me déplacer ou me lancer.",null,5000);else{const r=['joie','clin','rire','fier','curieuse'][n%5];expr(r,1600)}}
   function bounce(){el.classList.remove('hop');void el.offsetWidth;el.classList.add('hop')}
   function save(){S.set('pearlPos',{x:pos.x/innerWidth,y:pos.y/innerHeight})}
@@ -1400,7 +1427,7 @@ const Pearl=(()=>{
     if(onF){vel.x*=.985;rot+=vel.x/s*57.3}else rot+=vel.x*.6;
     if(hit>4){el.classList.remove('squash');void el.offsetWidth;el.classList.add('squash');if(hit>9)expr('surprise',500)}
     place();const slow=Math.abs(vel.x)<.12&&Math.abs(vel.y)<.6;rest=slow?rest+1:0;
-    if(rest>30){phys=false;vel={x:0,y:0};rot=((rot%360)+360)%360;if(rot>180)rot-=360;body.style.transition='transform .6s ease';rot=0;place();setTimeout(()=>body.style.transition='',650);save();expr('joie',1500);return}
+    if(rest>30){phys=false;vel={x:0,y:0};settle();return}
     raf=requestAnimationFrame(step)}
   addEventListener('devicemotion',e=>{const g=e.accelerationIncludingGravity;if(g&&g.x!=null){sensor=true;const n=Math.hypot(g.x,g.y)||1;if(n>2){gx=-g.x/9.8;gy=g.y/9.8}else{gx=0;gy=1}
     if(el&&!el.hidden&&cfg().roll&&!phys&&!drag&&pos&&pos.y>=floor()-1&&Math.abs(gx)>.35){vel.x+=gx*2;startPhys()}}
@@ -1434,7 +1461,7 @@ const Pearl=(()=>{
         if(f.el.style.opacity==0){f.x=pos.x;f.y=pos.y}f.vx=(f.vx+(tx-f.x)*.1)*.76;f.vy=(f.vy+(ty-f.y)*.1)*.76;f.x+=f.vx;f.y+=f.vy;
         const tr=a*57.3+90,dr=((tr-f.r+540)%360)-180;f.r+=dr*.15;f.el.style.opacity=1;f.el.style.left=f.x.toFixed(1)+'px';f.el.style.top=f.y.toFixed(1)+'px';f.el.style.setProperty('--r',f.r.toFixed(1)+'deg')})};
     fraf=requestAnimationFrame(tick)}
-  function act(k){({expliquer:()=>explain(),visite:()=>tour(),son:toggleSound,agenda:readAgenda,motdoux:()=>say(($('note')&&$('note').textContent)||'Je pense à vous.','calin'),
+  function act(k){({expliquer:()=>explain(),visite:()=>tour(),son:()=>soundSheet(),agenda:readAgenda,motdoux:()=>say(($('note')&&$('note').textContent)||'Je pense à vous.','calin'),
     jeux:gameHelp,reglages:()=>openSettings('voice'),ranger:()=>{say('Je me range. Touchez la petite perle en haut pour me rappeler.','dort');setTimeout(()=>setOn(false),1800)}})[k]()}
   function toggleSound(){const c=cfg();if(c.mute){S.set('voice',Object.assign(S.get('voice',{}),{mute:false}));say('Me revoilà, j\'ai retrouvé ma voix.','joie')}else{say('D\'accord, je me tais. Touchez Son pour que je reparle.','doux',null,true);setTimeout(()=>{S.set('voice',Object.assign(S.get('voice',{}),{mute:true}));shut()},300)}}
   function readAgenda(){const t=iso(new Date()),tm=iso(new Date(Date.now()+864e5));const ev=sortedEvents();const a=ev.filter(e=>e.date===t),b=ev.filter(e=>e.date===tm);
@@ -1466,7 +1493,7 @@ const Pearl=(()=>{
   function firstTouch(){unlock();if(greeted)return;greeted=true;const c=cfg();if(!c.greet||!visible())return;const d=iso(new Date());if(S.get('greetDay','')===d)return;S.set('greetDay',d);
     const h=new Date().getHours(),g=h<6?'Bonne nuit':h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';const n=sortedEvents().filter(e=>e.date===d).length;
     setTimeout(()=>say(g+' Élodie ! '+(n?'Vous avez '+n+' rendez-vous aujourd\'hui.':'Rien de prévu aujourd\'hui, profitez-en.')+' Touchez-moi deux fois si vous avez besoin de moi.','joie'),400)}
-  function setOn(v){S.set('pearlOn',v);if(el){el.hidden=!v;if(!v){hideBub();shut();stopPhys()}}paintBtn()}
+  function setOn(v){S.set('pearlOn',v);if(el){el.hidden=!v;if(!v){hideBub();shut();stopPhys();tilted=false;clearTimeout(compT);rot=0;place()}}paintBtn()}
   function paintBtn(){const b=$('pearl-btn');if(b){b.setAttribute('aria-pressed',visible());b.setAttribute('aria-label',visible()?'Ranger la Perle':'Appeler la Perle')}}
   function onGame(k,desc){if(!el||el.hidden||!cfg().gameHelp)return;expr('curieuse');
     if(cfg().narr){setTimeout(gameHelp,500);return}
@@ -1477,9 +1504,9 @@ const Pearl=(()=>{
   function onPro(k){if(!el||el.hidden||!cfg().narr||!cfg().nPro)return;const t=PRO_HELP[k];if(t)setTimeout(()=>say(t,'pense'),400)}
   let lastToast='',lastToastT=0;
   function readToast(m){if(!el||el.hidden||!cfg().narr||!cfg().nToast||!m||tourS)return;m=String(m).replace(/\s+/g,' ').trim();if(m.length>220||m===lastToast&&Date.now()-lastToastT<3000)return;lastToast=m;lastToastT=Date.now();speak(m)}
-  function status(){return{voices:voices.length,all:allVoices().length,state:vst,synth:'speechSynthesis' in window,diag}}
+  function status(){return{voices:TTSN&&nvoices.length?nvoices.filter(v=>/^fr/i.test(v.lang)).length:voices.length,all:TTSN&&nvoices.length?nvoices.length:allVoices().length,state:vst,synth:!!TTSN||'speechSynthesis' in window,diag,native:!!TTSN}}
   function resize(){if(!el)return;el.style.width=el.style.height=sz()+'px';clamp();place()}
-  return {testVoice,allVoices,reload:()=>{loadVoices();return voices.length},babbleTest:t=>{const id=++speakSeq;babble(t,id)},build,say,expr,setOn,onGame,onView,onPro,readToast,status,unlock,resize,speak,shut,visible,tour,explain,voices:()=>voices,toggle:()=>{const v=!visible();setOn(v);if(v)say('Me revoilà !','joie')},bubble,hideBub,openMenu}
+  return {testVoice,allVoices:()=>TTSN&&nvoices.length?nvoices:allVoices(),installVoices:()=>{try{return TTSN&&TTSN.openInstall()}catch(_){}},native:!!TTSN,reload:()=>{loadVoices();nLoad();return TTSN&&nvoices.length?nvoices.filter(v=>/^fr/i.test(v.lang)).length:voices.length},babbleTest:t=>{const id=++speakSeq;babble(t,id)},build,say,expr,setOn,onGame,onView,onPro,readToast,status,unlock,resize,speak,shut,visible,tour,explain,voices:()=>voices,toggle:()=>{const v=!visible();setOn(v);if(v)say('Me revoilà !','joie')},bubble,hideBub,openMenu}
 })();
 
 /* ===================== Espace Pro ===================== */
@@ -1774,7 +1801,7 @@ function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),
     <div class="row"><span class="small">Taille :</span>${[[60,'Petite'],[72,'Moyenne'],[88,'Grande']].map(([s,l])=>`<button class="chip" data-psz="${s}" aria-pressed="${v.size===s}">${l}</button>`).join('')}</div>
     ${tg('st-greet',v.greet,'Elle dit bonjour chaque jour')}${tg('st-ghelp',v.gameHelp,'Elle explique les jeux')}${tg('st-roll',v.roll,'Elle roule quand on penche le téléphone')}
     <button class="pill" id="st-tour">Faire la visite guidée</button></div></details>
-  <details class="setg" ${focus==='voice'?'open':''}><summary>Voix et son</summary><div class="stack">
+  <details class="setg" ${focus==='voice'?'open':''}><summary>Voix et son (options avancées)</summary><div class="stack">
     <div><p class="small" style="margin-bottom:8px">Comment elle parle :</p><div class="row">${[['auto','Automatique'],['phone','Voix du téléphone'],['sounds','Petits sons'],['off','Silence']].map(([k,l])=>`<button class="chip" data-eng="${k}" aria-pressed="${v.engine===k}">${l}</button>`).join('')}</div>
       <p class="small muted" id="vo-engh" style="margin-top:6px"></p></div>
     ${tg('vo-n',v.narr,'Elle explique à voix haute','Interrupteur général de toutes les explications')}
@@ -1794,7 +1821,7 @@ function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),
     <p class="small" id="vo-st"></p>
     <button class="btn-plum" id="vo-tour">Essayer toutes les voix, une par une</button><div class="stack" id="vo-res"></div>
     <button class="pill" id="vo-rel">Relancer la recherche des voix</button>
-    ${ANDROID?`<a class="btn pill" style="justify-content:center" href="intent:#Intent;action=com.android.settings.TTS_SETTINGS;end">Ouvrir « Synthèse vocale » d'Android</a><a class="btn pill" style="justify-content:center" href="intent:#Intent;action=android.speech.tts.engine.INSTALL_TTS_DATA;end">Installer les données vocales (français)</a>`:''}
+    ${NATIVE?`<button class="btn-gold" id="vo-inst">Installer ou réparer la voix du téléphone</button>`:ANDROID?`<a class="btn pill" style="justify-content:center" href="intent:#Intent;action=com.android.settings.TTS_SETTINGS;end">Ouvrir « Synthèse vocale » d'Android</a><a class="btn pill" style="justify-content:center" href="intent:#Intent;action=android.speech.tts.engine.INSTALL_TTS_DATA;end">Installer les données vocales (français)</a>`:''}
     <div class="field"><label for="vo-free">Lui faire lire un texte</label><textarea id="vo-free" rows="3" placeholder="Écrivez ici ce qu'elle doit dire"></textarea></div>
     <div class="row"><button class="pill" id="vo-readt">Lire ce texte</button><button class="pill" id="vo-reads">Lire l'écran</button><button class="pill" id="vo-snd">Tester les petits sons</button></div>
     <p class="small muted">Si rien ne s'entend : volume « média » du téléphone, Réglages Android, Synthèse vocale, moteur « Google », puis installer le français. Hors ligne, il faut des voix téléchargées.</p>
@@ -1832,6 +1859,29 @@ function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),
   q('#st-charm').onclick=()=>{popBack();setTimeout(()=>{go('accueil');const d=$('charm-set');if(d){d.open=true;setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'start'}),200)}},80)};
   q('#st-bk').onclick=backupFile;q('#st-rs').onchange=e=>restoreFile(e.target.files&&e.target.files[0]);
   q('#st-upd').onclick=()=>UPD.check(true);q('#st-auto').onchange=e=>S.set('autoUpd',e.target.checked)}
+/* --- le son, version simple : trois gros choix --- */
+const SNDI={voice:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12"/></svg>',sounds:'<svg viewBox="0 0 24 24"><path d="M9 17V6l10-2v11"/><circle cx="7" cy="17" r="2.3"/><circle cx="17" cy="15" r="2.3"/></svg>',off:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l4 5M21 9.5l-4 5"/></svg>'};
+function soundSheet(){const cur=()=>Object.assign({},VOICE0,S.get('voice',{}));const mode=()=>{const v=cur();return v.mute||v.engine==='off'?'off':v.engine==='sounds'?'sounds':'voice'};
+  const v0=cur();const b=sheet('Le son de la Perle',`<p style="font-size:1.05rem">Comment voulez-vous que je parle ?</p>
+   <div class="sndg">${[['voice','Ma voix','Je parle'],['sounds','Petits sons','Des notes douces'],['off','Silence','J\'écris seulement']].map(([k,l,d])=>`<button class="sndb" data-m="${k}" aria-pressed="false">${SNDI[k]}<b>${l}</b><small>${d}</small></button>`).join('')}</div>
+   <div class="field"><label for="sn-v">Volume : <b id="sn-vv"></b></label><input type="range" id="sn-v" min="0" max="1" step="0.05" value="${v0.vol}"></div>
+   ${tg('sn-t',v0.showText,'Afficher mes paroles','Dans la bulle, en plus de la voix')}
+   <button class="btn-gold" id="sn-test" style="justify-content:center">Écouter</button><p class="small" id="sn-st"></p>
+   <div class="row"><button class="pill" id="sn-fix">Je ne l'entends pas</button><button class="pill" id="sn-adv">Options avancées</button></div>`);
+  const q=s=>b.querySelector(s),sv=o=>S.set('voice',Object.assign(S.get('voice',{}),o));
+  const paint=()=>{const m=mode();b.querySelectorAll('.sndb').forEach(x=>x.setAttribute('aria-pressed',x.dataset.m===m));q('#sn-vv').textContent=Math.round(+q('#sn-v').value*100)+' %';
+    const st=Pearl.status();q('#sn-st').textContent=m==='off'?'Je reste silencieuse.':st.state==='ok'?'Je vous parle avec une vraie voix.':st.state==='secours'?'Ma voix ne répond pas : je joue de petits sons.':st.state==='muette'?"Je n'arrive pas à faire de bruit. Touchez « Je ne l'entends pas ».":''};
+  b.querySelectorAll('.sndb').forEach(x=>x.onclick=()=>{const m=x.dataset.m;sv(m==='voice'?{mute:false,engine:'auto'}:m==='sounds'?{mute:false,engine:'sounds'}:{mute:true});paint();if(m!=='off'){Pearl.unlock();Pearl.speak(m==='voice'?'Bonjour Élodie, je suis là.':'Voici mes petits sons.',true);setTimeout(paint,2500)}else Pearl.shut()});
+  q('#sn-v').oninput=()=>{sv({vol:+q('#sn-v').value});paint()};q('#sn-t').onchange=e=>sv({showText:e.target.checked});
+  q('#sn-test').onclick=()=>{Pearl.unlock();Pearl.expr('joie',3000);Pearl.speak('Bonjour Élodie, vous m\'entendez bien ?',true);[1500,4000].forEach(d=>setTimeout(paint,d))};
+  q('#sn-adv').onclick=()=>{popBack();setTimeout(()=>openSettings('voice'),120)};q('#sn-fix').onclick=()=>{popBack();setTimeout(voiceFix,120)};paint()}
+/* --- réparer la voix, pas à pas --- */
+function voiceFix(){const b=sheet('Réparer la voix','',{closeLabel:'Fermer'});const vs=()=>{const a=Pearl.allVoices(),fr=a.filter(x=>/^fr/i.test(x.lang));return(fr.length?fr.concat(a.filter(x=>!/^fr/i.test(x.lang)).slice(0,2)):a).slice(0,10)};
+  let list=[],i=0;const show=(html,btns)=>{b.innerHTML=html+'<div class="stack" id="vf-b"></div>';const box=b.querySelector('#vf-b');(btns||[]).forEach(([l,f,main])=>{const x=document.createElement('button');x.className=main?'btn-gold':'pill';x.style.justifyContent='center';x.textContent=l;x.onclick=f;box.appendChild(x)})};
+  const done=ok=>show(ok?'<p style="font-size:1.1rem">Parfait, je vous entends à mon tour !</p>':'<p>Je n\'ai pas trouvé de voix qui marche. Deux solutions :</p>',ok?[['Terminé',()=>popBack(),1]]:[['Utiliser les petits sons',()=>{S.set('voice',Object.assign(S.get('voice',{}),{engine:'sounds',mute:false}));Pearl.babbleTest('Voici mes petits sons.');popBack()},1]].concat(Pearl.native?[['Installer ou réparer la voix du téléphone',()=>Pearl.installVoices()]]:[]).concat([['Réglages Android, Synthèse vocale : volume média à fond, moteur Google, français installé',()=>{}]]));
+  const tryNext=()=>{if(i>=list.length){done(false);return}const v=list[i++];show(`<p>Voix ${i} sur ${list.length} : <b>${esc(v.name)}</b></p><p class="small muted">Écoutez. Montez le volume « média » du téléphone si besoin.</p>`,[]);
+    Pearl.testVoice(v,'Bonjour Élodie, voici la voix numéro '+i+'. Vous m\'entendez ?',r=>{setTimeout(()=>{show(`<p>Voix ${i} sur ${list.length} : <b>${esc(v.name)}</b></p><p style="font-size:1.05rem">${r==='ok'?'Vous m\'avez entendue ?':'Cette voix ne répond pas.'}</p>`,r==='ok'?[['Oui, je l\'entends',()=>{S.set('voice',Object.assign(S.get('voice',{}),{voice:v.name,engine:'auto',mute:false}));S.set('voiceOk',v.name);done(true)},1],['Non, voix suivante',tryNext]]:[['Voix suivante',tryNext,1]])},r==='ok'?3200:300)})};
+  show('<p style="font-size:1.05rem">Je vais essayer de parler, voix par voix. Dites-moi quand vous m\'entendez.</p><p class="small muted">Avant : volume « média » du téléphone monté, pas en mode silencieux.</p>',[['Commencer',()=>{Pearl.unlock();list=vs();i=0;if(!list.length)done(false);else tryNext()},1]])}
 /* --- voix : tous les réglages --- */
 function wireVoice(b){const q=s=>b.querySelector(s);const pct=x=>Math.round(x*100)+' %';const cfg=()=>Object.assign({},VOICE0,S.get('voice',{}));
   const ENGH={auto:"Essaie la voix du téléphone, puis des petits sons si elle ne répond pas.",phone:"Seulement la voix du téléphone.",sounds:"Petits sons doux à la place des mots, sans aucune voix à installer.",off:"Elle écrit dans sa bulle sans rien dire."};
@@ -1845,7 +1895,7 @@ function wireVoice(b){const q=s=>b.querySelector(s);const pct=x=>Math.round(x*10
   q('#vo-al').addEventListener('change',e=>{S.set('voice',Object.assign(S.get('voice',{}),{allLang:e.target.checked}));fillVoices()});
   b.querySelectorAll('[data-eng]').forEach(x=>x.onclick=()=>{S.set('voice',Object.assign(S.get('voice',{}),{engine:x.dataset.eng}));paint()});
   q('#vo-t').onclick=()=>{save();S.set('voiceOk','');Pearl.unlock();Pearl.expr('joie',3500);Pearl.speak('Bonjour Élodie, voici ma voix. Vous pouvez la régler comme vous le souhaitez.',true);[1500,4000,8000].forEach(d=>setTimeout(paint,d))};
-  q('#vo-st2').onclick=()=>Pearl.shut();
+  q('#vo-st2').onclick=()=>Pearl.shut();const vi=q('#vo-inst');if(vi)vi.onclick=()=>{try{Pearl.installVoices()}catch(_){toast('Ouvrez Réglages Android, Synthèse vocale.',6000)}};
   q('#vo-snd').onclick=()=>{Pearl.unlock();Pearl.babbleTest('Voici mes petits sons, vous les entendez bien.')};
   q('#vo-readt').onclick=()=>{save();Pearl.unlock();const t=q('#vo-free').value.trim();Pearl.speak(t||'Écrivez un texte, et je le lirai.',true)};
   q('#vo-reads').onclick=()=>{save();Pearl.unlock();const e=$('v-'+(window.__v||'accueil'));const t=((e&&e.innerText)||'').replace(/\s+/g,' ').trim().slice(0,900);Pearl.speak(t||'Il n\'y a rien à lire ici.',true)};
@@ -1996,7 +2046,8 @@ const Orient=(()=>{
   const fs=()=>document.fullscreenElement||document.webkitFullscreenElement;
   function paint(){const b=$('orient');if(!b)return;const l=isLand(),lk=!!S.get('orientLock',0);b.dataset.o=l?'land':'port';b.setAttribute('aria-pressed',lk);
     b.setAttribute('aria-label',(l?'Écran en paysage':'Écran en portrait')+(lk?', verrouillé':'')+'. Toucher pour passer en '+(l?'portrait':'paysage')+'.')}
-  async function lock(to){const so=screen.orientation;if(!so||!so.lock)throw new Error('nolock');
+  const SON=(()=>{try{return NATIVE?Capacitor.registerPlugin('ScreenOrientation'):null}catch(_){return null}})();
+  async function lock(to){if(SON){await SON.lock({orientation:to});return}const so=screen.orientation;if(!so||!so.lock)throw new Error('nolock');
     if(!fs()){const e=document.documentElement;try{await (e.requestFullscreen||e.webkitRequestFullscreen).call(e)}catch(_){}}
     await so.lock(to)}
   async function toggle(){const to=isLand()?'portrait':'landscape';
@@ -2004,7 +2055,7 @@ const Orient=(()=>{
     catch(e){toast("Ce navigateur refuse de bloquer l'écran. Utilisez la rotation automatique du téléphone, ou installez l'appli pour avoir ce bouton complet.",7000);paint()}}
   /* écran fixe : dès le premier toucher, plein écran + verrou (Chrome n'accepte le verrou qu'en plein écran) */
   let tries=0,left=false;const standalone=()=>matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches;
-  async function autoLock(){if(!S.get('keepFixed',true)||left||tries>=3||fs())return;tries++;const to=S.get('orientLock',0)||'portrait';
+  async function autoLock(){if(NATIVE||!S.get('keepFixed',true)||left||tries>=3||fs())return;tries++;const to=S.get('orientLock',0)||'portrait';
     try{await lock(to);S.set('orientLock',to);paint()}catch(e){if(tries>=3&&!S.get('fixedWarn',0)){S.set('fixedWarn',1);toast("L'écran peut encore tourner : coupez la « Rotation automatique » dans le volet rapide du téléphone. Une fois l'appli installée, elle restera fixe d'elle-même.",8000)}}}
   addEventListener('pointerdown',()=>{autoLock()},{passive:true});
   document.addEventListener('fullscreenchange',()=>{if(!fs()){left=true;S.set('orientLock',0)}paint()});
