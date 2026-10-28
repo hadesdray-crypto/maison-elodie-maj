@@ -438,6 +438,22 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 .sndb b{font-weight:500;font-size:.95rem}.sndb small{font-size:.74rem;color:#E0C2BB;line-height:1.2}
 .sndb[aria-pressed=true]{background:linear-gradient(170deg,#C98A8F,#965A61);box-shadow:0 0 0 3px rgba(243,205,184,.45);border-color:#FFE4D6}
 .sndb[aria-pressed=true] small{color:#FFF4EE}
+
+/* suggestions + dictée */
+.sg{position:fixed;z-index:90;background:linear-gradient(180deg,#4a2f3d,#33202b);border:1px solid #d9a38f;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,220,200,.12);padding:6px;max-height:min(44vh,320px);overflow:auto;-webkit-overflow-scrolling:touch}
+.sg[hidden]{display:none}
+.sg-h{margin:2px 8px 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#e8b9a6;opacity:.8}
+.sg-i{display:block;width:100%;text-align:left;background:none;border:0;color:#f6e6dd;font:inherit;font-size:15px;padding:11px 12px;border-radius:10px;min-height:44px;cursor:pointer}
+.sg-i b{color:#ffd2bf;font-weight:700}
+.sg-i:active,.sg-i:hover{background:rgba(232,185,166,.18)}
+#dict{position:fixed;z-index:95;width:36px;height:36px;border-radius:50%;border:1px solid #d9a38f;background:radial-gradient(circle at 35% 30%,#f3c9b8,#b97a69 70%,#7a4a3e);box-shadow:0 3px 10px rgba(0,0,0,.45);padding:0;display:grid;place-items:center;cursor:pointer}
+#dict[hidden]{display:none}
+#dict svg{width:20px;height:20px;fill:none;stroke:#3a2230;stroke-width:2;stroke-linecap:round}
+#dict svg rect{fill:#3a2230}
+#dict.on{animation:dictp 1s infinite;background:radial-gradient(circle at 35% 30%,#ffb0a0,#e0405a 70%,#8a1830)}
+#dict.on svg{stroke:#fff}#dict.on svg rect{fill:#fff}
+@keyframes dictp{0%,100%{box-shadow:0 0 0 0 rgba(255,90,110,.6)}50%{box-shadow:0 0 0 10px rgba(255,90,110,0)}}
+.dict-pad{padding-right:46px!important}
 </style>
 <div class="wrap">
   <header class="top plate">
@@ -1234,13 +1250,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.4',date:'28 octobre 2026',
+const APP={version:'11.5',date:'28 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -1972,6 +1988,84 @@ const Theme=(()=>{
   function set(k){S.set('theme',k);return apply(k)}
   return{apply,set,cur:()=>S.get('theme','rose')}})();
 Theme.apply(Theme.cur());
+/* ===================== Suggestions intelligentes et dictée partout ===================== */
+/* Les métiers les plus recherchés d'abord (l'ordre = popularité), puis le reste */
+const JOBS=['Assistant administratif','Comptable','Commercial','Conseiller clientèle','Chargé de recrutement','Responsable RH','Gestionnaire de paie','Assistant RH','Contrôleur de gestion','Directeur administratif et financier','Développeur web','Développeur full stack','Chef de projet','Chef de projet informatique','Data analyst','Data scientist','Ingénieur logiciel','Ingénieur d\'affaires','Technico-commercial','Responsable commercial','Directeur commercial','Business developer','Account manager','Chargé d\'affaires','Responsable de magasin','Vendeur','Conseiller de vente','Employé polyvalent','Caissier','Hôte de caisse','Responsable logistique','Préparateur de commandes','Cariste','Magasinier','Chauffeur livreur','Chauffeur poids lourd','Infirmier','Aide-soignant','Aide à domicile','Auxiliaire de vie','Médecin généraliste','Pharmacien','Préparateur en pharmacie','Kinésithérapeute','Sage-femme','Agent d\'entretien','Agent de sécurité','Gardien d\'immeuble','Électricien','Plombier','Chauffagiste','Maçon','Peintre en bâtiment','Menuisier','Soudeur','Mécanicien','Technicien de maintenance','Technicien de maintenance industrielle','Opérateur de production','Conducteur de ligne','Responsable de production','Ingénieur qualité','Responsable qualité','Responsable achats','Acheteur','Assistant achats','Gestionnaire de stocks','Responsable supply chain','Gestionnaire de flux','Déclarant en douane','Serveur','Cuisinier','Chef de cuisine','Commis de cuisine','Plongeur','Barman','Réceptionniste','Gouvernante','Directeur d\'hôtel','Téléconseiller','Chargé de clientèle','Responsable service client','Assistant de direction','Secrétaire','Secrétaire médicale','Office manager','Standardiste','Assistant juridique','Juriste','Juriste d\'entreprise','Avocat','Greffier','Notaire','Clerc de notaire','Paralegal','Responsable juridique','Auditeur','Auditeur interne','Expert-comptable','Collaborateur comptable','Chef comptable','Comptable fournisseurs','Comptable clients','Trésorier','Analyste financier','Credit manager','Gestionnaire de patrimoine','Conseiller en gestion de patrimoine','Banquier','Chargé de clientèle bancaire','Conseiller en assurance','Gestionnaire sinistres','Courtier','Actuaire','Responsable marketing','Chef de produit','Chargé de communication','Community manager','Responsable communication','Chargé de marketing digital','Responsable e-commerce','Traffic manager','Rédacteur web','Graphiste','Designer UX','Directeur artistique','Webdesigner','Journaliste','Photographe','Monteur vidéo','Développeur mobile','Développeur front-end','Développeur back-end','Développeur Java','Développeur Python','Développeur PHP','Développeur .NET','Administrateur systèmes','Administrateur réseaux','Ingénieur DevOps','Architecte cloud','Architecte logiciel','Chef de projet digital','Product owner','Scrum master','Responsable informatique','Directeur des systèmes d\'information','Technicien support informatique','Technicien helpdesk','Consultant SAP','Consultant ERP','Consultant en cybersécurité','Ingénieur réseaux','Testeur logiciel','Data engineer','Business analyst','Analyste BI','Consultant en organisation','Consultant en management','Directeur des ressources humaines','Responsable formation','Chargé de formation','Responsable paie','Gestionnaire administration du personnel','Chargé de mission RH','HR business partner','Responsable recrutement','Chargé de sourcing','Chasseur de têtes','Directeur général','Directeur de site','Directeur des opérations','Responsable d\'agence','Responsable de secteur','Directeur de magasin','Chef de rayon','Manager de proximité','Chef d\'équipe','Responsable d\'exploitation','Conducteur de travaux','Chef de chantier','Ingénieur travaux','Ingénieur bureau d\'études','Dessinateur projeteur','Technicien bureau d\'études','Métreur','Architecte','Géomètre','Ingénieur méthodes','Ingénieur production','Ingénieur R&D','Ingénieur maintenance','Responsable HSE','Animateur sécurité','Technicien de laboratoire','Chimiste','Biologiste','Technicien agricole','Agriculteur','Ouvrier agricole','Jardinier','Paysagiste','Boulanger','Pâtissier','Boucher','Charcutier','Poissonnier','Coiffeur','Esthéticienne','Socio-esthéticienne','Maquilleuse','Conseillère beauté','Enseignant','Professeur des écoles','Formateur','Éducateur spécialisé','Éducateur de jeunes enfants','Assistant maternel','Animateur','Moniteur éducateur','Assistant social','Psychologue','Orthophoniste','Ergothérapeute','Ostéopathe','Dentiste','Assistant dentaire','Vétérinaire','Auxiliaire vétérinaire','Agent immobilier','Négociateur immobilier','Gestionnaire locatif','Gestionnaire de copropriété','Syndic','Responsable de programmes immobiliers','Agent de voyage','Conseiller en séjour','Guide touristique','Responsable événementiel','Chargé d\'événementiel','Chef de projet événementiel','Régisseur','Technicien son et lumière','Livreur','Coursier','Conducteur de bus','Conducteur de taxi','Pilote','Hôtesse de l\'air','Agent d\'escale','Logisticien','Affréteur','Transitaire','Agent administratif','Agent d\'accueil','Chargé d\'accueil','Rédacteur territorial','Gestionnaire de dossiers','Chargé de gestion','Gestionnaire de contrats','Chargé de recouvrement','Responsable administratif','Responsable comptable','Responsable financier','Responsable juridique et conformité','Compliance officer','Délégué à la protection des données','Chargé de mission'];
+const CITIES2=['Paris','Lyon','Marseille','Toulouse','Nice','Nantes','Montpellier','Strasbourg','Bordeaux','Lille','Rennes','Reims','Saint-Étienne','Toulon','Le Havre','Grenoble','Dijon','Angers','Nîmes','Villeurbanne','Clermont-Ferrand','Aix-en-Provence','Brest','Tours','Limoges','Amiens','Perpignan','Metz','Besançon','Orléans','Rouen','Mulhouse','Caen','Nancy','Saint-Denis','Argenteuil','Roubaix','Tourcoing','Avignon','Poitiers','La Rochelle','Pau','Annecy','Chambéry','Valence','Quimper','Lorient','Vannes','Saint-Malo','Cannes','Antibes','Boulogne-Billancourt','Nanterre','Versailles','Courbevoie','La Défense','Île-de-France','Auvergne-Rhône-Alpes','Occitanie','Nouvelle-Aquitaine','Hauts-de-France','Grand Est','Bretagne','Normandie','Pays de la Loire','Provence-Alpes-Côte d\'Azur','Télétravail','Remote','Belgique','Suisse','Luxembourg'];
+const Sg=(()=>{
+  const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9+#.' ]/g,' ').replace(/'/g,' ').replace(/\s+/g,' ').trim();
+  function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let pp=null,p=Array.from({length:n+1},(_,j)=>j);
+    for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++){let v=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));if(pp&&i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])v=Math.min(v,pp[j-2]+1);c.push(v)}pp=p;p=c}return p[n]}
+  const mkItems=list=>list.map((l,i)=>({l,n:norm(l),w:norm(l).split(' '),r:i}));
+  function dist(q,it){let best=99;const cands=[it.n.slice(0,q.length),it.n.slice(0,q.length+1),it.n.slice(0,Math.max(1,q.length-1))];it.w.forEach(w=>{cands.push(w,w.slice(0,q.length),w.slice(0,q.length+1))});
+    for(const c of cands){if(!c)continue;const d=lev(q,c);if(d<best)best=d}return best}
+  function search(q,items,max){q=norm(q);max=max||7;const out=[];
+    if(!q)return items.slice(0,max).map(x=>x.l);
+    const sc=[];const tk=q.split(' ').filter(Boolean);
+    items.forEach(it=>{let s=0;if(it.n.startsWith(q))s=1000-it.r*.5;else if(it.w.some(w=>w.startsWith(q)))s=800-it.r*.5;else if(it.n.includes(q))s=600-it.r*.5;
+      else if(tk.length>1&&tk.every(t=>it.w.some(w=>w.startsWith(t))))s=700-it.r*.5;
+      else{const lim=q.length<=2?0:q.length<=5?1:2;const d=dist(q,it);if(d<=lim)s=400-d*80-it.r*.3}
+      if(s>0)sc.push([s,it])});
+    sc.sort((a,b)=>b[0]-a[0]);sc.slice(0,max).forEach(x=>out.push(x[1].l));
+    if(out.length<4){/* jamais un seul résultat : les plus proches, même mal écrits */
+      const rest=items.filter(it=>!out.includes(it.l)).map(it=>[dist(q,it)+it.r*.002,it]).sort((a,b)=>a[0]-b[0]);
+      for(const[,it]of rest){if(out.length>=5)break;out.push(it.l)}}
+    return out}
+  /* liste déroulante élégante */
+  let box=null,cur=null;
+  function ensure(){if(box)return box;box=document.createElement('div');box.className='sg';box.hidden=true;box.setAttribute('role','listbox');document.body.appendChild(box);
+    box.addEventListener('pointerdown',e=>e.preventDefault());addEventListener('scroll',()=>place(),true);addEventListener('resize',()=>place());return box}
+  function place(){if(!cur||box.hidden)return;const r=cur.el.getBoundingClientRect(),vv=window.visualViewport,vh=vv?vv.height+(vv.offsetTop||0):innerHeight;const w=Math.max(220,r.width);
+    box.style.width=w+'px';box.style.left=Math.max(8,Math.min(innerWidth-w-8,r.left))+'px';const h=box.offsetHeight;
+    if(vh-r.bottom<h+10&&r.top>h+10){box.style.top=(r.top-h-6)+'px'}else box.style.top=(r.bottom+6)+'px'}
+  function tok(el,cfg){const v=el.value;if(!cfg.multi)return{s:0,e:v.length,t:v.trim()};const c=el.selectionStart==null?v.length:el.selectionStart;const s=v.lastIndexOf(',',c-1)+1;let e=v.indexOf(',',c);if(e<0)e=v.length;return{s,e,t:v.slice(s,e).trim()}}
+  function show(){const{el,cfg}=cur;const T=tok(el,cfg),tokenRaw=T.t;
+    const items=cfg.items(),res=search(tokenRaw,items,7);if(!res.length){box.hidden=true;return}
+    box.innerHTML=(tokenRaw?'':'<p class="sg-h">Les plus recherchés</p>')+res.map(l=>{const nq=norm(tokenRaw);let h=esc(l);if(nq&&norm(l).startsWith(nq)){h='<b>'+esc(l.slice(0,tokenRaw.length))+'</b>'+esc(l.slice(tokenRaw.length))}return `<button type="button" class="sg-i" role="option" data-v="${esc(l)}">${h}</button>`}).join('');
+    box.hidden=false;place();box.querySelectorAll('.sg-i').forEach(b=>b.onclick=()=>pick(b.dataset.v))}
+  function pick(v){const{el,cfg}=cur;if(cfg.multi){const T=tok(el,cfg),before=el.value.slice(0,T.s).replace(/\s+$/,''),after=el.value.slice(T.e).replace(/^,\s*/,'').trim();el.value=(before?before+' ':'')+v+(after?', '+after:', ');if(!before)el.value=el.value.replace(/^\s+/,'')}else el.value=v;
+    el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));box.hidden=true}
+  function attach(el,cfg){if(!el||el.dataset.sg)return;el.dataset.sg='1';el.removeAttribute('list');el.setAttribute('autocomplete','off');
+    const mk=()=>{ensure();cur={el,cfg}};
+    el.addEventListener('focus',()=>{mk();show()});el.addEventListener('input',()=>{mk();show()});
+    el.addEventListener('blur',()=>{setTimeout(()=>{if(cur&&cur.el===el&&box)box.hidden=true},200)});
+    el.addEventListener('keydown',e=>{if(e.key==='Escape'&&box)box.hidden=true})}
+  return{attach,search,mk:mkItems,norm}})();
+(function(){const J=Sg.mk(JOBS),SK=Sg.mk(SKILLS),CI=Sg.mk([...new Set([...CITIES2,...CITIES])]);
+  const own=(arr)=>arr.filter(Boolean);
+  const jobsPlus=()=>{try{const mine=S.get('postes',[]).map(x=>x.title).filter(Boolean);return mine.length?Sg.mk([...new Set([...mine,...JOBS])]):J}catch(_){return J}};
+  const candNames=()=>{try{return Sg.mk([...new Set(getCands().map(x=>x.name))])}catch(_){return[]}};
+  const cfgs={'s-titles':{items:jobsPlus,multi:true},'c-job':{items:jobsPlus},'ent-poste':{items:jobsPlus},'m-job':{items:jobsPlus},'f-title':{items:jobsPlus},
+    's-skills':{items:()=>SK,multi:true},'s-not':{items:()=>SK,multi:true},'s-loc':{items:()=>CI,multi:true},'wx-city':{items:()=>CI},'ent-cand':{items:candNames},'cl-name':{items:()=>Sg.mk(own((S.get('clients',[])||[]).map(c=>c.name)))}};
+  Object.entries(cfgs).forEach(([id,c])=>{const e=document.getElementById(id);if(e)Sg.attach(e,c)})})();
+/* ---------- dictée : un micro dans tous les champs ---------- */
+const Dict=(()=>{let btn,tgt=null,on=false,rec=null,base='',SRN=null,hint=0;
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  try{if(NATIVE)SRN=Capacitor.registerPlugin('SpeechRecognition')}catch(_){}
+  const okType=e=>e&&((e.tagName==='TEXTAREA')||(e.tagName==='INPUT'&&/^(text|search|)$/i.test(e.getAttribute('type')||'text')));
+  function build(){if(btn)return;btn=document.createElement('button');btn.type='button';btn.id='dict';btn.hidden=true;btn.setAttribute('aria-label','Dicter');
+    btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>';document.body.appendChild(btn);
+    btn.addEventListener('pointerdown',e=>e.preventDefault());btn.addEventListener('click',()=>toggle());
+    addEventListener('scroll',place,true);addEventListener('resize',place);if(window.visualViewport)visualViewport.addEventListener('resize',place)}
+  function place(){if(!btn||btn.hidden||!tgt)return;const r=tgt.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight){btn.style.visibility='hidden';return}btn.style.visibility='';
+    btn.style.left=Math.min(innerWidth-44,r.right-42)+'px';btn.style.top=(tgt.tagName==='TEXTAREA'?r.top+6:r.top+(r.height-36)/2)+'px'}
+  function set(v){if(!tgt)return;tgt.value=v;tgt.dispatchEvent(new Event('input',{bubbles:true}))}
+  const join=(a,b)=>(a&&b?a.replace(/\s+$/,'')+' ':a)+b;
+  function stop(){on=false;if(btn)btn.classList.remove('on');try{rec&&rec.stop()}catch(_){}rec=null;try{SRN&&SRN.stop()}catch(_){}}
+  function fallback(why){stop();const n=hint++;if(tgt)tgt.focus();toast((why||'La dictée directe n\'est pas disponible.')+' Touchez le micro du clavier pour dicter.',n<2?6000:3500)}
+  async function start(){if(!tgt)return;base=tgt.value;
+    if(SRN){try{const p=await SRN.requestPermissions();if(p&&p.speechRecognition&&p.speechRecognition!=='granted'){fallback("Le micro n'est pas autorisé.");return}
+        const a=await SRN.available();if(a&&a.available===false){fallback();return}
+        on=true;btn.classList.add('on');await SRN.removeAllListeners();SRN.addListener('partialResults',d=>{const t=(d.matches&&d.matches[0])||'';if(t)set(join(base,t))});SRN.addListener('listeningState',d=>{if(d&&d.status==='stopped'){on=false;btn&&btn.classList.remove('on')}});
+        await SRN.start({language:'fr-FR',maxResults:1,partialResults:true,popup:false});return}catch(e){fallback()}return}
+    if(R){if(!NET.ok()){fallback('La dictée demande internet.');return}try{rec=new R();rec.lang='fr-FR';rec.interimResults=true;rec.continuous=false;
+        rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;set(join(base,t))};rec.onerror=ev=>{if(ev.error==='not-allowed'||ev.error==='service-not-allowed')fallback("Le micro n'est pas autorisé.");else stop()};rec.onend=()=>{on=false;btn&&btn.classList.remove('on')};
+        rec.start();on=true;btn.classList.add('on')}catch(_){fallback()}return}
+    fallback()}
+  function toggle(){if(on){stop();return}start()}
+  document.addEventListener('focusin',e=>{if(!okType(e.target))return;build();if(on&&tgt!==e.target)stop();tgt=e.target;btn.hidden=false;e.target.classList.add('dict-pad');place()});
+  document.addEventListener('focusout',e=>{const t=e.target;setTimeout(()=>{if(document.activeElement===t||document.activeElement===btn)return;if(t.classList)t.classList.remove('dict-pad');if(tgt===t){if(!on&&btn)btn.hidden=true}},250)});
+  return{start,stop,toggle}})();
 /* charm : vraie chaîne (intégration de Verlet), pendentif pesant, gravité du téléphone, doigt */
 const CH=['e','heart','rose'];let chSensor=false;
 const gyroOn=()=>S.get('gyro',true);
