@@ -462,6 +462,53 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 .btn-plum:active{transform:scale(.97);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5)) brightness(.9)}
 .btn-plum:active::after{background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(255,255,255,.1)),linear-gradient(180deg,var(--p2,#7e4650),var(--p1,#b9777e))}
 .btn-plum[hidden]{display:none}
+:root{--ic-cart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23EFC2AE' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8h6l5 22h20l4-16H13'/%3E%3Ccircle cx='19' cy='39' r='3'/%3E%3Ccircle cx='34' cy='39' r='3'/%3E%3Cpath d='M20 20h14'/%3E%3C/svg%3E");--ic-doux:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none' stroke='%23EFC2AE' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M24 40C10 30 6 22 6 16a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 6-4 14-18 24z'/%3E%3Cpath d='M17 17c1-2 3-3 5-2'/%3E%3C/svg%3E")}
+
+.cadd .cinrow,.vbox .cinrow{display:flex;gap:8px;align-items:center}
+.cinrow input{flex:1;min-width:0}
+.cadd-b{flex:0 0 46px;height:46px;border-radius:50%;border:1px solid #d9a38f;background:radial-gradient(circle at 35% 30%,#f3c9b8,#b97a69 70%,#7a4a3e);color:#3a2230;font-size:26px;line-height:1;font-weight:600;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+.cact{gap:10px;flex-wrap:nowrap}.cact .btn-plum{padding-left:12px;padding-right:12px;--pt:18px;font-size:.95rem}
+.seg{display:flex;gap:0;background:var(--card2);border:1px solid var(--line);border-radius:99px;padding:4px}
+.seg button{flex:1;border:0;background:none;color:var(--on-plate,#f6e6dd);font:inherit;font-weight:600;padding:11px 8px;border-radius:99px;min-height:44px}
+.seg button.on{background:linear-gradient(180deg,var(--p1,#b9777e),var(--p2,#7e4650));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 2px 6px rgba(0,0,0,.35)}
+.cprog{height:8px;border-radius:99px;background:var(--card2);border:1px solid var(--line);overflow:hidden}.cprog i{display:block;height:100%;background:linear-gradient(90deg,#B7776A,#F3CDB8);transition:width .4s}
+.chead .small{margin-top:6px}
+.cg{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.12));overflow:hidden}
+.cgh{display:flex;align-items:center;gap:10px;margin:0;padding:10px 14px;font-weight:600;font-size:.95rem;letter-spacing:.04em;background:linear-gradient(90deg,color-mix(in srgb,var(--cc,#999) 38%,transparent),transparent);border-bottom:1px solid var(--line)}
+.cgh span{font-size:1.25rem}.cgh em{margin-left:auto;font-style:normal;font-size:.8rem;opacity:.8;background:rgba(0,0,0,.25);border-radius:99px;padding:2px 10px}
+.cr{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:60px;border-bottom:1px solid rgba(255,255,255,.06)}
+.cr:last-child{border-bottom:0}
+.cck{flex:0 0 34px;height:34px;border-radius:50%;border:2px solid #d9a38f;background:rgba(0,0,0,.18);display:grid;place-items:center;padding:0}
+.cck svg{width:20px;height:20px;fill:none;stroke:transparent;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.cr.dn .cck{background:radial-gradient(circle at 35% 30%,#f3c9b8,#b97a69);border-color:#f3c9b8}.cr.dn .cck svg{stroke:#3a2230}
+.cth{flex:0 0 46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:26px;background:color-mix(in srgb,var(--cc,#999) 30%,#2a1a20);border:1px solid color-mix(in srgb,var(--cc,#999) 60%,transparent);background-size:cover;background-position:center}
+.cth.ph{background-color:#3a2a44;border-color:#b99be0}.cth.ph.has i{display:none}
+.cnm{flex:1;min-width:0;font-size:1.02rem;line-height:1.2;word-break:break-word}
+.cr.dn .cnm{text-decoration:line-through;opacity:.5}.cr.dn .cth{opacity:.5;filter:grayscale(.6)}
+.cq{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.25);border-radius:99px;padding:2px}
+.cq b{min-width:22px;text-align:center;font-size:.95rem}
+.cq button{width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:inherit;font-size:18px;line-height:1;padding:0}
+.cx{flex:0 0 32px;height:32px;border:0;background:none;color:inherit;opacity:.55;font-size:24px;line-height:1;padding:0}
+.cempty{text-align:center;padding:26px 14px;display:grid;gap:10px;justify-items:center}.cbig{font-size:54px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
+.cfoot{justify-content:center;gap:10px;margin-top:6px}
+.cchips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.cchips::-webkit-scrollbar{display:none}
+.chp{flex:0 0 auto;border:1px solid var(--line);background:var(--card2);color:inherit;border-radius:99px;padding:9px 14px;font:inherit;font-size:.9rem;min-height:40px;white-space:nowrap}
+.chp.on{background:linear-gradient(180deg,var(--p1,#b9777e),var(--p2,#7e4650));border-color:#f0c3ae}
+.pg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:104px;padding:10px 6px;border-radius:18px;border:1px solid color-mix(in srgb,var(--cc,#999) 55%,transparent);background:radial-gradient(circle at 50% 0,color-mix(in srgb,var(--cc,#999) 34%,transparent),color-mix(in srgb,var(--cc,#999) 8%,#241519) 75%);color:inherit;font:inherit;box-shadow:0 3px 8px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.16);transition:transform .12s}
+.pt:active{transform:scale(.94)}
+.pe{font-size:38px;line-height:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}.pn{font-size:.82rem;line-height:1.15;text-align:center;word-break:break-word}
+.pt.sel{outline:2px solid #f3c9b8;outline-offset:-2px}
+.pb{position:absolute;top:6px;right:6px;min-width:24px;height:24px;border-radius:99px;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.8rem;color:#3a2230;background:radial-gradient(circle at 35% 30%,#f9dccd,#d89a88);box-shadow:0 2px 4px rgba(0,0,0,.4);padding:0 6px}
+.cphoto{height:240px;border-radius:16px;background:#222 center/cover no-repeat;border:1px solid #d9a38f;margin-bottom:12px}.cphoto.big{height:min(60vh,420px);background-size:contain}
+.vbox{margin-bottom:16px}.vbox>.eyebrow{margin-bottom:8px}
+.vbtn{display:block;margin:6px auto;width:92px;height:92px;border-radius:50%;border:2px solid #f0c3ae;background:radial-gradient(circle at 35% 30%,#f9dccd,#c98a78 60%,#7a4a3e);color:#3a2230;font-size:38px;box-shadow:0 6px 16px rgba(0,0,0,.5),inset 0 2px 0 rgba(255,255,255,.5)}
+.vbtn.on{background:radial-gradient(circle at 35% 30%,#ffb0a0,#e0405a 65%,#8a1830);color:#fff;animation:dictp 1.1s infinite}
+.vtime{text-align:center;font-size:1.6rem;margin:6px 0;font-variant-numeric:tabular-nums}
+.vrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.14);margin-bottom:8px}.vrow.w{font-style:italic}
+.vpl{flex:0 0 42px;height:42px;border-radius:50%;border:1px solid #d9a38f;background:radial-gradient(circle at 35% 30%,#f3c9b8,#b97a69 70%,#7a4a3e);color:#3a2230;font-size:16px;padding:0}.vpl.big{flex-basis:56px;height:56px;font-size:22px}.vpl.on{background:radial-gradient(circle at 35% 30%,#ffb0a0,#e0405a 70%,#8a1830);color:#fff}
+.vhome{margin-top:10px;align-self:center}
+.cth{flex-basis:42px;height:42px;font-size:24px}.cr{gap:8px;padding:8px}.cq button{width:30px;height:30px}
 </style>
 <div class="wrap">
   <header class="top plate">
@@ -485,6 +532,8 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
       <a class="tile" href="#videos"><span class="medal"><span><span class="ico" style="background-image:var(--ic-play)" aria-hidden="true"></span></span></span><b>Regarder</b><small>Vidéos et docs</small></a>
       <a class="tile" href="#agenda"><span class="medal"><span><span class="ico" style="background-image:var(--ic-calendar)" aria-hidden="true"></span></span></span><b>Agenda</b><small>Mes rendez-vous</small></a>
       <a class="tile" href="#pro"><span class="medal"><span><span class="ico" style="background-image:var(--ic-briefcase)" aria-hidden="true"></span></span></span><b>Travail</b><small>Recrutement</small></a>
+      <a class="tile" href="#courses"><span class="medal"><span><span class="ico" style="background-image:var(--ic-cart)" aria-hidden="true"></span></span></span><b>Courses</b><small>Ma liste</small></a>
+      <a class="tile" href="#" id="t-doux"><span class="medal"><span><span class="ico" style="background-image:var(--ic-doux)" aria-hidden="true"></span></span></span><b>Mots doux</b><small>Écrits et vocaux</small></a>
     </nav>
 
     <div class="jewel">
@@ -595,6 +644,8 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
       <p class="small muted">YT = YouTube, NP = NewPipe, DM = Dailymotion.</p>
     </div></details>
   </section>
+
+  <section class="view stack" id="v-courses" hidden></section>
 
   <!-- AGENDA -->
   <section class="view stack" id="v-agenda" hidden>
@@ -764,7 +815,7 @@ const JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 
 /* ---------- navigation ---------- */
-const VIEWS=['accueil','jeux','videos','agenda','pro'];
+const VIEWS=['accueil','jeux','videos','agenda','pro','courses'];
 function show(){const v=VIEWS.includes(window.__v)?window.__v:(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'accueil');
   VIEWS.forEach(x=>$('v-'+x).hidden=x!==v);
   document.querySelectorAll('.tab').forEach(b=>{if(b.dataset.v===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
@@ -1258,13 +1309,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.8',date:'28 octobre 2026',
+const APP={version:'11.9',date:'28 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -2003,7 +2054,7 @@ Theme.apply(Theme.cur());
 const JOBS=['Assistant administratif','Comptable','Commercial','Conseiller clientèle','Chargé de recrutement','Responsable RH','Gestionnaire de paie','Assistant RH','Contrôleur de gestion','Directeur administratif et financier','Développeur web','Développeur full stack','Chef de projet','Chef de projet informatique','Data analyst','Data scientist','Ingénieur logiciel','Ingénieur d\'affaires','Technico-commercial','Responsable commercial','Directeur commercial','Business developer','Account manager','Chargé d\'affaires','Responsable de magasin','Vendeur','Conseiller de vente','Employé polyvalent','Caissier','Hôte de caisse','Responsable logistique','Préparateur de commandes','Cariste','Magasinier','Chauffeur livreur','Chauffeur poids lourd','Infirmier','Aide-soignant','Aide à domicile','Auxiliaire de vie','Médecin généraliste','Pharmacien','Préparateur en pharmacie','Kinésithérapeute','Sage-femme','Agent d\'entretien','Agent de sécurité','Gardien d\'immeuble','Électricien','Plombier','Chauffagiste','Maçon','Peintre en bâtiment','Menuisier','Soudeur','Mécanicien','Technicien de maintenance','Technicien de maintenance industrielle','Opérateur de production','Conducteur de ligne','Responsable de production','Ingénieur qualité','Responsable qualité','Responsable achats','Acheteur','Assistant achats','Gestionnaire de stocks','Responsable supply chain','Gestionnaire de flux','Déclarant en douane','Serveur','Cuisinier','Chef de cuisine','Commis de cuisine','Plongeur','Barman','Réceptionniste','Gouvernante','Directeur d\'hôtel','Téléconseiller','Chargé de clientèle','Responsable service client','Assistant de direction','Secrétaire','Secrétaire médicale','Office manager','Standardiste','Assistant juridique','Juriste','Juriste d\'entreprise','Avocat','Greffier','Notaire','Clerc de notaire','Paralegal','Responsable juridique','Auditeur','Auditeur interne','Expert-comptable','Collaborateur comptable','Chef comptable','Comptable fournisseurs','Comptable clients','Trésorier','Analyste financier','Credit manager','Gestionnaire de patrimoine','Conseiller en gestion de patrimoine','Banquier','Chargé de clientèle bancaire','Conseiller en assurance','Gestionnaire sinistres','Courtier','Actuaire','Responsable marketing','Chef de produit','Chargé de communication','Community manager','Responsable communication','Chargé de marketing digital','Responsable e-commerce','Traffic manager','Rédacteur web','Graphiste','Designer UX','Directeur artistique','Webdesigner','Journaliste','Photographe','Monteur vidéo','Développeur mobile','Développeur front-end','Développeur back-end','Développeur Java','Développeur Python','Développeur PHP','Développeur .NET','Administrateur systèmes','Administrateur réseaux','Ingénieur DevOps','Architecte cloud','Architecte logiciel','Chef de projet digital','Product owner','Scrum master','Responsable informatique','Directeur des systèmes d\'information','Technicien support informatique','Technicien helpdesk','Consultant SAP','Consultant ERP','Consultant en cybersécurité','Ingénieur réseaux','Testeur logiciel','Data engineer','Business analyst','Analyste BI','Consultant en organisation','Consultant en management','Directeur des ressources humaines','Responsable formation','Chargé de formation','Responsable paie','Gestionnaire administration du personnel','Chargé de mission RH','HR business partner','Responsable recrutement','Chargé de sourcing','Chasseur de têtes','Directeur général','Directeur de site','Directeur des opérations','Responsable d\'agence','Responsable de secteur','Directeur de magasin','Chef de rayon','Manager de proximité','Chef d\'équipe','Responsable d\'exploitation','Conducteur de travaux','Chef de chantier','Ingénieur travaux','Ingénieur bureau d\'études','Dessinateur projeteur','Technicien bureau d\'études','Métreur','Architecte','Géomètre','Ingénieur méthodes','Ingénieur production','Ingénieur R&D','Ingénieur maintenance','Responsable HSE','Animateur sécurité','Technicien de laboratoire','Chimiste','Biologiste','Technicien agricole','Agriculteur','Ouvrier agricole','Jardinier','Paysagiste','Boulanger','Pâtissier','Boucher','Charcutier','Poissonnier','Coiffeur','Esthéticienne','Socio-esthéticienne','Maquilleuse','Conseillère beauté','Enseignant','Professeur des écoles','Formateur','Éducateur spécialisé','Éducateur de jeunes enfants','Assistant maternel','Animateur','Moniteur éducateur','Assistant social','Psychologue','Orthophoniste','Ergothérapeute','Ostéopathe','Dentiste','Assistant dentaire','Vétérinaire','Auxiliaire vétérinaire','Agent immobilier','Négociateur immobilier','Gestionnaire locatif','Gestionnaire de copropriété','Syndic','Responsable de programmes immobiliers','Agent de voyage','Conseiller en séjour','Guide touristique','Responsable événementiel','Chargé d\'événementiel','Chef de projet événementiel','Régisseur','Technicien son et lumière','Livreur','Coursier','Conducteur de bus','Conducteur de taxi','Pilote','Hôtesse de l\'air','Agent d\'escale','Logisticien','Affréteur','Transitaire','Agent administratif','Agent d\'accueil','Chargé d\'accueil','Rédacteur territorial','Gestionnaire de dossiers','Chargé de gestion','Gestionnaire de contrats','Chargé de recouvrement','Responsable administratif','Responsable comptable','Responsable financier','Responsable juridique et conformité','Compliance officer','Délégué à la protection des données','Chargé de mission'];
 const CITIES2=['Paris','Lyon','Marseille','Toulouse','Nice','Nantes','Montpellier','Strasbourg','Bordeaux','Lille','Rennes','Reims','Saint-Étienne','Toulon','Le Havre','Grenoble','Dijon','Angers','Nîmes','Villeurbanne','Clermont-Ferrand','Aix-en-Provence','Brest','Tours','Limoges','Amiens','Perpignan','Metz','Besançon','Orléans','Rouen','Mulhouse','Caen','Nancy','Saint-Denis','Argenteuil','Roubaix','Tourcoing','Avignon','Poitiers','La Rochelle','Pau','Annecy','Chambéry','Valence','Quimper','Lorient','Vannes','Saint-Malo','Cannes','Antibes','Boulogne-Billancourt','Nanterre','Versailles','Courbevoie','La Défense','Île-de-France','Auvergne-Rhône-Alpes','Occitanie','Nouvelle-Aquitaine','Hauts-de-France','Grand Est','Bretagne','Normandie','Pays de la Loire','Provence-Alpes-Côte d\'Azur','Télétravail','Remote','Belgique','Suisse','Luxembourg'];
 const Sg=(()=>{
-  const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9+#.' ]/g,' ').replace(/'/g,' ').replace(/\s+/g,' ').trim();
+  const norm=s=>String(s).toLowerCase().replace(/œ/g,'oe').replace(/æ/g,'ae').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9+#.' ]/g,' ').replace(/'/g,' ').replace(/\s+/g,' ').trim();
   function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let pp=null,p=Array.from({length:n+1},(_,j)=>j);
     for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++){let v=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));if(pp&&i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])v=Math.min(v,pp[j-2]+1);c.push(v)}pp=p;p=c}return p[n]}
   const mkItems=list=>list.map((l,i)=>({l,n:norm(l),w:norm(l).split(' '),r:i}));
@@ -2049,7 +2100,7 @@ const Sg=(()=>{
     's-skills':{items:()=>SK,multi:true},'s-not':{items:()=>SK,multi:true},'s-loc':{items:()=>CI,multi:true},'wx-city':{items:()=>CI},'ent-cand':{items:candNames},'cl-name':{items:()=>Sg.mk(own((S.get('clients',[])||[]).map(c=>c.name)))}};
   Object.entries(cfgs).forEach(([id,c])=>{const e=document.getElementById(id);if(e)Sg.attach(e,c)})})();
 /* ---------- dictée : un micro dans tous les champs ---------- */
-const Dict=(()=>{let btn,tgt=null,on=false,rec=null,base='',SRN=null,hint=0;
+const Dict=(()=>{let btn,tgt=null,on=false,rec=null,base='',SRN=null,hint=0,cb=null;
   const R=window.SpeechRecognition||window.webkitSpeechRecognition;
   try{if(NATIVE)SRN=Capacitor.registerPlugin('SpeechRecognition')}catch(_){}
   const okType=e=>e&&((e.tagName==='TEXTAREA')||(e.tagName==='INPUT'&&/^(text|search|)$/i.test(e.getAttribute('type')||'text')));
@@ -2061,21 +2112,158 @@ const Dict=(()=>{let btn,tgt=null,on=false,rec=null,base='',SRN=null,hint=0;
     btn.style.left=Math.min(innerWidth-44,r.right-42)+'px';btn.style.top=(tgt.tagName==='TEXTAREA'?r.top+6:r.top+(r.height-36)/2)+'px'}
   function set(v){if(!tgt)return;tgt.value=v;tgt.dispatchEvent(new Event('input',{bubbles:true}))}
   const join=(a,b)=>(a&&b?a.replace(/\s+$/,'')+' ':a)+b;
-  function stop(){on=false;if(btn)btn.classList.remove('on');try{rec&&rec.stop()}catch(_){}rec=null;try{SRN&&SRN.stop()}catch(_){}}
+  function fin(){const f=cb;cb=null;if(f)setTimeout(f,150)}
+  function stop(){const was=on;on=false;if(btn)btn.classList.remove('on');if(was)fin();try{rec&&rec.stop()}catch(_){}rec=null;try{SRN&&SRN.stop()}catch(_){}}
   function fallback(why){stop();const n=hint++;if(tgt)tgt.focus();toast((why||'La dictée directe n\'est pas disponible.')+' Touchez le micro du clavier pour dicter.',n<2?6000:3500)}
   async function start(){if(!tgt)return;base=tgt.value;
     if(SRN){try{const p=await SRN.requestPermissions();if(p&&p.speechRecognition&&p.speechRecognition!=='granted'){fallback("Le micro n'est pas autorisé.");return}
         const a=await SRN.available();if(a&&a.available===false){fallback();return}
-        on=true;btn.classList.add('on');await SRN.removeAllListeners();SRN.addListener('partialResults',d=>{const t=(d.matches&&d.matches[0])||'';if(t)set(join(base,t))});SRN.addListener('listeningState',d=>{if(d&&d.status==='stopped'){on=false;btn&&btn.classList.remove('on')}});
+        on=true;btn.classList.add('on');await SRN.removeAllListeners();SRN.addListener('partialResults',d=>{const t=(d.matches&&d.matches[0])||'';if(t)set(join(base,t))});SRN.addListener('listeningState',d=>{if(d&&d.status==='stopped'){const was=on;on=false;btn&&btn.classList.remove('on');if(was)fin()}});
         await SRN.start({language:'fr-FR',maxResults:1,partialResults:true,popup:false});return}catch(e){fallback()}return}
     if(R){if(!NET.ok()){fallback('La dictée demande internet.');return}try{rec=new R();rec.lang='fr-FR';rec.interimResults=true;rec.continuous=false;
-        rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;set(join(base,t))};rec.onerror=ev=>{if(ev.error==='not-allowed'||ev.error==='service-not-allowed')fallback("Le micro n'est pas autorisé.");else stop()};rec.onend=()=>{on=false;btn&&btn.classList.remove('on')};
+        rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;set(join(base,t))};rec.onerror=ev=>{if(ev.error==='not-allowed'||ev.error==='service-not-allowed')fallback("Le micro n'est pas autorisé.");else stop()};rec.onend=()=>{const was=on;on=false;btn&&btn.classList.remove('on');if(was)fin()};
         rec.start();on=true;btn.classList.add('on')}catch(_){fallback()}return}
     fallback()}
   function toggle(){if(on){stop();return}start()}
   document.addEventListener('focusin',e=>{if(!okType(e.target))return;build();if(on&&tgt!==e.target)stop();tgt=e.target;btn.hidden=false;e.target.classList.add('dict-pad');place()});
   document.addEventListener('focusout',e=>{const t=e.target;setTimeout(()=>{if(document.activeElement===t||document.activeElement===btn)return;if(t.classList)t.classList.remove('dict-pad');if(tgt===t){if(!on&&btn)btn.hidden=true}},250)});
-  return{start,stop,toggle}})();
+  function into(el,f){build();if(on)stop();tgt=el;cb=f||null;btn.hidden=false;el.classList.add('dict-pad');place();start()}
+  return{start,stop,toggle,into}})();
+/* écrire par-dessus : un champ déjà rempli est sélectionné au toucher, la première lettre remplace tout */
+document.addEventListener('focusin',e=>{const t=e.target;if(!t||!t.tagName||t.dataset.keep)return;const ok=(t.tagName==='INPUT'&&/^(text|search|tel|email|url|)$/i.test(t.getAttribute('type')||'text'))||(t.tagName==='TEXTAREA'&&t.value.length<=240);if(!ok||!t.value)return;setTimeout(()=>{try{if(document.activeElement===t)t.select()}catch(_){}},30)});
+/* ===================== Courses, photos d'articles, mots doux vocaux ===================== */
+const IDB=(()=>{let db=null;const mem={};
+  const open=()=>new Promise((res,rej)=>{if(db)return res(db);try{const r=indexedDB.open('me_blobs',1);r.onupgradeneeded=()=>r.result.createObjectStore('b');r.onsuccess=()=>{db=r.result;res(db)};r.onerror=()=>rej(r.error)}catch(e){rej(e)}});
+  const tx=(m,f)=>open().then(d=>new Promise((res,rej)=>{const t=d.transaction('b',m),q=f(t.objectStore('b'));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)}));
+  return{put:(k,v)=>tx('readwrite',s=>s.put(v,k)).catch(()=>{mem[k]=v}),get:k=>tx('readonly',s=>s.get(k)).then(v=>v||mem[k]).catch(()=>mem[k]),del:k=>tx('readwrite',s=>s.delete(k)).catch(()=>{delete mem[k]})}})();
+const closeSh=b=>{const o=b&&b.closest('.sheet-ov');if(o){const x=o.querySelector('.sheet-x');if(x)x.click()}};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const Cr=(()=>{
+  const RAY=[['fl','Fruits et légumes','🥬','#7fae63'],['bo','Boucherie, poisson','🥩','#c8665f'],['ch','Charcuterie, traiteur','🥓','#d08a6a'],['cr','Crèmerie, œufs','🧀','#e3c46b'],['pa','Boulangerie','🥖','#d6a064'],['es','Épicerie salée','🍝','#c99a4b'],['su','Épicerie sucrée, petit-déj','☕','#b57a5d'],['sg','Surgelés','🧊','#7fb6d6'],['bs','Boissons','🥤','#6b9ad1'],['hy','Hygiène, beauté','🧴','#c98fb2'],['en','Entretien, maison','🧽','#6fb7b0'],['be','Bébé','🍼','#e6a8c3'],['an','Animaux','🐾','#a98b6e'],['ph','Pharmacie','💊','#d0707a'],['ph0','Mes photos','📸','#b99be0'],['au','Autre','🛒','#a8a0a0']];
+  const RAW={fl:'🍎 Pommes;🍐 Poires;🍌 Bananes;🍊 Oranges;🍋 Citrons;🍇 Raisin;🍓 Fraises;🍑 Pêches;🍒 Cerises;🍉 Pastèque;🍈 Melon;🍍 Ananas;🥭 Mangue;🥝 Kiwis;🫐 Myrtilles;🍅 Tomates;🥒 Concombre;🥒 Courgettes;🥕 Carottes;🥔 Pommes de terre;🧅 Oignons;🧄 Ail;🥦 Brocoli;🥬 Salade;🥬 Épinards;🌽 Maïs;🌶️ Piments;🫑 Poivrons;🍆 Aubergines;🥑 Avocats;🍄 Champignons;🎃 Potiron;🌿 Persil;🌿 Basilic;🥬 Poireaux;🥬 Chou;🫛 Haricots verts;🫛 Petits pois;🌱 Radis',
+bo:'🥩 Steaks;🥩 Bœuf haché;🍗 Poulet;🍗 Escalopes de poulet;🍖 Rôti;🥩 Côtes de porc;🥩 Agneau;🦆 Canard;🐟 Poisson frais;🐟 Saumon;🐟 Cabillaud;🍤 Crevettes;🦪 Moules;🦑 Calamars',
+ch:'🍖 Jambon;🥓 Lardons;🥓 Bacon;🌭 Saucisses;🌭 Saucisson;🥫 Pâté;🥧 Quiche;🍕 Pizza fraîche;🥪 Sandwichs;🥗 Salade traiteur',
+cr:'🥛 Lait;🧈 Beurre;🥚 Œufs;🍦 Yaourts;🍮 Crèmes dessert;🥄 Crème fraîche;🧀 Fromage râpé;🧀 Camembert;🧀 Emmental;🧀 Chèvre;🧀 Mozzarella;🧀 Parmesan;🥣 Fromage blanc;🧀 Comté;🧀 Roquefort;🥛 Lait d\'avoine',
+pa:'🥖 Baguette;🥐 Croissants;🍞 Pain de mie;🍞 Pain complet;🥯 Pain aux céréales;🥨 Brioche;🍰 Gâteau;🧁 Muffins;🥐 Pains au chocolat;🍞 Biscottes;🥖 Pain burger',
+es:'🍝 Pâtes;🍚 Riz;🫘 Lentilles;🫘 Haricots rouges;🥫 Thon;🥫 Sardines;🥫 Tomates pelées;🍝 Sauce tomate;🫒 Huile d\'olive;🛢️ Huile;🧂 Sel;🧂 Poivre;🫙 Moutarde;🍅 Ketchup;🥫 Mayonnaise;🍜 Soupe;🌾 Farine;🥣 Semoule;🧄 Épices;🥜 Cacahuètes;🍿 Chips;🌽 Maïs en boîte;🫒 Olives;🥒 Cornichons;🍲 Bouillon;🥫 Petits pois en boîte;🍶 Vinaigre;🍜 Nouilles;🌮 Tortillas',
+su:'☕ Café;🍵 Thé;🥣 Céréales;🍫 Chocolat;🍪 Biscuits;🍯 Confiture;🥜 Pâte à tartiner;🍬 Bonbons;🧂 Sucre;🍎 Compotes;🍯 Miel;🥞 Levure;🍫 Chocolat en poudre;🍪 Gâteaux secs;🍿 Pop-corn;🥜 Amandes;🍇 Fruits secs',
+sg:'🍨 Glaces;🍟 Frites;🥦 Légumes surgelés;🍕 Pizza surgelée;🐟 Poisson pané;🍧 Sorbet;🧊 Glaçons;🥟 Raviolis surgelés',
+bs:'💧 Eau;🫧 Eau gazeuse;🥤 Soda;🧃 Jus de fruits;🍷 Vin rouge;🥂 Vin blanc;🍾 Champagne;🍺 Bière;🍹 Sirop;🥛 Lait de coco;🧉 Tisane;🍸 Apéritif;🥃 Spiritueux',
+hy:'🧼 Savon;🧴 Gel douche;🧴 Shampoing;🪥 Dentifrice;🪥 Brosses à dents;🧻 Papier toilette;🚿 Déodorant;💄 Maquillage;🧴 Crème visage;🪒 Rasoirs;🧴 Cotons;🤧 Mouchoirs;🧴 Après-shampoing;🧴 Démaquillant;💅 Vernis;🧴 Crème solaire',
+en:'🧽 Éponges;🧴 Lessive;🧺 Adoucissant;🧴 Liquide vaisselle;🗑️ Sacs poubelle;🧻 Essuie-tout;🕯️ Bougies;🔋 Piles;💡 Ampoules;🧴 Nettoyant sols;📜 Papier aluminium;🧴 Nettoyant WC;🧴 Produit vitres;🧼 Pastilles lave-vaisselle;🧹 Balai;🧦 Chaussettes',
+be:'🍼 Lait bébé;👶 Couches;🧷 Lingettes;🥣 Petits pots;🍼 Biberons',
+an:'🐕 Croquettes chien;🐈 Croquettes chat;🐾 Litière;🦴 Friandises;🐠 Nourriture poissons',
+ph:'💊 Doliprane;🩹 Pansements;🌡️ Thermomètre;🧴 Gel hydroalcoolique;💊 Vitamines;😷 Masques'};
+  const CAT=[];Object.keys(RAW).forEach(r=>RAW[r].split(';').forEach(x=>{const i=x.indexOf(' ');CAT.push({id:'c'+CAT.length,e:x.slice(0,i),n:x.slice(i+1),r})}));
+  const norm=Sg.norm,sing=s=>s.replace(/(s|x)$/,'');
+  CAT.forEach(c=>{c.k=norm(c.n);c.s=sing(c.k)});
+  const rayOf=r=>RAY.find(x=>x[0]===r)||RAY[RAY.length-1];
+  const items=()=>S.get('courses',[]),save=v=>S.set('courses',v);
+  let tab=S.get('cTab','liste'),fil='all',busy=false;
+  const match=n=>{const k=norm(n),s=sing(k);if(!k)return null;return CAT.find(c=>c.k===k||c.s===s)||CAT.find(c=>c.k.startsWith(k)||k.startsWith(c.s)&&c.s.length>3)||CAT.find(c=>c.k.includes(k)&&k.length>2)||null};
+  const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+  function add(n,o){o=o||{};const L=items();const m=o.ph?null:match(n);const name=m?m.n:cap(n.trim());const nk=norm(name);
+    const ex=!o.ph&&L.find(x=>!x.ph&&norm(x.n)===nk&&!x.done);if(ex){ex.q=(ex.q||1)+(o.q||1)}else L.push({id:uid(),n:name,e:o.e||(m?m.e:'🛒'),r:o.r||(m?m.r:'au'),q:o.q||1,done:false,ph:o.ph||null,t:Date.now()});save(L);return m}
+  function parse(t){const NUM={un:1,une:1,deux:2,trois:3,quatre:4,cinq:5,six:6,sept:7,huit:8,neuf:9,dix:10,douze:12};
+    return String(t).split(/[,;\n]|\bet\b|\bpuis\b|\bplus\b/i).map(x=>x.trim()).filter(Boolean).map(p=>{let q=1,m=/^(\d+)\s*(?:x\s*)?(.+)$/.exec(p);if(m){q=Math.min(99,+m[1]);p=m[2]}else{m=/^(un|une|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|douze)\s+(.+)$/i.exec(p);if(m){q=NUM[m[1].toLowerCase()];p=m[2]}}
+      p=p.replace(/^(?:du|de la|de l['’]|des|d['’]|le|la|les|l['’]|un|une)\s*/i,'').trim();return p?{n:p,q}:null}).filter(Boolean)}
+  function addText(t){const ps=parse(t);if(!ps.length)return 0;ps.forEach(p=>add(p.n,{q:p.q}));return ps.length}
+  const qtyIn=id=>{const x=items().find(i=>i.id===id);return x&&!x.done?x.q:0};
+  const catQty=c=>{const x=items().find(i=>!i.ph&&norm(i.n)===c.k&&!i.done);return x?x.q:0};
+  function thumb(x){if(x.ph)return `<span class="cth ph" data-ph="${x.ph}" data-a="img" data-id="${x.id}"><i>📸</i></span>`;const r=rayOf(x.r);return `<span class="cth" style="--cc:${r[3]}">${x.e||r[2]}</span>`}
+  function row(x){return `<div class="cr${x.done?' dn':''}" data-id="${x.id}"><button class="cck" data-a="tg" aria-label="${x.done?'Remettre':'Pris'}"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>${thumb(x)}<span class="cnm" data-a="tg">${esc(x.n)}</span><span class="cq"><button data-a="mi" aria-label="Moins">−</button><b>${x.q}</b><button data-a="pl" aria-label="Plus">+</button></span><button class="cx" data-a="del" aria-label="Retirer">×</button></div>`}
+  function renderList(){const L=items(),todo=L.filter(x=>!x.done),done=L.filter(x=>x.done);
+    if(!L.length)return `<div class="cempty"><div class="cbig">🛒</div><p><b>Votre liste est vide.</b></p><p class="small muted">Écrivez ou dictez ci-dessus, ou touchez des produits dans le catalogue, ou photographiez un article en magasin.</p><button class="btn-plum" data-a="gocat" style="justify-content:center">Ouvrir le catalogue</button></div>`;
+    let h='';RAY.forEach(r=>{const g=todo.filter(x=>(x.ph?'ph0':x.r)===r[0]);if(!g.length)return;h+=`<div class="cg"><p class="cgh" style="--cc:${r[3]}"><span>${r[2]}</span>${r[1]}<em>${g.length}</em></p>${g.map(row).join('')}</div>`});
+    if(!todo.length)h+=`<div class="cempty ok"><div class="cbig">✨</div><p><b>Tout est dans le chariot !</b></p></div>`;
+    if(done.length)h+=`<div class="cg dg"><p class="cgh dn2"><span>🛒</span>Dans le chariot<em>${done.length}</em></p>${done.map(row).join('')}<div class="row" style="margin-top:8px"><button class="pill" data-a="clrdone">Retirer les articles pris</button></div></div>`;
+    h+=`<div class="row cfoot"><button class="pill" data-a="share">Partager la liste</button><button class="pill" data-a="clrall">Tout effacer</button></div>`;return h}
+  function renderCat(){const q=(S.get('cQ','')||'');let L=CAT;if(fil!=='all')L=L.filter(c=>c.r===fil);
+    const chips=`<div class="cchips"><button class="chp${fil==='all'?' on':''}" data-fil="all">Tout</button>${RAY.filter(r=>r[0]!=='ph0'&&r[0]!=='au').map(r=>`<button class="chp${fil===r[0]?' on':''}" data-fil="${r[0]}">${r[2]} ${r[1].split(',')[0]}</button>`).join('')}</div>`;
+    return chips+`<div class="pg">${L.map(c=>{const n=catQty(c);return `<button class="pt${n?' sel':''}" data-cat="${c.id}" style="--cc:${rayOf(c.r)[3]}"><span class="pe">${c.e}</span><span class="pn">${esc(c.n)}</span>${n?`<i class="pb">${n}</i>`:''}</button>`}).join('')}</div>`}
+  function head(){const L=items(),t=L.length,d=L.filter(x=>x.done).length,left=t-d;return `<div class="chead"><div class="cprog"><i style="width:${t?Math.round(d/t*100):0}%"></i></div><p class="small muted">${t?`${left} à prendre · ${d} dans le chariot`:'Rien pour le moment'}</p></div>`}
+  function build(){const v=$('v-courses');if(!v)return;
+    v.innerHTML=`<div class="row" style="justify-content:space-between"><div><p class="eyebrow">Mes achats</p><h2>Courses</h2></div><a class="pill" href="#accueil">← Accueil</a></div>
+    <div class="jewel stack cadd"><div class="cinrow"><input id="c-in" type="text" placeholder="Écrire : lait, 6 œufs, du pain…" autocomplete="off" enterkeyhint="done"><button class="cadd-b" id="c-ok" aria-label="Ajouter">+</button></div>
+    <div class="row cact"><button class="btn-plum" id="c-mic" style="flex:1;justify-content:center">🎤 Dicter</button><button class="btn-plum" id="c-cam-b" style="flex:1;justify-content:center">📷 Photo</button></div>
+    <p class="small muted">En magasin : photographiez l'article exact, il rejoint la liste avec sa photo.</p><input type="file" accept="image/*" capture="environment" id="c-cam" hidden></div>
+    <div id="c-head"></div><div class="seg"><button data-tab="liste">Ma liste</button><button data-tab="cat">Catalogue</button></div><div id="c-body" class="stack"></div>`;
+    Sg.attach($('c-in'),{items:()=>Sg.mk(CAT.map(c=>c.n)),multi:true});wire();paint()}
+  function paint(){const b=$('c-body');if(!b)return;$('c-head').innerHTML=head();document.querySelectorAll('#v-courses .seg button').forEach(x=>x.classList.toggle('on',x.dataset.tab===tab));
+    const sc=scrollY;b.innerHTML=tab==='liste'?renderList():renderCat();scrollTo(0,sc);fillPh()}
+  async function fillPh(){const els=[...document.querySelectorAll('#v-courses [data-ph]')];for(const e of els){if(e.dataset.ok)continue;e.dataset.ok='1';try{const bl=await IDB.get(e.dataset.ph);if(bl){const u=URL.createObjectURL(bl);e.style.backgroundImage=`url(${u})`;e.classList.add('has');e._u=u}}catch(_){}}}
+  const vib=()=>{try{navigator.vibrate&&navigator.vibrate(10)}catch(_){}};
+  function ok(){const inp=$('c-in');const n=addText(inp.value);if(n){inp.value='';toast(n>1?n+' articles ajoutés':'Ajouté à la liste',1800);tab='liste';S.set('cTab',tab);paint();vib()}else inp.focus()}
+  async function photo(file){if(!file)return;try{const bm=await createImageBitmap(file);const sc=Math.min(1,640/Math.max(bm.width,bm.height)),w=Math.round(bm.width*sc),h=Math.round(bm.height*sc),cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(bm,0,0,w,h);
+      const bl=await new Promise(r=>cv.toBlob(r,'image/jpeg',.74)),pid='p'+uid();await IDB.put(pid,bl);const url=URL.createObjectURL(bl);
+      const b=sheet('Cet article',`<div class="cphoto" style="background-image:url(${url})"></div><div class="field"><label for="c-pn">Comment l'appeler ? (facultatif)</label><input id="c-pn" type="text" placeholder="Ex. le yaourt à la vanille" autocomplete="off"></div><button class="btn-plum" id="c-pok" style="justify-content:center">Ajouter à la liste</button>`,{closeLabel:'Annuler',onClose:()=>{}});
+      b.querySelector('#c-pok').onclick=()=>{add(b.querySelector('#c-pn').value.trim()||'Article en photo',{ph:pid,r:'ph0',e:'📸'});closeSh(b);tab='liste';paint();toast('Photo ajoutée à la liste',1800);vib()};
+      let done=false;const o=b.closest('.sheet-ov');new MutationObserver(()=>{if(!document.body.contains(o)&&!done){done=true;if(!items().some(x=>x.ph===pid))IDB.del(pid)}}).observe(document.body,{childList:true})
+    }catch(e){toast("Cette photo n'a pas pu être lue.",3000)}}
+  function share(){const L=items().filter(x=>!x.done);if(!L.length){toast('Rien à partager',1500);return}let t='Liste de courses\n';RAY.forEach(r=>{const g=L.filter(x=>(x.ph?'ph0':x.r)===r[0]);if(g.length)t+='\n'+r[1]+'\n'+g.map(x=>'- '+x.n+(x.q>1?' ×'+x.q:'')).join('\n')+'\n'});
+    if(navigator.share){navigator.share({text:t}).catch(()=>{})}else{try{navigator.clipboard.writeText(t);toast('Liste copiée',2000)}catch(_){toast('Partage impossible ici',2500)}}}
+  function wire(){const v=$('v-courses');$('c-ok').onclick=ok;$('c-in').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ok()}});
+    $('c-mic').onclick=()=>{const i=$('c-in');i.focus();Dict.into(i,()=>{if(i.value.trim())ok()})};
+    $('c-cam-b').onclick=()=>$('c-cam').click();$('c-cam').onchange=e=>{const f=e.target.files[0];e.target.value='';photo(f)};
+    v.addEventListener('click',e=>{const t=e.target.closest('[data-a],[data-tab],[data-fil],[data-cat]');if(!t)return;
+      if(t.dataset.tab){tab=t.dataset.tab;S.set('cTab',tab);paint();return}
+      if(t.dataset.fil){fil=t.dataset.fil;paint();return}
+      if(t.dataset.cat){const c=CAT.find(x=>x.id===t.dataset.cat);if(c){add(c.n,{});vib();paint()}return}
+      const a=t.dataset.a,r=t.closest('.cr'),id=r&&r.dataset.id||t.dataset.id;let L=items();const x=L.find(i=>i.id===id);
+      if(a==='gocat'){tab='cat';paint();return}
+      if(a==='tg'&&x){x.done=!x.done;save(L);vib();paint()}
+      else if(a==='pl'&&x){x.q=Math.min(99,(x.q||1)+1);save(L);paint()}
+      else if(a==='mi'&&x){if((x.q||1)>1){x.q--;save(L);paint()}else{rm(x)}}
+      else if(a==='del'&&x)rm(x);
+      else if(a==='img'&&x){IDB.get(x.ph).then(bl=>{if(bl){const u=URL.createObjectURL(bl);sheet(x.n,`<div class="cphoto big" style="background-image:url(${u})"></div>`,{closeLabel:'Fermer'})}})}
+      else if(a==='clrdone'){const k=L.filter(i=>i.done);k.forEach(i=>i.ph&&IDB.del(i.ph));save(L.filter(i=>!i.done));paint();toast('Chariot vidé',1500)}
+      else if(a==='clrall'){const b=sheet('Tout effacer ?',`<p>La liste entière sera vidée.</p><button class="btn-plum" id="c-yes" style="justify-content:center">Oui, tout effacer</button>`,{closeLabel:'Non, garder'});b.querySelector('#c-yes').onclick=()=>{items().forEach(i=>i.ph&&IDB.del(i.ph));save([]);closeSh(b);paint()}}
+      else if(a==='share')share()});
+    function rm(x){const L=items(),i=L.findIndex(k=>k.id===x.id);if(i<0)return;const [g]=L.splice(i,1);save(L);paint();toastUndo(g.n+' retiré',()=>{const M=items();M.splice(Math.min(i,M.length),0,g);save(M);paint()})}}
+  return{build,paint,addText,add}})();
+/* ===================== Mots doux : vocaux et écrits ===================== */
+const Vx=(()=>{let aud=null,aid=null;
+  const fmt=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
+  const list=()=>S.get('voices',[]);
+  function stopPlay(){if(aud){try{aud.pause()}catch(_){}aud=null}const p=aid;aid=null;document.querySelectorAll('.vpl.on').forEach(x=>x.classList.remove('on'));return p}
+  async function play(id){if(aid===id){stopPlay();return false}stopPlay();const bl=await IDB.get('v_'+id);if(!bl){toast("Ce vocal est introuvable sur ce téléphone.",3000);return false}
+    const u=URL.createObjectURL(bl);aud=new Audio(u);aid=id;document.querySelectorAll(`.vpl[data-id="${id}"]`).forEach(x=>x.classList.add('on'));aud.onended=()=>{stopPlay();URL.revokeObjectURL(u)};try{await aud.play()}catch(_){stopPlay();toast("Lecture impossible : montez le volume.",3000)}return true}
+  function homeBtn(){const h=document.querySelector('.hero');if(!h)return;let b=document.getElementById('vhome');const n=list().length;
+    if(!n){if(b)b.remove();return}
+    if(!b){b=document.createElement('button');b.id='vhome';b.className='pill vhome';h.appendChild(b);let k=-1;b.onclick=async()=>{const L=list();if(!L.length)return;if(k<0){const d=new Date();k=(d.getFullYear()*400+d.getMonth()*31+d.getDate())%L.length}else k=(k+1)%L.length;const on=await play(L[k].id);b.textContent=on?'■ Arrêter':(L.length>1?'▶ Un autre mot doux vocal':'▶ Réécouter')};}
+    b.textContent=document.querySelector('.vpl.on')?'■ Arrêter':'▶ Écouter un mot doux vocal'}
+  function open(){let rec=null,stream=null,chunks=[],t0=0,tm=null,blob=null,dur=0,pv=null,state='idle';
+    const b=sheet('Mots doux',`<div class="vbox"><p class="eyebrow">Un mot doux parlé</p><div id="vrec"></div></div>
+      <div class="vbox"><p class="eyebrow">Mes vocaux</p><div id="vlist"></div></div>
+      <div class="vbox"><p class="eyebrow">Mots doux écrits</p><div class="cinrow"><input id="vw-in" type="text" placeholder="Écrire un mot doux…" autocomplete="off" enterkeyhint="done"><button class="cadd-b" id="vw-ok" aria-label="Ajouter">+</button></div><div id="vw-list" class="stack" style="margin-top:8px"></div></div>`,{closeLabel:'Fermer',onClose:()=>{stopPlay();stopRec(true)}});
+    const $b=s=>b.querySelector(s);
+    function drawRec(){const r=$b('#vrec');
+      if(state==='idle')r.innerHTML=`<button class="vbtn" id="v-go"><span>🎤</span></button><p class="small muted" style="text-align:center">Touchez pour enregistrer. Touchez encore pour finir.</p>`;
+      else if(state==='rec')r.innerHTML=`<button class="vbtn on" id="v-go"><span>■</span></button><p class="vtime" id="vt">0:00</p><p class="small muted" style="text-align:center">Je vous écoute… touchez pour terminer.</p>`;
+      else r.innerHTML=`<div class="row" style="justify-content:center;gap:10px"><button class="vpl big" id="v-pv">▶</button><b class="vtime" style="margin:0">${fmt(dur)}</b></div><div class="field"><label for="v-tt">Un titre ? (facultatif)</label><input id="v-tt" type="text" placeholder="Ex. Pour ce soir" autocomplete="off"></div><div class="row"><button class="btn-plum" id="v-keep" style="flex:1;justify-content:center">Garder</button><button class="btn-plum" id="v-redo" style="flex:1;justify-content:center">Refaire</button></div>`;
+      const g=$b('#v-go');if(g)g.onclick=()=>state==='idle'?startRec():stopRec();
+      const pvb=$b('#v-pv');if(pvb)pvb.onclick=()=>{if(pv){pv.pause();pv=null;pvb.textContent='▶';return}const u=URL.createObjectURL(blob);pv=new Audio(u);pv.onended=()=>{pv=null;pvb.textContent='▶'};pv.play().then(()=>pvb.textContent='■').catch(()=>{pv=null;toast('Lecture impossible',2000)})};
+      const k=$b('#v-keep');if(k)k.onclick=async()=>{const id=uid();await IDB.put('v_'+id,blob);const L=list();L.unshift({id,t:($b('#v-tt').value||'').trim(),d:Date.now(),dur});S.set('voices',L);blob=null;if(pv){pv.pause();pv=null}state='idle';drawRec();drawList();homeBtn();toast('Mot doux enregistré',2000)};
+      const rd=$b('#v-redo');if(rd)rd.onclick=()=>{if(pv){pv.pause();pv=null}blob=null;state='idle';drawRec()}}
+    async function startRec(){try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){toast("Le micro n'est pas autorisé : autorisez-le dans les réglages du téléphone.",4500);return}
+      stopPlay();const mt=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m));
+      try{rec=new MediaRecorder(stream,mt?{mimeType:mt}:undefined)}catch(e){toast("L'enregistrement n'est pas possible ici.",3500);stream.getTracks().forEach(t=>t.stop());return}
+      chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+      rec.onstop=()=>{clearInterval(tm);stream&&stream.getTracks().forEach(t=>t.stop());if(rec&&rec._cancel){state='idle';return}blob=new Blob(chunks,{type:(rec&&rec.mimeType)||'audio/webm'});dur=Math.max(1,(Date.now()-t0)/1000);state='rev';if(document.body.contains(b))drawRec()};
+      rec.start();t0=Date.now();state='rec';drawRec();tm=setInterval(()=>{const s=(Date.now()-t0)/1000,v=$b('#vt');if(v)v.textContent=fmt(s);if(s>=180)stopRec()},250)}
+    function stopRec(cancel){if(rec&&rec.state!=='inactive'){if(cancel)rec._cancel=true;try{rec.stop()}catch(_){}}clearInterval(tm)}
+    function drawList(){const L=list(),e=$b('#vlist');if(!L.length){e.innerHTML='<p class="small muted">Aucun vocal pour le moment.</p>';return}
+      e.innerHTML=L.map(v=>`<div class="vrow" data-id="${v.id}"><button class="vpl" data-id="${v.id}" aria-label="Écouter">▶</button><div class="grow"><b>${esc(v.t||'Mot doux')}</b><p class="small muted">${new Date(v.d).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} · ${fmt(v.dur||0)}</p></div><button class="cx" data-del="${v.id}" aria-label="Supprimer">×</button></div>`).join('');
+      e.querySelectorAll('.vpl').forEach(x=>x.onclick=async()=>{await play(x.dataset.id)});
+      e.querySelectorAll('[data-del]').forEach(x=>x.onclick=()=>{const id=x.dataset.del;if(aid===id)stopPlay();S.set('voices',list().filter(v=>v.id!==id));IDB.del('v_'+id);drawList();homeBtn()})}
+    function drawW(){const n=S.get('notes',DEFAULT_NOTES),e=$b('#vw-list');e.innerHTML=n.map((t,i)=>`<div class="vrow w"><div class="grow">« ${esc(t)} »</div><button class="cx" data-wd="${i}" aria-label="Retirer">×</button></div>`).join('')||'<p class="small muted">Aucun mot doux écrit.</p>';
+      e.querySelectorAll('[data-wd]').forEach(x=>x.onclick=()=>{const m=S.get('notes',DEFAULT_NOTES);m.splice(+x.dataset.wd,1);S.set('notes',m);renderNote();drawW()})}
+    const addW=()=>{const i=$b('#vw-in'),t=i.value.trim();if(!t)return;const m=S.get('notes',DEFAULT_NOTES);m.unshift(t);S.set('notes',m);i.value='';renderNote();drawW();toast('Mot doux ajouté',1500)};
+    $b('#vw-ok').onclick=addW;$b('#vw-in').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addW()}});
+    drawRec();drawList();drawW()}
+  return{open,homeBtn,play}})();
+
+(function(){Cr.build();Vx.homeBtn();const t=document.getElementById('t-doux');if(t)t.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();Vx.open()},true)})();
 /* charm : vraie chaîne (intégration de Verlet), pendentif pesant, gravité du téléphone, doigt */
 const CH=['e','heart','rose'];let chSensor=false;
 const gyroOn=()=>S.get('gyro',true);
@@ -2167,6 +2355,6 @@ const Orient=(()=>{
   return{toggle,paint,reset:()=>{tries=0;left=false}}})();
 $('orient').onclick=()=>Orient.toggle();Orient.paint();
 
-</script><script>(function(){var V='11.8',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.9',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
