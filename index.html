@@ -509,6 +509,27 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 .vpl{flex:0 0 42px;height:42px;border-radius:50%;border:1px solid #d9a38f;background:radial-gradient(circle at 35% 30%,#f3c9b8,#b97a69 70%,#7a4a3e);color:#3a2230;font-size:16px;padding:0}.vpl.big{flex-basis:56px;height:56px;font-size:22px}.vpl.on{background:radial-gradient(circle at 35% 30%,#ffb0a0,#e0405a 70%,#8a1830);color:#fff}
 .vhome{margin-top:10px;align-self:center}
 .cth{flex-basis:42px;height:42px;font-size:24px}.cr{gap:8px;padding:8px}.cq button{width:30px;height:30px}
+/* Les Bonbons */
+.cdy{display:grid;gap:10px}
+.cdy-top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.cdy-top>div{display:grid;text-align:center;min-width:56px}.cdy-top b{font-size:1.4rem;font-family:var(--display,inherit)}
+.cdy-goal{flex:1;text-align:center}.cdd{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-1px;box-shadow:inset -2px -2px 3px rgba(0,0,0,.3),inset 2px 2px 3px rgba(255,255,255,.5)}
+.cdy-bar{height:10px;border-radius:99px;background:var(--card2);border:1px solid var(--line);overflow:hidden}.cdy-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff7aa0,#ffd27a);transition:width .4s}
+.cdy-frame{position:relative;margin:0 auto;padding:8px;border-radius:22px;background:linear-gradient(135deg,#f6cbb8,#b9786a 40%,#f0c3ae 60%,#8c5247);box-shadow:0 10px 24px rgba(0,0,0,.5);touch-action:none}
+.cdy-frame canvas{display:block;border-radius:16px;background:radial-gradient(circle at 50% 20%,#6b3d57,#3a1f33 70%,#26121f);touch-action:none}
+.cdy-end{position:absolute;inset:8px;border-radius:16px;background:rgba(32,14,26,.88);backdrop-filter:blur(3px);display:grid;place-content:center;justify-items:center;gap:10px;text-align:center;padding:20px;animation:fadein .4s}
+.cd-stars{font-size:46px;color:#ffd27a;letter-spacing:6px;text-shadow:0 3px 10px rgba(255,180,80,.6)}.cd-stars span{color:#6a4a50;text-shadow:none}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+/* salon de jeux : cartes colorées */
+.gamecard{position:relative;overflow:hidden;background:linear-gradient(120deg,color-mix(in srgb,var(--gc,#c98a78) 55%,#2a1620) 0%,color-mix(in srgb,var(--gc,#c98a78) 22%,#241218) 70%)!important;border:1px solid color-mix(in srgb,var(--gc,#c98a78) 70%,#fff 10%)!important;box-shadow:0 6px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.22);color:#fff3ec}
+.gamecard::after{content:"";position:absolute;left:0;right:0;top:0;height:46%;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0));pointer-events:none}
+.gic{flex:0 0 62px;height:62px;border-radius:20px;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle at 35% 25%,color-mix(in srgb,var(--gc) 40%,#fff),var(--gc) 60%,color-mix(in srgb,var(--gc) 50%,#000));box-shadow:0 5px 10px rgba(0,0,0,.4),inset 0 2px 0 rgba(255,255,255,.5);filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.gamecard .btn-plum{--pt:14px;padding:8px 22px;min-height:44px}
+#game-host .howto{background:linear-gradient(135deg,rgba(255,190,160,.14),rgba(255,120,160,.1));border:1px solid rgba(240,195,174,.35)}
+#game-host .praise{font-size:1.25rem;font-weight:700;background:linear-gradient(90deg,#ffd27a,#ff8fb0,#ffd27a);-webkit-background-clip:text;background-clip:text;color:transparent;text-align:center;min-height:1.6em}
+#game-host .board{padding:8px;border-radius:20px;background:linear-gradient(135deg,#f6cbb8,#b9786a 40%,#f0c3ae 60%,#8c5247);box-shadow:0 10px 22px rgba(0,0,0,.45)}
+#fx-conf{position:fixed;inset:0;z-index:99;pointer-events:none}
 </style>
 <div class="wrap">
   <header class="top plate">
@@ -528,7 +549,7 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
     </div>
 
     <nav class="tiles" aria-label="Menu principal">
-      <a class="tile" href="#jeux"><span class="medal"><span><span class="ico" style="background-image:var(--ic-diamond)" aria-hidden="true"></span></span></span><b>Jouer</b><small>18 jeux</small></a>
+      <a class="tile" href="#jeux"><span class="medal"><span><span class="ico" style="background-image:var(--ic-diamond)" aria-hidden="true"></span></span></span><b>Jouer</b><small>19 jeux</small></a>
       <a class="tile" href="#videos"><span class="medal"><span><span class="ico" style="background-image:var(--ic-play)" aria-hidden="true"></span></span></span><b>Regarder</b><small>Vidéos et docs</small></a>
       <a class="tile" href="#agenda"><span class="medal"><span><span class="ico" style="background-image:var(--ic-calendar)" aria-hidden="true"></span></span></span><b>Agenda</b><small>Mes rendez-vous</small></a>
       <a class="tile" href="#pro"><span class="medal"><span><span class="ico" style="background-image:var(--ic-briefcase)" aria-hidden="true"></span></span></span><b>Travail</b><small>Recrutement</small></a>
@@ -971,6 +992,7 @@ $('vadd-go').onclick=()=>{const v=$('vadd-in').value.trim();if(!v)return;S.set('
 
 /* ---------- jeux ---------- */
 const GAMES=[
+ {k:'bonbons',n:'Les Bonbons',d:'Bonbons, explosions et niveaux : le jeu de toutes les envies.',cat:'Détente'},
  {k:'motdujour',n:'Le Mot du jour',d:'Trouvez le mot de 5 lettres, un nouveau chaque jour.',cat:'Réflexion'},
  {k:'pendu',n:'Le Pendu',d:'Devinez le mot avant que le collier ne tombe.',cat:'Détente'},
  {k:'puzzle',n:'Le Puzzle photo',d:'Reconstituez une de vos photos.',cat:'Détente'},
@@ -989,10 +1011,11 @@ const GAMES=[
  {k:'jeu421',n:'Le 421',d:'Le jeu de dés des cafés, contre la Maison.',cat:'Contre la Maison'},
  {k:'liens',n:'Les Liens',d:'Comprendre ce que nos gestes font ressentir aux autres.',cat:'Apprendre'},
  {k:'assoc',n:'Associations',d:'Reliez chaque description à la bonne image.',cat:'Apprendre'}];
-function gameMenu(){$('game-menu').innerHTML=`<div id="defi" class="jewel stack"></div><div class="jewel stack"><p class="sec-title">Puzzle de la collection</p><button class="coffret mini" data-g="coffret" aria-label="Jouer au Coffret"><span class="grid">${[1,2,3,4,5,6,7,8,0].map(v=>v?`<span class="ct"><span class="num">${v}</span></span>`:'<span class="ct empty"></span>').join('')}</span></button><button class="btn-plum" data-g="coffret" style="align-self:center">Ouvrir le coffret</button></div>`+['Détente','Réflexion','Contre la Maison','Apprendre'].map(cat=>`<p class="eyebrow" style="margin-top:8px">${cat}</p>`+GAMES.filter(g=>g.cat===cat).map(g=>`<button class="gamecard btn-gold" data-g="${g.k}"><span class="ic" style="background:transparent;width:64px;height:64px"><span class="gem g${(GAMES.indexOf(g)%6)}" style="width:38px;height:38px;display:block"></span></span><span class="grow"><span style="font-family:var(--display);font-size:1.35rem;display:block">${g.n}</span><span class="muted" style="font-size:.95rem">${g.d}</span>${S.get('best_'+g.k,'')?`<span class="small muted" style="display:block">Record : ${S.get('best_'+g.k,'')}</span>`:''}</span><span class="btn-plum" style="border-radius:999px;padding:8px 14px;min-height:0;font-size:.9rem">Jouer</span></button>`).join('')).join('')+'<div id="online-games" class="jewel stack"></div>';
+const GEMO={bonbons:['🍬','#ff5d8f'],motdujour:['🔤','#4aa8ff'],pendu:['📿','#c177ff'],puzzle:['🖼️','#f0a24a'],coffret:['🧩','#e0805f'],joyaux:['💎','#38c2c8'],nuancier:['🎨','#e8658a'],flacons:['🧪','#8f6cf0'],fusion:['👑','#f2b632'],memory:['🃏','#43b97f'],sudoku:['🔢','#4f86e0'],picross:['🖌️','#e0558b'],solitaire:['⚪','#9aa7c7'],coffre:['🔐','#c8955a'],motsmeles:['🔎','#4ab6a4'],quatre:['🔴','#e0485a'],jeu421:['🎲','#d9803a'],liens:['💞','#e56aa0'],assoc:['🔗','#6a9be0']};
+function gameMenu(){$('game-menu').innerHTML=`<div id="defi" class="jewel stack"></div><div class="jewel stack"><p class="sec-title">Puzzle de la collection</p><button class="coffret mini" data-g="coffret" aria-label="Jouer au Coffret"><span class="grid">${[1,2,3,4,5,6,7,8,0].map(v=>v?`<span class="ct"><span class="num">${v}</span></span>`:'<span class="ct empty"></span>').join('')}</span></button><button class="btn-plum" data-g="coffret" style="align-self:center">Ouvrir le coffret</button></div>`+['Détente','Réflexion','Contre la Maison','Apprendre'].map(cat=>`<p class="eyebrow" style="margin-top:8px">${cat}</p>`+GAMES.filter(g=>g.cat===cat).map(g=>`<button class="gamecard btn-gold" data-g="${g.k}" style="--gc:${(GEMO[g.k]||[0,"#c98a78"])[1]}"><span class="gic" style="--gc:${(GEMO[g.k]||[0,"#c98a78"])[1]}">${(GEMO[g.k]||["🎲"])[0]}</span><span class="grow"><span style="font-family:var(--display);font-size:1.35rem;display:block">${g.n}</span><span class="muted" style="font-size:.95rem">${g.d}</span>${S.get('best_'+g.k,'')?`<span class="small muted" style="display:block">Record : ${S.get('best_'+g.k,'')}</span>`:''}</span><span class="btn-plum" style="border-radius:999px;padding:8px 14px;min-height:0;font-size:.9rem">Jouer</span></button>`).join('')).join('')+'<div id="online-games" class="jewel stack"></div>';
   try{renderDefi();renderOnline()}catch(e){console.warn(e)}
   $('game-menu').querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>openGame(b.dataset.g))}
-function openGame(k){$('game-menu').hidden=true;$('game-area').hidden=false;({coffret,joyaux,nuancier,liens,assoc,memory,jeu421,solitaire,fusion,sudoku,quatre,coffre,motsmeles,picross,flacons,motdujour,pendu,puzzle})[k]($('game-host'));scrollTo(0,0);pushBack(()=>{$('game-area').hidden=true;$('game-menu').hidden=false;gameMenu()});try{Pearl.onGame(k)}catch(_){}}
+function openGame(k){$('game-menu').hidden=true;$('game-area').hidden=false;({bonbons,coffret,joyaux,nuancier,liens,assoc,memory,jeu421,solitaire,fusion,sudoku,quatre,coffre,motsmeles,picross,flacons,motdujour,pendu,puzzle})[k]($('game-host'));scrollTo(0,0);pushBack(()=>{$('game-area').hidden=true;$('game-menu').hidden=false;gameMenu()});try{Pearl.onGame(k)}catch(_){}}
 $('game-back').onclick=()=>{if(BACK.length)popBack();else{$('game-area').hidden=true;$('game-menu').hidden=false;gameMenu()}};
 function best(k,v){if(v>S.get('best_'+k,0))S.set('best_'+k,v)}
 const PRAISE=['Sublime','Divin','Éblouissant','Magnifique','Quel éclat','Majestueux'];
@@ -1309,13 +1332,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.9',date:'28 octobre 2026',
+const APP={version:'11.10',date:'28 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -2264,6 +2287,157 @@ const Vx=(()=>{let aud=null,aid=null;
   return{open,homeBtn,play}})();
 
 (function(){Cr.build();Vx.homeBtn();const t=document.getElementById('t-doux');if(t)t.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();Vx.open()},true)})();
+/* ===================== Les Bonbons : un vrai jeu d'alignement, façon bonbons et explosions ===================== */
+function bonbons(host){
+  const N=8,SH=[0,1,2,3,4,5];
+  const COLS=[['#ff8aa0','#e0204d','#8c0b2a'],['#ffc27a','#ff8a1f','#a8480a'],['#fff3a0','#ffd21f','#b88a00'],['#a8f5a0','#38c24a','#17701f'],['#9fd4ff','#2f8cf0','#124a9a'],['#e3b4ff','#a24df0','#5a1ea0']];
+  const NAMES=['rouges','orange','jaunes','verts','bleus','violets'];
+  const PR=['Délicieux !','Savoureux !','Sucré !','Divin !','Croquant !','Incroyable !','Gourmand !'];
+  let cs=40,W=320,cv,cx,dpr=1,B=[],tw=[],pt=[],fx=[],busy=false,score=0,moves=20,lvl=S.get('cdyLvl',1),goal=null,prog=0,ntypes=5,hint=null,hintT=0,sel=-1,over=false,drag=null,msg=null,shake=0,mute=S.get('cdyMute',false),alive=true,last=0;
+  const rnd=n=>Math.floor(Math.random()*n),ease={out:t=>1-Math.pow(1-t,3),io:t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,bounce:t=>{const n=7.5625,d=2.75;if(t<1/d)return n*t*t;if(t<2/d)return n*(t-=1.5/d)*t+.75;if(t<2.5/d)return n*(t-=2.25/d)*t+.9375;return n*(t-=2.625/d)*t+.984375}};
+  const level=n=>{const o={moves:Math.max(14,24-Math.floor(n/3)),types:n<4?5:6};if(n%3===0){o.kind='col';o.col=rnd(o.types);o.need=12+n*2}else{o.kind='score';o.need=900+n*420}return o};
+  host.innerHTML=`<p class="howto"><b>La règle</b>Glissez un bonbon vers son voisin pour aligner 3 pareils ou plus. 4 en ligne : bonbon rayé. 5 en ligne : bonbon chocolat. En L ou en T : bonbon emballé.</p>
+  <div class="cdy"><div class="cdy-top"><div><span class="small muted">Niveau</span><b id="cd-l">1</b></div><div class="cdy-goal" id="cd-g"></div><div><span class="small muted">Coups</span><b id="cd-m">0</b></div></div>
+  <div class="cdy-bar"><i id="cd-b"></i></div><div class="cdy-frame"><canvas id="cdy"></canvas><div class="cdy-end" id="cd-e" hidden></div></div>
+  <div class="row" style="justify-content:space-between;align-items:center"><span>Score <span class="stat" id="cd-s">0</span></span><span class="small muted" id="cd-r"></span><span class="row" style="gap:8px"><button class="pill" id="cd-snd">${mute?'Son coupé':'Son'}</button><button class="pill" id="cd-re">Recommencer</button></span></div></div>`;
+  cv=$('cdy');cx=cv.getContext('2d');
+  /* ---------- son ---------- */
+  let ac=null;const beep=(f,d,v,ty)=>{if(mute)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type=ty||'sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.5,t+d);g.gain.setValueAtTime(v||.08,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d)}catch(_){}};
+  const popSnd=c=>{beep(300+c*70,.14,.07,'triangle')},boom=()=>{beep(120,.35,.12,'sawtooth');beep(520,.2,.05)};
+  /* ---------- dessin d'un bonbon ---------- */
+  function shapePath(c,t,r){c.beginPath();
+    if(t===0){c.arc(0,0,r,0,7)}
+    else if(t===1){for(let i=0;i<6;i++){const a=Math.PI/3*i+Math.PI/6,x=Math.cos(a)*r*1.05,y=Math.sin(a)*r*1.05;i?c.lineTo(x,y):c.moveTo(x,y)}c.closePath()}
+    else if(t===2){c.moveTo(0,-r*1.08);c.bezierCurveTo(r*.95,-r*.35,r*1.0,r*.55,0,r*.98);c.bezierCurveTo(-r*1.0,r*.55,-r*.95,-r*.35,0,-r*1.08)}
+    else if(t===3){const q=r*.88,k=r*.34;c.moveTo(-q+k,-q);c.lineTo(q-k,-q);c.quadraticCurveTo(q,-q,q,-q+k);c.lineTo(q,q-k);c.quadraticCurveTo(q,q,q-k,q);c.lineTo(-q+k,q);c.quadraticCurveTo(-q,q,-q,q-k);c.lineTo(-q,-q+k);c.quadraticCurveTo(-q,-q,-q+k,-q)}
+    else if(t===4){c.ellipse(0,0,r*1.02,r*.74,0,0,7)}
+    else{c.moveTo(0,r*.95);c.bezierCurveTo(-r*1.35,r*.1,-r*.85,-r*.95,0,-r*.35);c.bezierCurveTo(r*.85,-r*.95,r*1.35,r*.1,0,r*.95)}}
+  function drawCandy(c,o,x,y,size,time){const r=size*.40*(o.sc==null?1:o.sc);if(r<=0.5||o.al<=0)return;c.save();c.globalAlpha=o.al==null?1:o.al;c.translate(x,y);if(o.rot)c.rotate(o.rot);
+    if(o.s===4){/* chocolat */const g=c.createRadialGradient(-r*.3,-r*.35,r*.1,0,0,r*1.05);g.addColorStop(0,'#a8683f');g.addColorStop(.55,'#5a2f1b');g.addColorStop(1,'#2a1209');c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=6;c.shadowOffsetY=3;c.fillStyle=g;c.beginPath();c.arc(0,0,r*1.02,0,7);c.fill();c.shadowColor='transparent';
+      const sp=['#ff5a7a','#ffd21f','#4be06a','#4aa8ff','#c177ff','#ff9a2a'];for(let i=0;i<12;i++){const a=i*2.4+time/700,d=r*(.25+.5*((i*37)%10)/10);c.save();c.translate(Math.cos(a)*d,Math.sin(a)*d);c.rotate(a*2);c.fillStyle=sp[i%6];c.fillRect(-r*.12,-r*.04,r*.24,r*.08);c.restore()}
+      c.strokeStyle='rgba(255,230,200,.7)';c.lineWidth=1.5;c.beginPath();c.arc(0,0,r*1.02+2+Math.sin(time/200)*1.2,0,7);c.stroke();
+      c.fillStyle='rgba(255,255,255,.45)';c.beginPath();c.ellipse(-r*.35,-r*.4,r*.28,r*.16,-.6,0,7);c.fill();c.restore();return}
+    const col=COLS[o.t];
+    if(o.s===3){/* emballé : halo + papillotes */c.shadowColor=col[1];c.shadowBlur=12;c.fillStyle=col[1];c.beginPath();c.moveTo(-r*1.25,-r*.5);c.lineTo(-r*.7,0);c.lineTo(-r*1.25,r*.5);c.closePath();c.moveTo(r*1.25,-r*.5);c.lineTo(r*.7,0);c.lineTo(r*1.25,r*.5);c.closePath();c.fill();c.shadowBlur=0}
+    c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=5;c.shadowOffsetY=3;shapePath(c,o.t,r);const g=c.createRadialGradient(-r*.35,-r*.4,r*.08,0,0,r*1.15);g.addColorStop(0,col[0]);g.addColorStop(.5,col[1]);g.addColorStop(1,col[2]);c.fillStyle=g;c.fill();c.shadowColor='transparent';
+    c.save();shapePath(c,o.t,r);c.clip();
+    if(o.s===1||o.s===2){c.fillStyle='rgba(255,255,255,.62)';for(let i=-2;i<=2;i++){if(o.s===1)c.fillRect(-r*1.2,i*r*.42-r*.09,r*2.4,r*.18);else c.fillRect(i*r*.42-r*.09,-r*1.2,r*.18,r*2.4)}}
+    const rim=c.createLinearGradient(0,-r,0,r);rim.addColorStop(0,'rgba(255,255,255,.0)');rim.addColorStop(.7,'rgba(255,255,255,0)');rim.addColorStop(1,'rgba(255,255,255,.28)');c.fillStyle=rim;c.fillRect(-r*1.3,-r*1.3,r*2.6,r*2.6);c.restore();
+    shapePath(c,o.t,r);c.lineWidth=1.4;c.strokeStyle='rgba(255,255,255,.35)';c.stroke();
+    c.fillStyle='rgba(255,255,255,.78)';c.beginPath();c.ellipse(-r*.36,-r*.42,r*.3,r*.17,-.7,0,7);c.fill();c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.arc(r*.35,r*.42,r*.07,0,7);c.fill();
+    if(o.s===3){c.strokeStyle='rgba(255,255,255,.8)';c.lineWidth=2;c.beginPath();c.arc(0,0,r*1.08+Math.sin(time/180)*1.2,0,7);c.stroke()}
+    c.restore()}
+  /* ---------- tweens et particules ---------- */
+  function tween(o,to,d,e){return new Promise(res=>{const from={};for(const k in to)from[k]=o[k];tw.push({o,from,to,t0:performance.now(),d,e:e||ease.out,res})})}
+  function stepTw(now){tw=tw.filter(w=>{const p=Math.min(1,(now-w.t0)/w.d),k=w.e(p);for(const key in w.to)w.o[key]=w.from[key]+(w.to[key]-w.from[key])*k;if(p>=1){w.res();return false}return true})}
+  function burst(x,y,t,n,pow){const col=COLS[t<0?4:t];for(let i=0;i<n;i++){const a=Math.random()*7,v=(1+Math.random()*3)*(pow||1);pt.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1.2,l:1,c:i%3?col[0]:'#fff',s:2+Math.random()*3.5,star:i%2===0,r:Math.random()*6})}}
+  function confetti(){for(let i=0;i<110;i++){const c=COLS[rnd(6)];pt.push({x:W/2+(Math.random()-.5)*W*.4,y:W*.35,vx:(Math.random()-.5)*9,vy:-Math.random()*9-2,l:1.6,c:c[0],s:3+Math.random()*4,star:i%3===0,r:Math.random()*6,g:.18})}}
+  function say(t){msg={t,t0:performance.now()}}
+  /* ---------- plateau ---------- */
+  const pos=i=>[(i%N+.5)*cs,(Math.floor(i/N)+.5)*cs];
+  const mk=(t,i)=>{const [x,y]=pos(i);return{t,s:0,x,y,sc:1,al:1,rot:0}};
+  const ty=i=>B[i]?B[i].t:-9;
+  function runs(types){const out=[];for(let r=0;r<N;r++){let c=0;while(c<N){const t=types[r*N+c];if(t==null||t<0){c++;continue}let k=c;while(k<N&&types[r*N+k]===t)k++;if(k-c>=3)out.push({d:'h',t,cells:Array.from({length:k-c},(_,j)=>r*N+c+j)});c=k}}
+    for(let c=0;c<N;c++){let r=0;while(r<N){const t=types[r*N+c];if(t==null||t<0){r++;continue}let k=r;while(k<N&&types[k*N+c]===t)k++;if(k-r>=3)out.push({d:'v',t,cells:Array.from({length:k-r},(_,j)=>(r+j)*N+c)});r=k}}return out}
+  const types=()=>B.map(o=>o?(o.s===4?-1:o.t):null);
+  function fresh(){do{B=[];for(let i=0;i<N*N;i++){let t;do{t=rnd(ntypes)}while((i%N>=2&&B[i-1]&&B[i-1].t===t&&B[i-2].t===t)||(i>=2*N&&B[i-N].t===t&&B[i-2*N].t===t));B.push(mk(t,i))}}while(!findMove());}
+  function validSwap(a,b){const A=B[a],C=B[b];if(!A||!C)return false;if(A.s===4||C.s===4||(A.s&&C.s))return true;const t=types();[t[a],t[b]]=[t[b],t[a]];return runs(t).length>0}
+  function findMove(){const all=[];for(let i=0;i<N*N;i++){const r=Math.floor(i/N),c=i%N;if(c<N-1&&validSwap(i,i+1))all.push([i,i+1]);if(r<N-1&&validSwap(i,i+N))all.push([i,i+N])}return all.length?all[rnd(all.length)]:null}
+  /* ---------- correspondances et spéciaux ---------- */
+  function analyse(pref){const R=runs(types());if(!R.length)return null;const clear=new Set(),make=[],used=new Set();R.forEach(r=>r.cells.forEach(i=>clear.add(i)));
+    const H=R.filter(r=>r.d==='h'),V=R.filter(r=>r.d==='v');
+    R.filter(r=>r.cells.length>=5).forEach(r=>{const i=(pref&&r.cells.find(c=>pref.includes(c)))??r.cells[2];if(!used.has(i)){used.add(i);make.push({i,s:4})}});
+    H.forEach(h=>V.forEach(v=>{if(h.t!==v.t)return;const x=h.cells.find(c=>v.cells.includes(c));if(x!=null&&!used.has(x)){used.add(x);make.push({i:x,s:3})}}));
+    R.filter(r=>r.cells.length===4).forEach(r=>{if(r.cells.some(c=>used.has(c)))return;const i=(pref&&r.cells.find(c=>pref.includes(c)))??r.cells[1];used.add(i);make.push({i,s:r.d==='h'?2:1})});
+    make.forEach(m=>clear.delete(m.i));return{clear,make}}
+  function expand(set,protect){const q=[...set],seen=new Set(set);const add=i=>{if(i>=0&&i<N*N&&B[i]&&!seen.has(i)&&!(protect&&protect.has(i))){seen.add(i);q.push(i)}};
+    while(q.length){const i=q.pop(),o=B[i];if(!o)continue;const r=Math.floor(i/N),c=i%N;
+      if(o.s===1){for(let k=0;k<N;k++)add(r*N+k);fx.push({k:'row',r,t0:performance.now()})}
+      else if(o.s===2){for(let k=0;k<N;k++)add(k*N+c);fx.push({k:'col',c,t0:performance.now()})}
+      else if(o.s===3){for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const rr=r+dr,cc=c+dc;if(rr>=0&&rr<N&&cc>=0&&cc<N)add(rr*N+cc)}fx.push({k:'ring',x:pos(i)[0],y:pos(i)[1],t0:performance.now()})}
+      else if(o.s===4){const tg=o.target;for(let k=0;k<N*N;k++)if(B[k]&&(tg==null?true:B[k].t===tg))add(k);fx.push({k:'zap',i,t0:performance.now()})}}
+    set.clear();seen.forEach(i=>set.add(i));return set}
+  async function clearSet(g,chain){const set=expand(g.clear,new Set(g.make.map(m=>m.i)));const ps=[];let big=false;
+    g.make.forEach(m=>{const o=B[m.i];if(o){if(m.s===4){o.t=-1}o.s=m.s;ps.push(tween(o,{sc:1.45},120).then(()=>tween(o,{sc:1},220,ease.bounce)));burst(o.x,o.y,o.t,10,1.4);big=true}});
+    let got=0;set.forEach(i=>{const o=B[i];if(!o)return;if(o.s)big=true;got++;if(goal&&goal.kind==='col'&&o.t===goal.col)prog++;burst(o.x,o.y,o.t,o.s?18:9,o.s?1.8:1);ps.push(tween(o,{sc:1.25,al:0},o.s?260:200,ease.out));if(o.s)score+=60*chain});
+    score+=got*10*chain;popSnd(Math.min(chain,6));if(big){boom();shake=chain>1?10:7;try{navigator.vibrate&&navigator.vibrate(20)}catch(_){}}
+    if(got>=5||chain>1)say(PR[Math.min(PR.length-1,rnd(3)+(chain>1?chain-1:0))]+(chain>2?'  ×'+chain:''));
+    hud();await Promise.all(ps);set.forEach(i=>{B[i]=null})}
+  async function gravity(){const ps=[];for(let c=0;c<N;c++){let w=N-1;for(let r=N-1;r>=0;r--){const o=B[r*N+c];if(o){if(r!==w){B[w*N+c]=o;B[r*N+c]=null;const [,y]=pos(w*N+c);ps.push(tween(o,{y},180+(w-r)*60,ease.bounce))}w--}}
+      let k=0;for(let r=w;r>=0;r--){const o=mk(rnd(ntypes),r*N+c);o.y=-(++k)*cs;B[r*N+c]=o;const [,y]=pos(r*N+c);ps.push(tween(o,{y},260+(r+k)*55,ease.bounce))}}
+    await Promise.all(ps)}
+  async function settle(pref){let chain=1;let g;while((g=analyse(pref))){pref=null;await clearSet(g,chain);await gravity();chain++}return chain-1}
+  /* ---------- échanges ---------- */
+  function exch(a,b){const A=B[a],C=B[b];B[a]=C;B[b]=A;return Promise.all([tween(A,{x:pos(b)[0],y:pos(b)[1]},170,ease.io),tween(C,{x:pos(a)[0],y:pos(a)[1]},170,ease.io)])}
+  function comboSet(a,b){const A=B[a],C=B[b],set=new Set([a,b]);const ra=Math.floor(a/N),ca=a%N,rb=Math.floor(b/N),cb=b%N;
+    const all=f=>{for(let k=0;k<N*N;k++)if(B[k]&&f(B[k]))set.add(k)};
+    if(A.s===4&&C.s===4){all(()=>true)}
+    else if(A.s===4||C.s===4){const bm=A.s===4?A:C,o=A.s===4?C:A,bi=A.s===4?a:b;bm.target=o.t;if(o.s){const sp=o.s;all(x=>x.t===o.t);set.forEach(i=>{const x=B[i];if(i!==bi&&x&&x.t===o.t&&!x.s){x.s=sp===3?3:(Math.random()<.5?1:2)}else if(i!==bi&&x&&x.t===o.t&&sp!==3){}})}}
+    else if(A.s===3&&C.s===3){for(let r=rb-2;r<=rb+2;r++)for(let c=cb-2;c<=cb+2;c++)if(r>=0&&r<N&&c>=0&&c<N)set.add(r*N+c)}
+    else if((A.s===3&&(C.s===1||C.s===2))||(C.s===3&&(A.s===1||A.s===2))){for(let k=0;k<N;k++)for(let d=-1;d<=1;d++){if(rb+d>=0&&rb+d<N)set.add((rb+d)*N+k);if(cb+d>=0&&cb+d<N)set.add(k*N+cb+d)}}
+    else{for(let k=0;k<N;k++){set.add(rb*N+k);set.add(k*N+cb)}}
+    return set}
+  async function attempt(a,b){if(busy||over||moves<=0)return;busy=true;hint=null;hintT=performance.now();sel=-1;const A=B[a],C=B[b];
+    if(!validSwap(a,b)){await exch(a,b);await exch(b,a);busy=false;beep(180,.12,.05,'square');return}
+    await exch(a,b);moves--;hud();
+    if(A.s===4||C.s===4||(A.s&&C.s)){const set=comboSet(a,b);boom();await clearSet({clear:set,make:[]},1);await gravity()}
+    await settle([a,b]);await after()}
+  async function after(){if(over){busy=false;return}
+    if(goalDone()){await win();return}
+    if(moves<=0){lose();return}
+    if(!findMove()){say('Mélange !');await wait(500);reshuffle()}
+    busy=false;hintT=performance.now()}
+  function reshuffle(){const t=B.map(o=>o);for(let k=t.length-1;k>0;k--){const j=rnd(k+1);[t[k],t[j]]=[t[j],t[k]]}let tries=0;B=t;while((analyse()||!findMove())&&tries++<60){for(let k=B.length-1;k>0;k--){const j=rnd(k+1);[B[k],B[j]]=[B[j],B[k]]}}B.forEach((o,i)=>{const [x,y]=pos(i);tween(o,{x,y},350)})}
+  const goalDone=()=>goal.kind==='score'?score>=goal.need:prog>=goal.need;
+  /* ---------- victoire, défaite ---------- */
+  async function win(){over=true;const left=moves;/* bonus : chaque coup restant fait exploser un bonbon rayé */
+    for(let k=0;k<Math.min(left,6);k++){const cand=B.map((o,i)=>o&&!o.s?i:-1).filter(i=>i>=0);if(!cand.length)break;const i=cand[rnd(cand.length)];B[i].s=Math.random()<.5?1:2;moves--;hud();await tween(B[i],{sc:1.4},140);await clearSet({clear:new Set([i]),make:[]},1);await gravity();const g=analyse();if(g){await clearSet(g,2);await gravity()}}
+    hud();confetti();boom();const stars=left>=8?3:left>=4?2:1;const best0=S.get('cdyStars',{});best0[lvl]=Math.max(best0[lvl]||0,stars);S.set('cdyStars',best0);S.set('cdyLvl',lvl+1);best('bonbons',score);
+    const e=$('cd-e');e.hidden=false;e.innerHTML=`<p class="eyebrow">Niveau ${lvl} réussi</p><div class="cd-stars">${'★'.repeat(stars)}<span>${'★'.repeat(3-stars)}</span></div><p>${score} points</p><button class="btn-plum" id="cd-next" style="justify-content:center">Niveau suivant</button>`;$('cd-next').onclick=()=>{lvl++;start()};busy=false}
+  function lose(){over=true;busy=false;best('bonbons',score);const e=$('cd-e');e.hidden=false;e.innerHTML=`<p class="eyebrow">Plus de coups</p><p>Il manquait un peu de sucre…<br>${score} points</p><button class="btn-plum" id="cd-again" style="justify-content:center">Réessayer</button>`;$('cd-again').onclick=()=>start()}
+  /* ---------- interface ---------- */
+  function hud(){if(!$('cd-m'))return;$('cd-l').textContent=lvl;$('cd-m').textContent=moves;$('cd-s').textContent=score;
+    const g=$('cd-g');if(goal.kind==='score'){g.innerHTML=`<span class="small muted">Objectif</span><b>${Math.min(score,goal.need)} / ${goal.need}</b>`;$('cd-b').style.width=Math.min(100,score/goal.need*100)+'%'}
+    else{g.innerHTML=`<span class="small muted">Récoltez</span><b><i class="cdd" style="background:${COLS[goal.col][1]}"></i> ${Math.min(prog,goal.need)} / ${goal.need}</b>`;$('cd-b').style.width=Math.min(100,prog/goal.need*100)+'%'}
+    $('cd-r').textContent=S.get('best_bonbons','')?'Record '+S.get('best_bonbons',''):''}
+  function size(){const w=Math.min(host.clientWidth||340,440);W=Math.floor(w/N)*N;cs=W/N;dpr=Math.min(2.5,window.devicePixelRatio||1);cv.width=W*dpr;cv.height=W*dpr;cv.style.width=W+'px';cv.style.height=W+'px'}
+  function start(){lvl=Math.max(1,lvl);const L=level(lvl);goal=L;moves=L.moves;ntypes=L.types;score=0;prog=0;over=false;busy=false;tw=[];pt=[];fx=[];msg=null;sel=-1;size();fresh();$('cd-e').hidden=true;hud();hintT=performance.now();say('Niveau '+lvl)}
+  /* ---------- boucle de rendu ---------- */
+  function frame(now){if(!alive||!document.body.contains(cv)){alive=false;return}requestAnimationFrame(frame);const dt=Math.min(.05,(now-(last||now))/1000);last=now;stepTw(now);
+    if(!busy&&!over&&!hint&&now-hintT>6500){const m=findMove();if(m)hint={a:m[0],b:m[1],t0:now}}
+    cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,W);
+    let sx=0,sy=0;if(shake>0){sx=(Math.random()-.5)*shake;sy=(Math.random()-.5)*shake;shake*=.86;if(shake<.3)shake=0}cx.save();cx.translate(sx,sy);
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++){cx.fillStyle=(r+c)%2?'rgba(255,255,255,.055)':'rgba(255,255,255,.1)';cx.fillRect(c*cs,r*cs,cs,cs)}
+    if(sel>=0){const [x,y]=pos(sel);cx.fillStyle='rgba(255,230,210,.28)';cx.fillRect(x-cs/2,y-cs/2,cs,cs);cx.strokeStyle='#ffe0cf';cx.lineWidth=2;cx.strokeRect(x-cs/2+1,y-cs/2+1,cs-2,cs-2)}
+    B.forEach((o,i)=>{if(!o)return;let ex=0,ey=0,s=o.sc;if(hint&&(i===hint.a||i===hint.b)){const p=Math.sin((now-hint.t0)/180);const dir=i===hint.a?1:-1,[ax,ay]=pos(hint.a),[bx,by]=pos(hint.b);ex=(bx-ax)/cs*dir*p*5;ey=(by-ay)/cs*dir*p*5}
+      const oo=o;const save=o.sc;o.sc=s*(o===(drag&&B[drag.i])?1.12:1);drawCandy(cx,o,o.x+ex,o.y+ey,cs,now);o.sc=save});
+    fx=fx.filter(f=>{const p=(now-f.t0)/450;if(p>=1)return false;cx.save();cx.globalAlpha=1-p;if(f.k==='row'){const y=(f.r+.5)*cs;const g=cx.createLinearGradient(0,y-cs*.5,0,y+cs*.5);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.5,'rgba(255,255,255,.95)');g.addColorStop(1,'rgba(255,255,255,0)');cx.fillStyle=g;cx.fillRect(0,y-cs*.5*(1-p*.5),W,cs*(1-p*.5))}
+      else if(f.k==='col'){const x=(f.c+.5)*cs;const g=cx.createLinearGradient(x-cs*.5,0,x+cs*.5,0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.5,'rgba(255,255,255,.95)');g.addColorStop(1,'rgba(255,255,255,0)');cx.fillStyle=g;cx.fillRect(x-cs*.5*(1-p*.5),0,cs*(1-p*.5),W)}
+      else if(f.k==='ring'){cx.strokeStyle='#fff';cx.lineWidth=5*(1-p);cx.beginPath();cx.arc(f.x,f.y,cs*(.5+p*2),0,7);cx.stroke()}
+      else if(f.k==='zap'){cx.fillStyle='rgba(255,255,255,.55)';cx.fillRect(0,0,W,W)}
+      cx.restore();return true});
+    pt=pt.filter(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g||.12;p.l-=dt*(p.g?.7:1.7);if(p.l<=0)return false;cx.globalAlpha=Math.min(1,p.l);cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r+=.15);if(p.star){cx.beginPath();for(let k=0;k<5;k++){const a=k*1.2566-1.5708;cx.lineTo(Math.cos(a)*p.s*1.6,Math.sin(a)*p.s*1.6);cx.lineTo(Math.cos(a+.6283)*p.s*.65,Math.sin(a+.6283)*p.s*.65)}cx.closePath();cx.fill()}else cx.fillRect(-p.s/2,-p.s/2,p.s,p.s);cx.restore();cx.globalAlpha=1;return true});
+    cx.restore();
+    if(msg){const p=(now-msg.t0)/1300;if(p>=1)msg=null;else{cx.save();cx.globalAlpha=p<.2?p/.2:1-Math.max(0,(p-.6)/.4);const sc=.7+Math.min(1,p*3)*.4;cx.translate(W/2,W*.45);cx.scale(sc,sc);cx.font='700 '+Math.round(cs*.9)+'px '+getComputedStyle(document.body).fontFamily;cx.textAlign='center';cx.lineWidth=7;cx.strokeStyle='#7a2a44';cx.fillStyle='#ffe9dc';cx.strokeText(msg.t,0,0);cx.fillText(msg.t,0,0);cx.restore()}}}
+  /* ---------- gestes : glisser ou toucher deux fois ---------- */
+  const cell=e=>{const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*W,y=(e.clientY-r.top)/r.height*W;const c=Math.floor(x/cs),rr=Math.floor(y/cs);return c>=0&&c<N&&rr>=0&&rr<N?{i:rr*N+c,x,y}:null};
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();if(busy||over)return;const h=cell(e);if(!h)return;hint=null;hintT=performance.now();try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    if(sel>=0&&sel!==h.i){const a=sel,dx=Math.abs(a%N-h.i%N),dy=Math.abs(Math.floor(a/N)-Math.floor(h.i/N));if(dx+dy===1){attempt(a,h.i);return}}
+    drag={i:h.i,x:h.x,y:h.y,moved:false};sel=h.i});
+  cv.addEventListener('pointermove',e=>{if(!drag||busy||over)return;const h=cell(e);if(!h)return;const dx=h.x-drag.x,dy=h.y-drag.y;if(Math.hypot(dx,dy)<cs*.42)return;drag.moved=true;const a=drag.i;let b;if(Math.abs(dx)>Math.abs(dy)){if(dx>0&&a%N<N-1)b=a+1;else if(dx<0&&a%N>0)b=a-1}else{if(dy>0&&a<N*N-N)b=a+N;else if(dy<0&&a>=N)b=a-N}drag=null;if(b!=null){sel=-1;attempt(a,b)}});
+  const up=()=>{drag=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  $('cd-re').onclick=()=>{if(busy)return;start()};$('cd-snd').onclick=()=>{mute=!mute;S.set('cdyMute',mute);$('cd-snd').textContent=mute?'Son coupé':'Son'};
+  addEventListener('resize',()=>{if(alive&&document.body.contains(cv)){size()}});
+  start();requestAnimationFrame(frame);
+  window.__cdy={get B(){return B},get busy(){return busy},get moves(){return moves},get score(){return score},attempt,findMove,analyse,win:()=>{score=goal.need+1;prog=goal.need;return after()},N,get goal(){return goal}};
+}
+
+/* confettis de victoire pour tous les jeux */
+const fxConf=(()=>{let cv,cx,ps=[],on=false;
+  function loop(){if(!ps.length){on=false;cv.remove();cv=null;return}cx.clearRect(0,0,cv.width,cv.height);ps=ps.filter(p=>{p.vy+=.25;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;if(p.y>cv.height+20)return false;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore();return true});requestAnimationFrame(loop)}
+  return n=>{if(!cv){cv=document.createElement('canvas');cv.id='fx-conf';cv.width=innerWidth;cv.height=innerHeight;document.body.appendChild(cv);cx=cv.getContext('2d')}
+    const C=['#ff8aa0','#ffd27a','#8fe3a0','#9fd4ff','#e3b4ff','#ffc27a','#fff'];for(let i=0;i<(n||90);i++)ps.push({x:innerWidth/2+(Math.random()-.5)*innerWidth*.5,y:innerHeight*.45,vx:(Math.random()-.5)*12,vy:-Math.random()*13-3,w:6+Math.random()*6,h:4+Math.random()*5,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:C[i%C.length]});if(!on){on=true;requestAnimationFrame(loop)}}})();
+(function(){const h=$('game-host');if(!h)return;let last='';new MutationObserver(()=>{const p=h.querySelector('.praise');const t=p?p.textContent:'';if(t&&t!==last&&/gagn|bravo|réussi|victoire|trouv|résolu|Coffret|Sublime|Divin|Éblouiss|Magnifique|Majestueux|Quel éclat/i.test(t)&&!h.querySelector('#cdy'))fxConf(70);last=t}).observe(h,{subtree:true,childList:true,characterData:true})})();
 /* charm : vraie chaîne (intégration de Verlet), pendentif pesant, gravité du téléphone, doigt */
 const CH=['e','heart','rose'];let chSensor=false;
 const gyroOn=()=>S.get('gyro',true);
@@ -2355,6 +2529,6 @@ const Orient=(()=>{
   return{toggle,paint,reset:()=>{tries=0;left=false}}})();
 $('orient').onclick=()=>Orient.toggle();Orient.paint();
 
-</script><script>(function(){var V='11.9',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.10',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
