@@ -454,6 +454,14 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 #dict.on svg{stroke:#fff}#dict.on svg rect{fill:#fff}
 @keyframes dictp{0%,100%{box-shadow:0 0 0 0 rgba(255,90,110,.6)}50%{box-shadow:0 0 0 10px rgba(255,90,110,0)}}
 .dict-pad{padding-right:46px!important}
+/* boutons « écrin » : bouts en pointe, tube de métal rose, reflets */
+.btn-plum{--pt:24px;position:relative;isolation:isolate;border:0!important;border-image:none!important;background:none!important;color:#fff3ec;font-weight:600;letter-spacing:.03em;padding:12px 40px;min-height:56px;text-shadow:0 1px 2px rgba(50,15,25,.7);filter:drop-shadow(0 5px 7px rgba(0,0,0,.45));transition:transform .15s,filter .15s}
+.btn-plum::before,.btn-plum::after{content:"";position:absolute;pointer-events:none;clip-path:polygon(var(--pt) 0,calc(100% - var(--pt)) 0,100% 50%,calc(100% - var(--pt)) 100%,var(--pt) 100%,0 50%)}
+.btn-plum::before{inset:0;z-index:-2;background:linear-gradient(180deg,#fff1e6 0%,#e9b7a2 18%,#b9786a 52%,#f0c3ae 78%,#8c5247 100%)}
+.btn-plum::after{inset:3px;--pt:21px;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,.18) 40%,rgba(255,255,255,0) 50%,rgba(0,0,0,.22) 100%),linear-gradient(180deg,var(--p1,#b9777e),var(--p2,#7e4650));box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.btn-plum:active{transform:scale(.97);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5)) brightness(.9)}
+.btn-plum:active::after{background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(255,255,255,.1)),linear-gradient(180deg,var(--p2,#7e4650),var(--p1,#b9777e))}
+.btn-plum[hidden]{display:none}
 </style>
 <div class="wrap">
   <header class="top plate">
@@ -744,7 +752,7 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 </nav>
 <div class="toast" id="toast" hidden></div>
 
-<script>
+<script type="text/plain" id="app-src">
 const $=id=>document.getElementById(id);
 const S={get(k,d){try{const v=localStorage.getItem('me_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('me_'+k,JSON.stringify(v));return true}catch(e){return false}}};
 addEventListener('error',e=>{try{console.warn('Maison Élodie :',e.message)}catch(_){}});
@@ -1250,13 +1258,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.6',date:'28 octobre 2026',
+const APP={version:'11.7',date:'28 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -2157,4 +2165,6 @@ const Orient=(()=>{
   return{toggle,paint,reset:()=>{tries=0;left=false}}})();
 $('orient').onclick=()=>Orient.toggle();Orient.paint();
 
-</script>
+</script><script>(function(){var V='11.7',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
+if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
