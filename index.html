@@ -558,6 +558,19 @@ html.kid .tile{min-height:150px}
 .btn-plum::before{background:linear-gradient(180deg,#fff6ee 0%,#f0c3ae 14%,#c98a78 40%,#fbe0d0 55%,#b9786a 80%,#7a4a3e 100%)!important}
 .btn-plum{padding-left:46px!important;padding-right:46px!important}
 .sndg{grid-template-columns:repeat(auto-fit,minmax(0,1fr))!important}
+
+/* bijouterie */
+.bjv{display:grid;place-items:center;margin-bottom:10px}.bjv canvas{border-radius:22px;border:1px solid #d9a38f;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.bjbtns{display:flex;gap:8px;align-items:center;margin:4px 0 12px}.bjbtns .btn-plum{padding-left:30px!important;padding-right:30px!important}
+.bjl{margin:12px 0 6px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#e8b9a6}
+.bjchips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.bjchips::-webkit-scrollbar{display:none}
+.bjc{flex:0 0 auto;border:2px solid rgba(255,255,255,.14);background:var(--card2);color:inherit;border-radius:16px;padding:0 14px;min-height:48px;font:inherit;font-size:.9rem;white-space:nowrap;display:grid;place-items:center}
+.bjc.sq{width:64px;height:64px;padding:0;border-radius:18px;background:radial-gradient(circle at 50% 30%,#5b3144,#2a1420)}.bjc.sw{width:46px;height:46px;padding:0;border-radius:50%;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 2px 5px rgba(0,0,0,.4)}
+.bjc.on{border-color:#f6d5c4;box-shadow:0 0 0 2px rgba(246,213,196,.35),0 0 14px rgba(255,190,160,.5)}.bjc.on:not(.sq):not(.sw){background:linear-gradient(180deg,var(--p1,#b9777e),var(--p2,#7e4650))}
+.bjgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.bjt{position:relative}
+.bjtb{width:100%;aspect-ratio:1;border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,#5b3144,#2a1420)}
+.bjx{position:absolute;top:-4px;right:-4px;width:24px;height:24px;border-radius:50%;border:0;background:#e0485a;color:#fff;font-size:16px;line-height:1;padding:0}
+.sheet-b>*{flex-shrink:0}
 </style>
 <div class="wrap">
   <header class="top plate">
@@ -1360,13 +1373,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.12',date:'28 octobre 2026',
+const APP={version:'11.13',date:'28 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.12','28 octobre 2026',["Barre du bas rétablie comme avant", "Boutons de validation en bijou : pointes serties d'une pierre rose", "Perle ne fait plus de bruits étranges : uniquement sa voix, à choisir parmi toutes les voix du téléphone"]],['11.11','28 octobre 2026',["Barre du bas refaite : écrin de métal rose, bulle qui s'élève, étincelles et petit carillon au toucher", "Réglages en grandes cartes colorées, plus simples", "Son de la Perle : voix plus grave ou plus aiguë, vitesse, choix de la voix", "Mode simple (enfant) dans les réglages", "Accordéons des sous-menus plus jolis"]],['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.13','28 octobre 2026',["Bijouterie : créez et portez votre charm (14 formes, 6 métaux, 9 pierres, chaînes, initiales, photo)", "Courses : envoi de la liste en image (WhatsApp, SMS, e-mail…) ou en texte", "Courses : corrections de reconnaissance (lait, pâtes)"]],['11.12','28 octobre 2026',["Barre du bas rétablie comme avant", "Boutons de validation en bijou : pointes serties d'une pierre rose", "Perle ne fait plus de bruits étranges : uniquement sa voix, à choisir parmi toutes les voix du téléphone"]],['11.11','28 octobre 2026',["Barre du bas refaite : écrin de métal rose, bulle qui s'élève, étincelles et petit carillon au toucher", "Réglages en grandes cartes colorées, plus simples", "Son de la Perle : voix plus grave ou plus aiguë, vitesse, choix de la voix", "Mode simple (enfant) dans les réglages", "Accordéons des sous-menus plus jolis"]],['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -2218,13 +2231,13 @@ ph:'💊 Doliprane;🩹 Pansements;🌡️ Thermomètre;🧴 Gel hydroalcoolique
   const rayOf=r=>RAY.find(x=>x[0]===r)||RAY[RAY.length-1];
   const items=()=>S.get('courses',[]),save=v=>S.set('courses',v);
   let tab=S.get('cTab','liste'),fil='all',busy=false;
-  const match=n=>{const k=norm(n),s=sing(k);if(!k)return null;return CAT.find(c=>c.k===k||c.s===s)||CAT.find(c=>c.k.startsWith(k)||k.startsWith(c.s)&&c.s.length>3)||CAT.find(c=>c.k.includes(k)&&k.length>2)||null};
+  const match=n=>{const k=norm(n),s=sing(k);if(!k)return null;return CAT.find(c=>c.k===k)||CAT.find(c=>c.s===s)||CAT.find(c=>c.k.startsWith(k)||k.startsWith(c.s)&&c.s.length>3)||CAT.find(c=>c.k.includes(k)&&k.length>2)||null};
   const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
   function add(n,o){o=o||{};const L=items();const m=o.ph?null:match(n);const name=m?m.n:cap(n.trim());const nk=norm(name);
     const ex=!o.ph&&L.find(x=>!x.ph&&norm(x.n)===nk&&!x.done);if(ex){ex.q=(ex.q||1)+(o.q||1)}else L.push({id:uid(),n:name,e:o.e||(m?m.e:'🛒'),r:o.r||(m?m.r:'au'),q:o.q||1,done:false,ph:o.ph||null,t:Date.now()});save(L);return m}
   function parse(t){const NUM={un:1,une:1,deux:2,trois:3,quatre:4,cinq:5,six:6,sept:7,huit:8,neuf:9,dix:10,douze:12};
     return String(t).split(/[,;\n]|\bet\b|\bpuis\b|\bplus\b/i).map(x=>x.trim()).filter(Boolean).map(p=>{let q=1,m=/^(\d+)\s*(?:x\s*)?(.+)$/.exec(p);if(m){q=Math.min(99,+m[1]);p=m[2]}else{m=/^(un|une|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|douze)\s+(.+)$/i.exec(p);if(m){q=NUM[m[1].toLowerCase()];p=m[2]}}
-      p=p.replace(/^(?:du|de la|de l['’]|des|d['’]|le|la|les|l['’]|un|une)\s*/i,'').trim();return p?{n:p,q}:null}).filter(Boolean)}
+      p=p.replace(/^(?:du|de la|des|le|la|les|un|une)\s+/i,'').replace(/^(?:de l|d|l)['’]\s*/i,'').trim();return p?{n:p,q}:null}).filter(Boolean)}
   function addText(t){const ps=parse(t);if(!ps.length)return 0;ps.forEach(p=>add(p.n,{q:p.q}));return ps.length}
   const qtyIn=id=>{const x=items().find(i=>i.id===id);return x&&!x.done?x.q:0};
   const catQty=c=>{const x=items().find(i=>!i.ph&&norm(i.n)===c.k&&!i.done);return x?x.q:0};
@@ -2235,7 +2248,7 @@ ph:'💊 Doliprane;🩹 Pansements;🌡️ Thermomètre;🧴 Gel hydroalcoolique
     let h='';RAY.forEach(r=>{const g=todo.filter(x=>(x.ph?'ph0':x.r)===r[0]);if(!g.length)return;h+=`<div class="cg"><p class="cgh" style="--cc:${r[3]}"><span>${r[2]}</span>${r[1]}<em>${g.length}</em></p>${g.map(row).join('')}</div>`});
     if(!todo.length)h+=`<div class="cempty ok"><div class="cbig">✨</div><p><b>Tout est dans le chariot !</b></p></div>`;
     if(done.length)h+=`<div class="cg dg"><p class="cgh dn2"><span>🛒</span>Dans le chariot<em>${done.length}</em></p>${done.map(row).join('')}<div class="row" style="margin-top:8px"><button class="pill" data-a="clrdone">Retirer les articles pris</button></div></div>`;
-    h+=`<div class="row cfoot"><button class="pill" data-a="share">Partager la liste</button><button class="pill" data-a="clrall">Tout effacer</button></div>`;return h}
+    h+=`<div class="row cfoot"><button class="btn-plum" data-a="share" style="justify-content:center">📤 Envoyer la liste</button><button class="pill" data-a="clrall">Tout effacer</button></div>`;return h}
   function renderCat(){const q=(S.get('cQ','')||'');let L=CAT;if(fil!=='all')L=L.filter(c=>c.r===fil);
     const chips=`<div class="cchips"><button class="chp${fil==='all'?' on':''}" data-fil="all">Tout</button>${RAY.filter(r=>r[0]!=='ph0'&&r[0]!=='au').map(r=>`<button class="chp${fil===r[0]?' on':''}" data-fil="${r[0]}">${r[2]} ${r[1].split(',')[0]}</button>`).join('')}</div>`;
     return chips+`<div class="pg">${L.map(c=>{const n=catQty(c);return `<button class="pt${n?' sel':''}" data-cat="${c.id}" style="--cc:${rayOf(c.r)[3]}"><span class="pe">${c.e}</span><span class="pn">${esc(c.n)}</span>${n?`<i class="pb">${n}</i>`:''}</button>`}).join('')}</div>`}
@@ -2258,8 +2271,34 @@ ph:'💊 Doliprane;🩹 Pansements;🌡️ Thermomètre;🧴 Gel hydroalcoolique
       b.querySelector('#c-pok').onclick=()=>{add(b.querySelector('#c-pn').value.trim()||'Article en photo',{ph:pid,r:'ph0',e:'📸'});closeSh(b);tab='liste';paint();toast('Photo ajoutée à la liste',1800);vib()};
       let done=false;const o=b.closest('.sheet-ov');new MutationObserver(()=>{if(!document.body.contains(o)&&!done){done=true;if(!items().some(x=>x.ph===pid))IDB.del(pid)}}).observe(document.body,{childList:true})
     }catch(e){toast("Cette photo n'a pas pu être lue.",3000)}}
-  function share(){const L=items().filter(x=>!x.done);if(!L.length){toast('Rien à partager',1500);return}let t='Liste de courses\n';RAY.forEach(r=>{const g=L.filter(x=>(x.ph?'ph0':x.r)===r[0]);if(g.length)t+='\n'+r[1]+'\n'+g.map(x=>'- '+x.n+(x.q>1?' ×'+x.q:'')).join('\n')+'\n'});
-    if(navigator.share){navigator.share({text:t}).catch(()=>{})}else{try{navigator.clipboard.writeText(t);toast('Liste copiée',2000)}catch(_){toast('Partage impossible ici',2500)}}}
+  function listText(){const L=items().filter(x=>!x.done);let t='Liste de courses\n';RAY.forEach(r=>{const g=L.filter(x=>(x.ph?'ph0':x.r)===r[0]);if(g.length)t+='\n'+r[1]+'\n'+g.map(x=>'- '+x.n+(x.q>1?' ×'+x.q:'')).join('\n')+'\n'});return t}
+  async function listImage(){const L=items().filter(x=>!x.done),W=1080,pad=44,rowH=124,gh=96;const groups=RAY.map(r=>[r,L.filter(x=>(x.ph?'ph0':x.r)===r[0])]).filter(g=>g[1].length);
+    const H=230+groups.reduce((a,g)=>a+gh+g[1].length*rowH+30,0)+110,cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
+    const bg=c.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#4a2433');bg.addColorStop(1,'#26121b');c.fillStyle=bg;c.fillRect(0,0,W,H);
+    const rr=(x,y,w,h,r)=>{c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()};
+    const mg=c.createLinearGradient(0,0,W,0);[['#f6cbb8',0],['#b9786a',.4],['#f0c3ae',.6],['#8c5247',1]].forEach(([k,o])=>mg.addColorStop(o,k));c.fillStyle=mg;rr(24,24,W-48,H-48,40);c.fill();c.fillStyle=bg;rr(32,32,W-64,H-64,34);c.fill();
+    c.textBaseline='middle';c.fillStyle='#ffe9dc';c.font='700 76px Georgia,serif';c.textAlign='center';c.fillText('Liste de courses',W/2,115);
+    c.font='36px sans-serif';c.fillStyle='#e8b9a6';c.fillText(new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})+' · '+L.length+' article'+(L.length>1?'s':''),W/2,182);
+    let y=230;const bms={};for(const x of L){if(x.ph){try{const bl=await IDB.get(x.ph);if(bl)bms[x.id]=await createImageBitmap(bl)}catch(_){}}}
+    for(const [r,g] of groups){c.fillStyle=r[3];c.globalAlpha=.9;rr(pad+16,y,W-2*pad-32,gh-14,30);c.fill();c.globalAlpha=1;c.textAlign='left';c.fillStyle='#fff';c.font='700 46px sans-serif';c.fillText(r[2]+'  '+r[1],pad+44,y+(gh-14)/2+2);y+=gh;
+      for(const x of g){const ty=y+8;c.fillStyle='rgba(255,255,255,.07)';rr(pad+16,ty,W-2*pad-32,rowH-16,28);c.fill();
+        const bx=pad+34,by=ty+6,bs=rowH-28;c.save();rr(bx,by,bs,bs,24);c.clip();if(bms[x.id]){const bm=bms[x.id],s=Math.max(bs/bm.width,bs/bm.height);c.drawImage(bm,bx+bs/2-bm.width*s/2,by+bs/2-bm.height*s/2,bm.width*s,bm.height*s)}else{c.fillStyle=rayOf(x.r)[3];c.globalAlpha=.35;c.fillRect(bx,by,bs,bs);c.globalAlpha=1;c.font='62px sans-serif';c.textAlign='center';c.fillStyle='#fff';c.fillText(x.e||'🛒',bx+bs/2,by+bs/2+4)}c.restore();
+        c.textAlign='left';c.fillStyle='#fff3ec';c.font='600 44px sans-serif';let nm=x.n;while(c.measureText(nm).width>W-2*pad-360&&nm.length>3)nm=nm.slice(0,-2);if(nm!==x.n)nm+='…';c.fillText(nm,bx+bs+26,ty+(rowH-16)/2);
+        if(x.q>1){c.fillStyle='#f3c9b8';rr(W-pad-170,ty+(rowH-16)/2-30,120,60,30);c.fill();c.fillStyle='#3a2230';c.textAlign='center';c.font='700 40px sans-serif';c.fillText('× '+x.q,W-pad-110,ty+(rowH-16)/2+2)}
+        c.strokeStyle='#f3c9b8';c.lineWidth=4;c.strokeRect(W-pad-232-0,ty+(rowH-16)/2-0,0,0);y+=rowH}y+=30}
+    c.textAlign='center';c.fillStyle='#e8b9a6';c.font='italic 34px Georgia,serif';c.fillText('Maison Élodie',W/2,H-70);
+    return new Promise(r=>cv.toBlob(r,'image/png'))}
+  const b64=bl=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(String(f.result).split(',')[1]);f.readAsDataURL(bl)});
+  async function sendBlob(bl,text){const file=new File([bl],'courses.png',{type:'image/png'});
+    if(NATIVE){try{const Fs=Capacitor.registerPlugin('Filesystem'),Sh=Capacitor.registerPlugin('Share');const r=await Fs.writeFile({path:'courses.png',data:await b64(bl),directory:'CACHE'});await Sh.share({title:'Liste de courses',text,url:r.uri,dialogTitle:'Envoyer la liste'});return true}catch(e){if(e&&/cancel/i.test(String(e.message||e)))return true}}
+    try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text,title:'Liste de courses'});return true}}catch(e){if(e&&e.name==='AbortError')return true}
+    const u=URL.createObjectURL(bl),a=document.createElement('a');a.href=u;a.download='liste-de-courses.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);toast("Image enregistrée : envoyez-la depuis votre galerie.",5000);return false}
+  async function share(){if(!items().some(x=>!x.done)){toast('Rien à envoyer pour le moment',2000);return}
+    const bl=await listImage(),url=URL.createObjectURL(bl),text=listText();
+    const b=sheet('Envoyer la liste',`<img src="${url}" alt="Aperçu de la liste" style="width:100%;border-radius:16px;border:1px solid #d9a38f;max-height:46vh;object-fit:contain;background:#26121b"><button class="btn-plum" id="c-snd" style="justify-content:center">Envoyer l'image</button><div class="row"><button class="pill" id="c-txt">Envoyer en texte</button><button class="pill" id="c-dl">Enregistrer l'image</button></div><p class="small muted">WhatsApp, SMS, e-mail ou toute autre appli : le téléphone vous propose la liste.</p>`,{closeLabel:'Fermer',onClose:()=>URL.revokeObjectURL(url)});
+    b.querySelector('#c-snd').onclick=()=>sendBlob(bl,text);
+    b.querySelector('#c-txt').onclick=async()=>{try{if(NATIVE){await Capacitor.registerPlugin('Share').share({title:'Liste de courses',text,dialogTitle:'Envoyer la liste'})}else if(navigator.share)await navigator.share({text,title:'Liste de courses'});else{await navigator.clipboard.writeText(text);toast('Liste copiée, collez-la où vous voulez',3000)}}catch(e){}};
+    b.querySelector('#c-dl').onclick=()=>{const a=document.createElement('a');a.href=url;a.download='liste-de-courses.png';document.body.appendChild(a);a.click();a.remove()}}
   function wire(){const v=$('v-courses');$('c-ok').onclick=ok;$('c-in').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ok()}});
     $('c-mic').onclick=()=>{const i=$('c-in');i.focus();Dict.into(i,()=>{if(i.value.trim())ok()})};
     $('c-cam-b').onclick=()=>$('c-cam').click();$('c-cam').onchange=e=>{const f=e.target.files[0];e.target.value='';photo(f)};
@@ -2477,7 +2516,7 @@ const fxConf=(()=>{let cv,cx,ps=[],on=false;
 const KID={on:()=>S.get('kid',false),apply(){document.documentElement.classList.toggle('kid',this.on())},
   set(v){S.set('kid',v);this.apply();if(v){const c=Object.assign({},VOICE0,S.get('voice',{}));S.set('voice',Object.assign(S.get('voice',{}),{narr:true,showText:true,rate:Math.min(c.rate,.9)}))}try{Pearl.speak(v?'Mode simple activé. Touche les gros dessins.':'Mode complet activé.',true)}catch(_){}}};
 KID.apply();
-const SET_CARDS=[['Voix et son','🔊','#ff5d8f',null,'son'],['La Perle','🫧','#c177ff','La Perle'],['Mode simple','🧒','#43b97f',null,'kid'],['Affichage','🎨','#f0a24a','Affichage'],['Connexion','📶','#4aa8ff','Connexion internet'],['Sauvegarde','💾','#8f6cf0','Sauvegarde'],['Mises à jour','⬆️','#38c2c8','Mises à jour'],['Voix muette ?','🛠️','#e0485a',null,'fix']];
+const SET_CARDS=[['Voix et son','🔊','#ff5d8f',null,'son'],['La Perle','🫧','#c177ff','La Perle'],['Mode simple','🧒','#43b97f',null,'kid'],['Affichage','🎨','#7fae63','Affichage'],['Connexion','📶','#4aa8ff','Connexion internet'],['Sauvegarde','💾','#8f6cf0','Sauvegarde'],['Mises à jour','⬆️','#38c2c8','Mises à jour'],['Bijouterie','💍','#e8a04a',null,'bij']];
 function setCards(b,focus){const ds=[...b.querySelectorAll('details.setg')];if(!ds.length)return;const sec=t=>ds.find(d=>d.querySelector('summary').textContent.trim().startsWith(t));
   const grid=document.createElement('div');grid.className='setgrid';
   grid.innerHTML=SET_CARDS.map(([n,e,c,t,k],i)=>{const on=k==='kid'&&KID.on();return `<button class="setc${on?' on':''}" data-i="${i}" style="--gc:${c}"><span class="gic">${e}</span><b>${n}</b>${k==='kid'?`<small>${on?'Activé':'Désactivé'}</small>`:''}</button>`}).join('')+`<button class="setc wide" data-i="adv" style="--gc:#9aa7c7"><span class="gic">⚙️</span><b>Réglages avancés de la voix</b></button>`;
@@ -2487,12 +2526,14 @@ function setCards(b,focus){const ds=[...b.querySelectorAll('details.setg')];if(!
   const home=()=>{grid.hidden=false;back.hidden=true;ds.forEach(x=>x.hidden=true)};back.onclick=home;
   grid.querySelectorAll('.setc').forEach(x=>x.onclick=()=>{const i=x.dataset.i;if(i==='adv'){showSec(sec('Voix et son'));return}const [n,e,c,t,k]=SET_CARDS[+i];
     if(k==='son'){popBack();setTimeout(soundSheet,120);return}
-    if(k==='fix'){popBack();setTimeout(voiceFix,120);return}
+    if(k==='bij'){popBack();setTimeout(()=>BJ.open(),120);return}
     if(k==='kid'){KID.set(!KID.on());x.classList.toggle('on',KID.on());x.querySelector('small').textContent=KID.on()?'Activé':'Désactivé';return}
     const d=sec(t);if(d)showSec(d)});
   const map={pearl:'La Perle',voice:'Voix et son',fix:'Dépannage',net:'Connexion',display:'Affichage',backup:'Sauvegarde',update:'Mises à jour'};
   if(focus&&map[focus]){const d=sec(map[focus]);if(d)showSec(d)}}
 const _v=S.get('voice',{});if(!S.get('voiceMig2')){if(_v.engine==='sounds')S.set('voice',Object.assign(_v,{engine:'auto'}));S.set('voiceMig2',1)}
+
+(function(){const r=document.querySelector('[data-ch="rose"]');if(r&&r.parentElement){const b=document.createElement('button');b.className='chip';b.textContent='💍 Bijouterie';b.onclick=()=>BJ.open();r.parentElement.appendChild(b)}})();
 /* charm : vraie chaîne (intégration de Verlet), pendentif pesant, gravité du téléphone, doigt */
 const CH=['e','heart','rose'];let chSensor=false;
 const gyroOn=()=>S.get('gyro',true);
@@ -2503,7 +2544,7 @@ const Charm=(()=>{
   function imgFor(k){if(IMGS[k])return IMGS[k];const m=/url\(["']?(data:[^"')]+)["']?\)/.exec(getComputedStyle(document.documentElement).getPropertyValue('--charm-'+k));const i=new Image();if(m)i.src=m[1];return IMGS[k]=i}
   function geo(){const g=CHG[kind];return{g,seg:(g.top-g.ring)*SC/N,lp:(g.com-g.top)*SC}}
   function build(){P=[];const{seg,lp}=geo();for(let i=0;i<=N+1;i++){const y=AY+(i<=N?i*seg:N*seg+lp);P.push({x:ax,y:y,px:ax,py:y,w:i===0?0:i===N+1?1/4:1/.25})}}
-  function setKind(k){kind=k;img=imgFor(k);const{seg,lp}=geo();/* garder la position, ajuster les longueurs */}
+  function setKind(k){if(!CHG[k])k='e';kind=k;img=imgFor(k);const{seg,lp}=geo();/* garder la position, ajuster les longueurs */}
   function anchor(){const r=rivet();if(!r||r.hidden)return false;const b=r.getBoundingClientRect();const nx=b.left+b.width/2,pgY=b.top+b.height/2+scrollY;const nt=Math.round(pgY-AY);
     if(!ready){ax=nx;ready=true;build()}ax=nx;if(Math.abs(nt-top0)>=1||!layer.style.top){top0=nt;layer.style.top=top0+'px'}return true}
   function size(){const w=document.documentElement.clientWidth;if(w===W)return;W=w;dpr=Math.min(2.5,window.devicePixelRatio||1);cv.width=Math.round(W*dpr);cv.height=Math.round(LH*dpr);cv.style.width=W+'px';cv.style.height=LH+'px';layer.style.width=W+'px'}
@@ -2522,8 +2563,8 @@ const Charm=(()=>{
       for(let i=1;i<P.length;i++){const p=P[i];if(p.x<6){p.x=6;p.px=p.x+(p.px-p.x)*.4}if(p.x>W-6){p.x=W-6;p.px=p.x+(p.px-p.x)*.4}}
       P[0].x=ax;P[0].y=AY}
     for(let i=1;i<P.length;i++){const p=P[i],vx=p.x-p.px,vy=p.y-p.py,v=Math.hypot(vx,vy);if(v>40){p.px=p.x-vx*40/v;p.py=p.y-vy*40/v}}}
-  function draw(){if(!img||!img.complete||!img.naturalWidth)return;const c=cx;c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,LH);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
-    const{g,seg}=geo(),hs=(g.top-g.ring)/N,iw=img.naturalWidth,ih=img.naturalHeight,sc=SC;
+  function draw(){if(!img||img.complete===false||!(img.naturalWidth||img.width))return;const c=cx;c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,LH);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
+    const{g,seg}=geo(),hs=(g.top-g.ring)/N,iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height,sc=SC;
     c.shadowColor='rgba(0,0,0,.4)';c.shadowBlur=5;c.shadowOffsetY=3;
     for(let i=0;i<N;i++){const a=P[i],b=P[i+1],th=Math.atan2(b.y-a.y,b.x-a.x)-Math.PI/2;const y0=i===0?0:g.ring+i*hs,y1=Math.min(ih,g.ring+(i+1)*hs+1.6);
       c.save();c.translate(a.x,a.y);c.rotate(th);c.drawImage(img,0,y0,iw,y1-y0,-g.cx*sc,(y0-(g.ring+i*hs))*sc,iw*sc,(y1-y0)*sc);c.restore()}
@@ -2542,11 +2583,11 @@ const Charm=(()=>{
     hit.addEventListener('pointerup',up);hit.addEventListener('pointercancel',up)}
   function init(){layer=document.createElement('div');layer.id='charm-layer';layer.setAttribute('aria-hidden','true');cv=document.createElement('canvas');cx=cv.getContext('2d');hit=document.createElement('div');hit.id='charm-hit';layer.append(cv,hit);document.body.appendChild(layer);
     const old=$('charm');if(old)old.remove();setKind(S.get('charm','e'));wire();requestAnimationFrame(frame);addEventListener('resize',()=>{W=0});setTimeout(()=>{if(P[N+1])P[N+1].px-=6},500)}
-  return{init,setKind,show:v=>{layer.hidden=!v;const r=rivet();if(r)r.hidden=!v},kick:(k)=>{if(P[N+1])P[N+1].px-=(k||8)}}})();
+  return{init,setKind,custom:(k,im,g)=>{IMGS[k]=im;CHG[k]=g},show:v=>{layer.hidden=!v;const r=rivet();if(r)r.hidden=!v},kick:(k)=>{if(P[N+1])P[N+1].px-=(k||8)}}})();
 function setCharm(k){S.set('charm',k);Charm.setKind(k);Charm.kick(6);document.querySelectorAll('[data-ch]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.ch===k))}
 let chAsked=false;
 function askMotion(){if(!chAsked&&window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function'){chAsked=true;DeviceOrientationEvent.requestPermission().catch(()=>{})}}
-(function(){Charm.init();const showC=S.get('charmOn',true);Charm.show(showC);setCharm(CH.includes(S.get('charm','e'))?S.get('charm','e'):'e');
+(function(){Charm.init();const showC=S.get('charmOn',true);Charm.show(showC);setCharm(CH.includes(S.get('charm','e'))||String(S.get('charm','e')).startsWith('x:')?S.get('charm','e'):'e');
   $('set-charm').checked=showC;$('set-gyro').checked=gyroOn();
   $('set-charm').onchange=e=>{S.set('charmOn',e.target.checked);Charm.show(e.target.checked)};
   $('set-gyro').onchange=e=>{S.set('gyro',e.target.checked);if(e.target.checked)askMotion()};
@@ -2583,7 +2624,118 @@ const Orient=(()=>{
   addEventListener('resize',paint);if(screen.orientation)try{screen.orientation.addEventListener('change',paint)}catch(_){}
   return{toggle,paint,reset:()=>{tries=0;left=false}}})();
 $('orient').onclick=()=>Orient.toggle();Orient.paint();
+/* ===================== Bijouterie : créer, modifier et porter son charm ===================== */
+const BJ=(()=>{
+  const METALS={rose:['Or rose',['#fff1e6','#e9b7a2','#b9786a','#f3c9b8','#7a4a3e']],or:['Or',['#fff7d0','#f5d46b','#b8860b','#ffe48a','#7a5a08']],argent:['Argent',['#ffffff','#d8dde4','#8a929e','#eef1f5','#5a616c']],platine:['Platine',['#f4f8ff','#c9d3e3','#7f8ca3','#e6edf7','#4a5366']],cuivre:['Cuivre',['#ffe0c4','#d98a52','#8c4a22','#f0b080','#5a2c10']],noir:['Noir',['#9a9aa4','#44444c','#15151a','#66666f','#050507']]};
+  const GEMS={rubis:['Rubis',['#ffc0cf','#e0204d','#7a0a28']],saphir:['Saphir',['#b9dcff','#2f6fe0','#0e2f78']],emeraude:['Émeraude',['#c4f5cf','#22b45a','#0b5a2a']],amethyste:['Améthyste',['#ecd0ff','#9b4de0','#4a1a86']],topaze:['Topaze',['#fff0b0','#f2a81a','#8a5a05']],diamant:['Diamant',['#ffffff','#dfeaff','#8fa8cf']],quartz:['Quartz rose',['#ffe3ee','#f49ec0','#b0507a']],onyx:['Onyx',['#8a8a96','#2a2a32','#050507']],perle:['Perle',['#ffffff','#f5ece6','#c9b3ac']]};
+  const mir=(p,f)=>{const q=new Path2D();q.addPath(p,new DOMMatrix([-1,0,0,1,0,0]));f&&0;return q};
+  const P=(f)=>{const p=new Path2D();f(p);return p};
+  const SHAPES={
+   medal:['Médaille',1,()=>P(p=>p.arc(0,0,1,0,7))],
+   oval:['Ovale',1,()=>P(p=>p.ellipse(0,0,.78,1,0,0,7))],
+   heart:['Cœur',1,()=>P(p=>{p.moveTo(0,.95);p.bezierCurveTo(-1.25,.2,-.95,-.95,0,-.35);p.bezierCurveTo(.95,-.95,1.25,.2,0,.95)})],
+   drop:['Goutte',1,()=>P(p=>{p.moveTo(0,-1);p.bezierCurveTo(.2,-.5,.9,-.1,.9,.3);p.arc(0,.3,.9,0,Math.PI);p.bezierCurveTo(-.9,-.1,-.2,-.5,0,-1)})],
+   star:['Étoile',1,()=>P(p=>{for(let i=0;i<10;i++){const r=i%2?.5:1.02,a=-Math.PI/2+i*Math.PI/5;i?p.lineTo(Math.cos(a)*r,Math.sin(a)*r):p.moveTo(Math.cos(a)*r,Math.sin(a)*r)}p.closePath()})],
+   flower:['Fleur',.9,()=>P(p=>{for(let i=0;i<6;i++){const a=i*Math.PI/3,x=Math.cos(a)*.6,y=Math.sin(a)*.6;p.moveTo(x+.45,y);p.arc(x,y,.45,0,7)}p.moveTo(.5,0);p.arc(0,0,.5,0,7)})],
+   butterfly:['Papillon',.75,()=>{const h=P(p=>{p.moveTo(0,-.1);p.bezierCurveTo(-.3,-1.1,-1.3,-1,-1.15,-.25);p.bezierCurveTo(-1.05,.12,-.4,.15,0,.02);p.bezierCurveTo(-.8,.2,-1.0,1.0,-.5,.98);p.bezierCurveTo(-.2,.95,-.05,.55,0,.1)});const q=new Path2D();q.addPath(h);q.addPath(h,new DOMMatrix([-1,0,0,1,0,0]));return q}],
+   moon:['Lune',1,()=>P(p=>{p.moveTo(.25,-1);p.bezierCurveTo(-1.35,-.75,-1.35,.75,.25,1);p.bezierCurveTo(-.75,.6,-.75,-.6,.25,-1)})],
+   clover:['Trèfle',.9,()=>P(p=>{[[-.5,0],[.5,0],[0,-.5],[0,.5]].forEach(([x,y])=>{p.moveTo(x+.52,y);p.arc(x,y,.52,0,7)})})],
+   diamond:['Losange',1,()=>P(p=>{p.moveTo(0,-1);p.lineTo(.72,0);p.lineTo(0,1);p.lineTo(-.72,0);p.closePath()})],
+   hexagon:['Hexagone',1,()=>P(p=>{for(let i=0;i<6;i++){const a=Math.PI/6+i*Math.PI/3;i?p.lineTo(Math.cos(a),Math.sin(a)):p.moveTo(Math.cos(a),Math.sin(a))}p.closePath()})],
+   shield:['Écusson',.95,()=>P(p=>{p.moveTo(-.85,-.8);p.bezierCurveTo(-.3,-.65,.3,-.65,.85,-.8);p.lineTo(.85,.1);p.bezierCurveTo(.85,.65,.3,.9,0,1);p.bezierCurveTo(-.3,.9,-.85,.65,-.85,.1);p.closePath()})],
+   wings:['Ailes de fée',.7,()=>{const h=P(p=>{p.moveTo(-.08,.1);p.bezierCurveTo(-.5,-1.3,-1.5,-1,-1.05,-.1);p.bezierCurveTo(-.9,.2,-.5,.15,-.08,.1);p.moveTo(-.08,.22);p.bezierCurveTo(-.75,.15,-1.05,.75,-.62,.98);p.bezierCurveTo(-.3,1.08,-.1,.6,-.08,.22)});const q=new Path2D();q.addPath(h);q.addPath(h,new DOMMatrix([-1,0,0,1,0,0]));q.moveTo(.1,.05);q.ellipse(0,.1,.1,.55,0,0,7);return q}],
+   bow:['Nœud',.75,()=>{const h=P(p=>{p.moveTo(0,0);p.bezierCurveTo(-.4,-.85,-1.2,-.75,-1.1,0);p.bezierCurveTo(-1.2,.75,-.4,.85,0,0)});const q=new Path2D();q.addPath(h);q.addPath(h,new DOMMatrix([-1,0,0,1,0,0]));q.moveTo(.26,0);q.arc(0,0,.26,0,7);return q}]};
+  const SKEYS=Object.keys(SHAPES);
+  const PLACES={centre:'Au centre',trio:'Trois pierres',halo:'Halo',sans:'Sans pierre'},BORDERS={lisse:'Lisse',perle:'Perlée',filigrane:'Filigrane'},CHAINS={fine:'Fine',perles:'Perles',torsade:'Torsade',maille:'Grosse maille'};
+  const W=200,TOP=255,CY=TOP+14+76,H=CY+76+16,RING=42,GEO={h:H,ring:RING,top:TOP,com:CY,cx:100};
+  const def=()=>({shape:'heart',metal:'rose',gem:'rubis',place:'centre',chain:'fine',border:'lisse',letter:'',photo:null});
+  const stops=(g,arr)=>{arr.forEach((c,i)=>g.addColorStop(i/(arr.length-1),c));return g};
+  /* pierre taillée */
+  function gem(c,x,y,r,g,mt){const col=GEMS[g][1];c.save();c.shadowColor='rgba(0,0,0,.45)';c.shadowBlur=r*.5;c.shadowOffsetY=r*.2;
+    const bz=stops(c.createLinearGradient(x-r,y-r,x+r,y+r),METALS[mt][1]);c.fillStyle=bz;c.beginPath();c.arc(x,y,r*1.18,0,7);c.fill();c.shadowColor='transparent';
+    const gr=c.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);gr.addColorStop(0,col[0]);gr.addColorStop(.55,col[1]);gr.addColorStop(1,col[2]);c.fillStyle=gr;c.beginPath();c.arc(x,y,r,0,7);c.fill();
+    if(g!=='perle'){c.strokeStyle='rgba(255,255,255,.38)';c.lineWidth=Math.max(.6,r*.06);for(let i=0;i<8;i++){const a=i*Math.PI/4+.39;c.beginPath();c.moveTo(x+Math.cos(a)*r*.38,y+Math.sin(a)*r*.38);c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r);c.stroke()}c.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4+.39;c.lineTo(x+Math.cos(a)*r*.38,y+Math.sin(a)*r*.38)}c.closePath();c.fillStyle='rgba(255,255,255,.18)';c.fill()}
+    c.fillStyle='rgba(255,255,255,.85)';c.beginPath();c.ellipse(x-r*.38,y-r*.42,r*.26,r*.14,-.7,0,7);c.fill();c.restore()}
+  /* le pendentif seul, centré en (cx,cy), rayon R */
+  function pendant(c,p,cx,cy,R,bmp){const sh=SHAPES[p.shape]||SHAPES.heart,path=sh[2](),K=R*sh[1],M=METALS[p.metal][1];c.save();c.translate(cx,cy);c.scale(K,K);
+    const mg=(rev)=>{const g=c.createLinearGradient(rev?1:-1,rev?1:-1,rev?-1:1,rev?-1:1);return stops(g,rev?M.slice().reverse():M)};
+    c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=9/K;c.shadowOffsetY=4/K;c.fillStyle=mg();c.fill(path);c.shadowColor='transparent';
+    c.lineJoin='round';c.strokeStyle=M[4];c.lineWidth=1.6/K;c.stroke(path);
+    /* bordure */
+    c.save();c.scale(.9,.9);c.lineCap='round';
+    if(p.border==='perle'){c.setLineDash([0,12/K]);c.strokeStyle=M[4];c.lineWidth=8.5/K;c.stroke(path);c.strokeStyle=M[0];c.lineWidth=6/K;c.stroke(path);c.strokeStyle=M[1];c.lineWidth=3.5/K;c.stroke(path)}
+    else if(p.border==='filigrane'){c.setLineDash([8/K,4/K]);c.strokeStyle=M[4];c.lineWidth=3.2/K;c.stroke(path);c.strokeStyle=M[0];c.lineWidth=1.6/K;c.stroke(path)}
+    else{c.strokeStyle=M[0];c.lineWidth=2.4/K;c.stroke(path);c.strokeStyle=M[4];c.lineWidth=1/K;c.globalAlpha=.7;c.scale(.97,.97);c.stroke(path)}
+    c.restore();
+    /* plaque intérieure */
+    c.save();c.scale(.78,.78);c.fillStyle=mg(true);c.fill(path);c.strokeStyle=M[4];c.lineWidth=2/K;c.stroke(path);c.restore();
+    c.save();c.scale(.76,.76);c.clip(path);const T=c.getTransform();c.setTransform(1,0,0,1,cx,cy);const k=K*.76;
+    if(bmp){const s=Math.max(2*k/bmp.width,2*k/bmp.height);c.drawImage(bmp,-bmp.width*s/2,-bmp.height*s/2,bmp.width*s,bmp.height*s)}
+    else{const L=(p.letter||'').slice(0,3),hasG=p.gem&&p.place!=='sans';
+      if(hasG&&p.place==='halo'){c.save();c.lineCap='round';c.setLineDash([0,k*.34]);c.strokeStyle=GEMS[p.gem][1][2];c.lineWidth=k*.2;c.beginPath();c.arc(0,0,k*.78,0,7);c.stroke();c.strokeStyle=GEMS[p.gem][1][1];c.lineWidth=k*.15;c.stroke();c.strokeStyle=GEMS[p.gem][1][0];c.lineWidth=k*.05;c.stroke();c.restore()}
+      if(hasG&&p.place==='trio'){gem(c,-k*.42,k*.22,k*.25,p.gem,p.metal);gem(c,k*.42,k*.22,k*.25,p.gem,p.metal);gem(c,0,-k*.32,k*.3,p.gem,p.metal)}
+      if(hasG&&p.place==='centre'&&!L)gem(c,0,0,k*.42,p.gem,p.metal);
+      if(hasG&&p.place==='centre'&&L)gem(c,0,-k*.58,k*.2,p.gem,p.metal);
+      if(L){const fs=k*(L.length===1?1.05:L.length===2?.8:.58);c.font=`700 ${fs}px Georgia,"Times New Roman",serif`;c.textAlign='center';c.textBaseline='middle';const ty=hasG&&p.place==='centre'?k*.14:0;c.fillStyle='rgba(40,12,20,.6)';c.fillText(L,fs*.03,ty+fs*.05);const g=c.createLinearGradient(0,ty-fs/2,0,ty+fs/2);stops(g,[M[0],M[1],M[2],M[3]]);c.fillStyle=g;c.fillText(L,0,ty-fs*.01)}}
+    c.restore();
+    /* reflet */
+    c.save();c.scale(1,1);c.clip(path);const gl=c.createLinearGradient(-1,-1,.3,.5);gl.addColorStop(0,'rgba(255,255,255,.5)');gl.addColorStop(.5,'rgba(255,255,255,.08)');gl.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=gl;c.beginPath();c.ellipse(-.3,-.45,.8,.45,-.6,0,7);c.fill();c.restore();c.restore()}
+  function chain(c,p){const M=METALS[p.metal][1],x=100,y0=RING,y1=TOP;c.save();
+    const g=stops(c.createLinearGradient(x-9,0,x+9,0),[M[4],M[1],M[0],M[2],M[4]]);c.strokeStyle=g;c.fillStyle=g;c.lineCap='round';c.shadowColor='rgba(0,0,0,.35)';c.shadowBlur=2;c.shadowOffsetY=1;
+    if(p.chain==='perles'){for(let y=y0+8;y<y1;y+=11){const r=c.createRadialGradient(x-1.8,y-2,.5,x,y,5.5);r.addColorStop(0,'#fff');r.addColorStop(.6,M[3]);r.addColorStop(1,M[2]);c.fillStyle=r;c.beginPath();c.arc(x,y,5.2,0,7);c.fill()}c.lineWidth=1.4;c.beginPath();c.moveTo(x,y0);c.lineTo(x,y1);c.globalCompositeOperation='destination-over';c.stroke()}
+    else if(p.chain==='torsade'){c.lineWidth=3.2;for(let s=0;s<2;s++){c.beginPath();for(let y=y0;y<=y1;y+=2){const xx=x+Math.sin(y/4.2+s*Math.PI)*5.2;y===y0?c.moveTo(xx,y):c.lineTo(xx,y)}c.stroke()}}
+    else{const big=p.chain==='maille',st=big?19:13,rx=big?7:5,ry=big?11:8;c.lineWidth=big?3.4:2.6;let i=0;for(let y=y0+ry-2;y<y1-ry+4;y+=st/1.15,i++){c.beginPath();if(i%2===0)c.ellipse(x,y,rx,ry,0,0,7);else{c.lineWidth=big?4.4:3.4;c.moveTo(x,y-ry*.7);c.lineTo(x,y+ry*.7);c.lineWidth=big?3.4:2.6;c.stroke();continue}c.stroke()}}
+    c.restore();
+    /* anneau du clou et maillon d'attache */
+    c.save();c.strokeStyle=stops(c.createLinearGradient(x-12,RING-12,x+12,RING+12),M);c.lineWidth=4;c.shadowColor='rgba(0,0,0,.4)';c.shadowBlur=3;c.beginPath();c.arc(x,RING,11,0,7);c.stroke();c.beginPath();c.ellipse(x,TOP+7,8,10.5,0,0,7);c.stroke();c.restore()}
+  function render(p,bmp){const cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');chain(c,p);pendant(c,p,100,CY,76,bmp);return cv}
+  /* pour l'aperçu et les vignettes */
+  function thumb(p,size,bmp){const cv=document.createElement('canvas');const d=Math.min(2,window.devicePixelRatio||1);cv.width=cv.height=size*d;cv.style.width=cv.style.height=size+'px';const c=cv.getContext('2d');c.scale(d,d);pendant(c,p,size/2,size/2,size*.4,bmp);return cv}
+  /* collection */
+  const coll=()=>S.get('bijoux',[]),saveColl=v=>S.set('bijoux',v);
+  const lib=()=>{const o=[];const sh=['heart','medal','star','flower','butterfly','moon','drop','clover','bow','wings','shield','diamond'],me=['rose','or','argent','platine','cuivre','noir'],ge=['rubis','saphir','emeraude','amethyste','topaze','diamant','quartz','perle'],pl=['centre','trio','halo'],bo=['lisse','perle','filigrane'],ch=['fine','perles','torsade','maille'],lt=['É','','','','','',''];
+    for(let i=0;i<24;i++)o.push({shape:sh[i%sh.length],metal:me[(i*5+1)%me.length],gem:ge[(i*3)%ge.length],place:pl[(i*2)%3],chain:ch[i%4],border:bo[(i+1)%3],letter:i%8===0?'É':'',photo:null});return o};
+  const nameOf=p=>SHAPES[p.shape][0]+' '+METALS[p.metal][0].toLowerCase();
+  async function bmpOf(id){if(!id)return null;try{const b=await IDB.get('b_'+id);return b?await createImageBitmap(b):null}catch(_){return null}}
+  async function apply(item){const bm=await bmpOf(item.p.photo),cv=render(item.p,bm),k='x:'+item.id;Charm.custom(k,cv,GEO);setCharm(k)}
+  async function restore(){const k=String(S.get('charm','e'));if(!k.startsWith('x:'))return;const it=coll().find(x=>'x:'+x.id===k);if(it)apply(it)}
+  function open(start){let p=Object.assign(def(),start||S.get('bjDraft',{})),bmp=null,curId=null;
+    const b=sheet('Bijouterie',`<div class="bjv"><canvas id="bj-pv"></canvas></div>
+     <div class="bjbtns"><button class="pill" id="bj-rnd">🎲 Au hasard</button><button class="btn-plum" id="bj-wear" style="flex:1;justify-content:center">Porter</button><button class="pill" id="bj-save">Garder</button></div>
+     <p class="bjl">Forme</p><div class="bjchips" id="bj-sh"></div><p class="bjl">Métal</p><div class="bjchips" id="bj-me"></div><p class="bjl">Pierre</p><div class="bjchips" id="bj-ge"></div>
+     <p class="bjl">Où les mettre</p><div class="bjchips" id="bj-pl"></div><p class="bjl">Bordure</p><div class="bjchips" id="bj-bo"></div><p class="bjl">Chaîne</p><div class="bjchips" id="bj-ch"></div>
+     <div class="field"><label for="bj-lt">Une lettre ou des initiales (3 au plus)</label><input id="bj-lt" type="text" maxlength="3" placeholder="Ex. É" autocomplete="off"></div>
+     <div class="row"><button class="pill" id="bj-ph">📷 Ma photo dans le bijou</button><button class="pill" id="bj-phx" hidden>Retirer la photo</button></div><input type="file" accept="image/*" id="bj-file" hidden>
+     <p class="bjl">Ma collection</p><div class="bjgrid" id="bj-my"></div><p class="bjl">Créations de la maison</p><div class="bjgrid" id="bj-lib"></div>`,{closeLabel:'Fermer'});
+    const q=s=>b.querySelector(s);
+    const pv=q('#bj-pv');function paintPv(){const d=Math.min(2,window.devicePixelRatio||1),sz=230;pv.width=pv.height=sz*d;pv.style.width=pv.style.height=sz+'px';const c=pv.getContext('2d');c.scale(d,d);
+      const g=c.createRadialGradient(sz/2,sz*.45,10,sz/2,sz/2,sz*.7);g.addColorStop(0,'#6b3d57');g.addColorStop(1,'#2a1420');c.fillStyle=g;c.fillRect(0,0,sz,sz);
+      c.save();c.beginPath();c.moveTo(sz/2,0);c.lineTo(sz/2,22);c.strokeStyle=METALS[p.metal][1][1];c.lineWidth=2;c.stroke();c.restore();pendant(c,p,sz/2,sz/2+10,sz*.37,bmp)}
+    const chips=(id,obj,key,mk)=>{const el=q('#'+id);el.innerHTML=Object.keys(obj).map(k=>`<button class="bjc${p[key]===k?' on':''}" data-k="${k}" aria-label="${esc(Array.isArray(obj[k])?obj[k][0]:obj[k])}">${mk?'':''}<span class="bjn">${esc(Array.isArray(obj[k])?obj[k][0]:obj[k])}</span></button>`).join('');
+      el.querySelectorAll('.bjc').forEach(x=>x.onclick=()=>{p[key]=x.dataset.k;sync()})};
+    function drawChips(){
+      const sh=q('#bj-sh');sh.innerHTML=SKEYS.map(k=>`<button class="bjc sq${p.shape===k?' on':''}" data-k="${k}" aria-label="${esc(SHAPES[k][0])}"></button>`).join('');
+      sh.querySelectorAll('.bjc').forEach(x=>{x.appendChild(thumb(Object.assign({},p,{shape:x.dataset.k,place:'sans',letter:''}),52));x.onclick=()=>{p.shape=x.dataset.k;sync()}});
+      const me=q('#bj-me');me.innerHTML=Object.keys(METALS).map(k=>{const M=METALS[k][1];return `<button class="bjc sw${p.metal===k?' on':''}" data-k="${k}" aria-label="${esc(METALS[k][0])}" style="background:linear-gradient(135deg,${M[0]},${M[1]} 40%,${M[2]} 70%,${M[3]})"></button>`}).join('');
+      me.querySelectorAll('.bjc').forEach(x=>x.onclick=()=>{p.metal=x.dataset.k;sync()});
+      const ge=q('#bj-ge');ge.innerHTML=Object.keys(GEMS).map(k=>{const G=GEMS[k][1];return `<button class="bjc sw${p.gem===k?' on':''}" data-k="${k}" aria-label="${esc(GEMS[k][0])}" style="background:radial-gradient(circle at 35% 30%,${G[0]},${G[1]} 55%,${G[2]})"></button>`}).join('');
+      ge.querySelectorAll('.bjc').forEach(x=>x.onclick=()=>{p.gem=x.dataset.k;if(p.place==='sans')p.place='centre';sync()});
+      chips('bj-pl',PLACES,'place');chips('bj-bo',BORDERS,'border');chips('bj-ch',CHAINS,'chain')}
+    function drawColl(){const mk=(el,list,own)=>{el.innerHTML='';list.forEach((it,i)=>{const w=document.createElement('div');w.className='bjt';const pp=own?it.p:it;const bt=document.createElement('button');bt.className='bjtb';bt.setAttribute('aria-label',own?it.name:nameOf(pp));bmpOf(pp.photo).then(bm=>bt.appendChild(thumb(pp,64,bm)));bt.onclick=async()=>{p=Object.assign(def(),pp);curId=own?it.id:null;bmp=await bmpOf(p.photo);sync();pv.scrollIntoView({block:'nearest'})};w.appendChild(bt);
+        if(own){const x=document.createElement('button');x.className='bjx';x.textContent='×';x.setAttribute('aria-label','Supprimer');x.onclick=e=>{e.stopPropagation();if(String(S.get('charm'))==='x:'+it.id)setCharm('e');if(it.p.photo)IDB.del('b_'+it.p.photo);saveColl(coll().filter(c=>c.id!==it.id));drawColl()};w.appendChild(x)}el.appendChild(w)})};
+      const my=coll();q('#bj-my').innerHTML='';if(my.length)mk(q('#bj-my'),my,true);else q('#bj-my').innerHTML='<p class="small muted">Vos bijoux gardés apparaîtront ici.</p>';mk(q('#bj-lib'),lib(),false)}
+    function sync(){S.set('bjDraft',p);q('#bj-lt').value=p.letter||'';q('#bj-phx').hidden=!p.photo;drawChips();paintPv()}
+    q('#bj-lt').oninput=e=>{p.letter=e.target.value.slice(0,3);paintPv();S.set('bjDraft',p)};
+    q('#bj-rnd').onclick=()=>{const r=a=>a[Math.floor(Math.random()*a.length)];p=Object.assign(def(),{shape:r(SKEYS),metal:r(Object.keys(METALS)),gem:r(Object.keys(GEMS)),place:r(['centre','trio','halo']),chain:r(Object.keys(CHAINS)),border:r(Object.keys(BORDERS)),letter:p.letter});bmp=null;curId=null;sync()};
+    const keep=async()=>{const L=coll();let it=curId&&L.find(x=>x.id===curId);if(it){it.p=Object.assign({},p);it.name=nameOf(p)}else{it={id:uid(),name:nameOf(p),p:Object.assign({},p)};L.unshift(it);curId=it.id}saveColl(L);return it};
+    q('#bj-save').onclick=async()=>{await keep();drawColl();toast('Bijou gardé dans votre collection',2200)};
+    q('#bj-wear').onclick=async()=>{const it=await keep();await apply(it);drawColl();toast('Votre charm est accroché',2200);closeSh(b)};
+    q('#bj-ph').onclick=()=>q('#bj-file').click();q('#bj-phx').onclick=()=>{p.photo=null;bmp=null;sync()};
+    q('#bj-file').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const bm=await createImageBitmap(f),sc=Math.min(1,480/Math.max(bm.width,bm.height)),cv=document.createElement('canvas');cv.width=Math.round(bm.width*sc);cv.height=Math.round(bm.height*sc);cv.getContext('2d').drawImage(bm,0,0,cv.width,cv.height);const bl=await new Promise(r=>cv.toBlob(r,'image/jpeg',.8)),id='ph'+uid();await IDB.put('b_'+id,bl);p.photo=id;bmp=await createImageBitmap(bl);sync()}catch(_){toast("Cette photo n'a pas pu être lue.",3000)}};
+    bmpOf(p.photo).then(bm=>{bmp=bm;sync()});sync();drawColl()}
+  setTimeout(restore,0);
+  return{open,restore,render,SHAPES,METALS}})();
 
-</script><script>(function(){var V='11.12',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.13',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
