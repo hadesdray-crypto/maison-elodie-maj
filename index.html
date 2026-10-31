@@ -1373,13 +1373,13 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.16',date:'31 octobre 2026',
+const APP={version:'11.17',date:'31 octobre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.16','31 octobre 2026',["Quand la caméra (pour le miroir) ou le micro (pour les mots doux) n'est pas autorisé : un message clair avec un bouton qui ouvre directement le bon écran d'autorisations du téléphone, comme dans les autres applications"]],['11.15','31 octobre 2026',["La fenêtre secrète : frottez le panneau du haut comme un miroir couvert de maquillage séché — bruits de frottement, petits craquements, poussière qui tombe — et la photo du jour apparaît derrière","Le vrai miroir : trois petits touchers (ou un cœur dessiné) sur le panneau de l'heure, toute la couleur est aspirée vers le doigt et la caméra avant devient un miroir, avec ou sans l'heure","Tout se règle dans Réglages → Fenêtre et miroir : l'endroit de chacun (haut ou bas), le geste, la dureté du grattage, les effets, les bruits, et la photo à changer quand on veut"]],['11.14','31 octobre 2026',["Perle : vraie voix de femme, plus claire et plus aiguë, choisie en priorité parmi les voix du téléphone", "Perle : trois niveaux au choix dans « Le son de la Perle » : Calme, Active, Passionnée (elle lit tout ce qui est à l'écran)", "Perle : plus de silence automatique la nuit (réglable dans les options avancées)", "Application construite en version finale signée (plus en version de test)"]],['11.13','28 octobre 2026',["Bijouterie : créez et portez votre charm (14 formes, 6 métaux, 9 pierres, chaînes, initiales, photo)", "Courses : envoi de la liste en image (WhatsApp, SMS, e-mail…) ou en texte", "Courses : corrections de reconnaissance (lait, pâtes)"]],['11.12','28 octobre 2026',["Barre du bas rétablie comme avant", "Boutons de validation en bijou : pointes serties d'une pierre rose", "Perle ne fait plus de bruits étranges : uniquement sa voix, à choisir parmi toutes les voix du téléphone"]],['11.11','28 octobre 2026',["Barre du bas refaite : écrin de métal rose, bulle qui s'élève, étincelles et petit carillon au toucher", "Réglages en grandes cartes colorées, plus simples", "Son de la Perle : voix plus grave ou plus aiguë, vitesse, choix de la voix", "Mode simple (enfant) dans les réglages", "Accordéons des sous-menus plus jolis"]],['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.17','31 octobre 2026',["Caméra et micro : la vraie fenêtre d'autorisation d'Android s'affiche directement dans l'appli — un seul toucher sur « Autoriser » et c'est fait, sans sortir de Maison Élodie","Les réglages du téléphone ne sont proposés qu'en dernier recours, si l'autorisation a déjà été refusée deux fois"]],['11.16','31 octobre 2026',["Quand la caméra (pour le miroir) ou le micro (pour les mots doux) n'est pas autorisé : un message clair avec un bouton qui ouvre directement le bon écran d'autorisations du téléphone, comme dans les autres applications"]],['11.15','31 octobre 2026',["La fenêtre secrète : frottez le panneau du haut comme un miroir couvert de maquillage séché — bruits de frottement, petits craquements, poussière qui tombe — et la photo du jour apparaît derrière","Le vrai miroir : trois petits touchers (ou un cœur dessiné) sur le panneau de l'heure, toute la couleur est aspirée vers le doigt et la caméra avant devient un miroir, avec ou sans l'heure","Tout se règle dans Réglages → Fenêtre et miroir : l'endroit de chacun (haut ou bas), le geste, la dureté du grattage, les effets, les bruits, et la photo à changer quand on veut"]],['11.14','31 octobre 2026',["Perle : vraie voix de femme, plus claire et plus aiguë, choisie en priorité parmi les voix du téléphone", "Perle : trois niveaux au choix dans « Le son de la Perle » : Calme, Active, Passionnée (elle lit tout ce qui est à l'écran)", "Perle : plus de silence automatique la nuit (réglable dans les options avancées)", "Application construite en version finale signée (plus en version de test)"]],['11.13','28 octobre 2026',["Bijouterie : créez et portez votre charm (14 formes, 6 métaux, 9 pierres, chaînes, initiales, photo)", "Courses : envoi de la liste en image (WhatsApp, SMS, e-mail…) ou en texte", "Courses : corrections de reconnaissance (lait, pâtes)"]],['11.12','28 octobre 2026',["Barre du bas rétablie comme avant", "Boutons de validation en bijou : pointes serties d'une pierre rose", "Perle ne fait plus de bruits étranges : uniquement sa voix, à choisir parmi toutes les voix du téléphone"]],['11.11','28 octobre 2026',["Barre du bas refaite : écrin de métal rose, bulle qui s'élève, étincelles et petit carillon au toucher", "Réglages en grandes cartes colorées, plus simples", "Son de la Perle : voix plus grave ou plus aiguë, vitesse, choix de la voix", "Mode simple (enfant) dans les réglages", "Accordéons des sous-menus plus jolis"]],['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -2369,7 +2369,8 @@ const Vx=(()=>{let aud=null,aid=null;
       const pvb=$b('#v-pv');if(pvb)pvb.onclick=()=>{if(pv){pv.pause();pv=null;pvb.textContent='▶';return}const u=URL.createObjectURL(blob);pv=new Audio(u);pv.onended=()=>{pv=null;pvb.textContent='▶'};pv.play().then(()=>pvb.textContent='■').catch(()=>{pv=null;toast('Lecture impossible',2000)})};
       const k=$b('#v-keep');if(k)k.onclick=async()=>{const id=uid();await IDB.put('v_'+id,blob);const L=list();L.unshift({id,t:($b('#v-tt').value||'').trim(),d:Date.now(),dur});S.set('voices',L);blob=null;if(pv){pv.pause();pv=null}state='idle';drawRec();drawList();homeBtn();toast('Mot doux enregistré',2000)};
       const rd=$b('#v-redo');if(rd)rd.onclick=()=>{if(pv){pv.pause();pv=null}blob=null;state='idle';drawRec()}}
-    async function startRec(){try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){PERM.sheet('mic');return}
+    async function startRec(){if(await ASKP('micro')==='denied'){PERM.sheet('mic');return}
+      try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){PERM.sheet('mic');return}
       stopPlay();const mt=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m));
       try{rec=new MediaRecorder(stream,mt?{mimeType:mt}:undefined)}catch(e){toast("L'enregistrement n'est pas possible ici.",3500);stream.getTracks().forEach(t=>t.stop());return}
       chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
@@ -2764,6 +2765,16 @@ const BJ=(()=>{
   return{open,restore,render,SHAPES,METALS}})();
 
 
+/* --- demander l'autorisation DANS l'appli : la vraie fenêtre d'Android, juste « Autoriser » --- */
+async function ASKP(kind){ /* 'camera' ou 'micro' → 'ok' si accordé, 'denied' si refusé, 'web' hors APK */
+  try{if(!NATIVE||!window.Capacitor||!Capacitor.Plugins||!Capacitor.Plugins.Perms)return 'web';
+    const P=Capacitor.Plugins.Perms;
+    let st=(await P.state())[kind];
+    if(st==='granted')return 'ok';
+    st=(await P.ask({kind}))[kind];
+    return st==='granted'?'ok':'denied'}
+  catch(_){return 'web'}}
+
 /* --- autorisations : un bouton qui ouvre le bon écran du téléphone, comme les autres applis --- */
 const PERM={
   open(){try{if(NATIVE&&window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.NativeSettings){
@@ -2774,8 +2785,12 @@ const PERM={
       :['Le micro doit être autorisé',"Pour enregistrer un mot doux ou dicter, l'appli doit pouvoir utiliser le micro du téléphone.",'Micro','🎙️ Autoriser le micro'];
     const b=sheet(T[0],`<p style="font-size:1.05rem">${T[1]}</p>
       <button class="btn-plum" id="perm-go" style="justify-content:center;width:100%">${T[3]}</button>
-      <p class="small muted">L'écran du téléphone va s'ouvrir : touchez <b>Autorisations</b>, puis <b>${T[2]}</b>, et choisissez « Autoriser ». Revenez ensuite dans Maison Élodie et recommencez.</p>`);
-    b.querySelector('#perm-go').onclick=()=>{if(!PERM.open())toast('Ouvrez les réglages du téléphone → Applications → Maison Élodie → Autorisations → '+T[2]+'.',8000)}}};
+      <p class="small muted">Touchez le bouton : si le téléphone le permet encore, sa fenêtre « Autoriser » s'affiche ici même. Sinon, l'écran des autorisations s'ouvre : touchez <b>Autorisations</b>, puis <b>${T[2]}</b>, choisissez « Autoriser » et revenez.</p>`);
+    b.querySelector('#perm-go').onclick=async()=>{
+      const r=await ASKP(kind==='cam'?'camera':'micro');
+      if(r==='ok'){const ov=b.closest('.sheet-ov');const x=ov&&ov.querySelector('.sheet-x');if(x)x.click();
+        toast("C'est autorisé ✅ Recommencez votre geste.",3500);return}
+      if(!PERM.open())toast('Ouvrez les réglages du téléphone → Applications → Maison Élodie → Autorisations → '+T[2]+'.',8000)}}};
 
 /* ==================== La fenêtre secrète et le miroir ====================
    Deux surprises cachées dans les panneaux de l'accueil, entièrement réglables :
@@ -2788,16 +2803,17 @@ const FEN=(()=>{
   const cfg=()=>Object.assign({},DEF,S.get('fen',{}));
   const save=o=>{S.set('fen',Object.assign(cfg(),o));try{refreshTouch()}catch(_){}};
   const css=document.createElement('style');css.textContent=`
-  .fen-wrap{position:absolute;inset:0;border-radius:inherit;overflow:hidden;z-index:6;touch-action:none}
+  .fen-wrap{position:absolute;inset:0;border-radius:inherit;overflow:hidden;z-index:1;touch-action:none}
+  .fen-live{isolation:isolate}
+  .fen-live>*:not(.fen-wrap):not(.fen-x){position:relative;z-index:7;pointer-events:none}
   .fen-photo{position:absolute;inset:0;background-size:cover;background-position:center;border-radius:inherit}
   .fen-photo .fen-none{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
     padding:14px;font-size:.95rem;color:#f6e3d8;background:radial-gradient(120% 120% at 30% 20%,#6d4450,#3a2026)}
   .fen-skin,.fen-dust{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit}
-  .fen-x{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,230,210,.5);
+  .fen-x{position:absolute;top:8px;right:8px;z-index:8;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,230,210,.5);
     background:rgba(40,20,24,.55);color:#f6e3d8;font-size:17px;line-height:1;z-index:9;backdrop-filter:blur(3px)}
-  .fen-dim>*:not(.fen-wrap){transition:opacity .5s}
-  .fen-dim.fen-on>*:not(.fen-wrap){opacity:.14}
-  .mir-wrap{position:absolute;inset:0;border-radius:inherit;overflow:hidden;z-index:6;background:#1a1012}
+  
+  .mir-wrap{position:absolute;inset:0;border-radius:inherit;overflow:hidden;z-index:8;background:#1a1012}
   .mir-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
   .mir-glass{position:absolute;inset:0;pointer-events:none;border-radius:inherit;
     background:linear-gradient(115deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 70%,rgba(255,235,220,.08) 100%);
@@ -2887,7 +2903,7 @@ const FEN=(()=>{
   /* ======================= LA FENÊTRE À GRATTER ======================= */
   async function openScratch(panel,sx,sy,ev){if(busy)return;busy='scratch';
     const c=cfg(),rect=panel.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
-    panel.classList.add('fen-dim');
+    panel.classList.add('fen-live');
     const wrap=document.createElement('div');wrap.className='fen-wrap';
     const ph=document.createElement('div');ph.className='fen-photo';
     const url=await photoUrl();
@@ -2898,21 +2914,20 @@ const FEN=(()=>{
     const dust=document.createElement('canvas');dust.className='fen-dust';dust.style.pointerEvents='none';
     dust.width=skin.width;dust.height=skin.height;
     const x=document.createElement('button');x.className='fen-x';x.textContent='✕';x.setAttribute('aria-label','Refermer la fenêtre');
-    wrap.append(ph,skin,dust,x);panel.appendChild(wrap);
+    wrap.append(ph,skin,dust);panel.appendChild(wrap);panel.appendChild(x);
     const sc=skin.getContext('2d');const tex=paintSkin(sc,skin.width,skin.height,baseColor(panel));
-    requestAnimationFrame(()=>panel.classList.add('fen-on'));
     const fx=c.fx;
     /* poussière qui tombe */
     const dc=dust.getContext('2d');let parts=[],raf=0;
     const tick=()=>{dc.clearRect(0,0,dust.width,dust.height);
       parts=parts.filter(p=>(p.l-=1)>0);
-      for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=.28*dpr;p.vx*=.99;
+      for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=.16*dpr;p.vx*=.96;
         dc.globalAlpha=Math.min(1,p.l/22);dc.fillStyle=p.c;
         dc.beginPath();dc.ellipse(p.x,p.y,p.r,p.r*.7,p.a,0,7);dc.fill()}
       dc.globalAlpha=1;if(parts.length)raf=requestAnimationFrame(tick);else raf=0};
     const puff=(px,py,n,sp)=>{if(!fx)return;for(let i=0;i<n;i++)parts.push({x:px,y:py,
-      vx:(Math.random()-.5)*2.4*dpr*(sp||1),vy:(Math.random()*.5+.2)*dpr,r:(.8+Math.random()*2.2)*dpr,
-      a:Math.random()*3,l:20+Math.random()*26,c:Math.random()<.75?'rgba(214,160,164,.9)':'rgba(248,232,222,.9)'});
+      vx:(Math.random()-.5)*.7*dpr,vy:(Math.random()*.4+.15)*dpr,r:(.6+Math.random()*1.5)*dpr,
+      a:Math.random()*3,l:12+Math.random()*12,c:Math.random()<.75?'rgba(214,160,164,.85)':'rgba(248,232,222,.85)'});
       if(!raf)raf=requestAnimationFrame(tick)};
     /* grattage : plus la dureté est haute, plus il faut insister */
     const hard=Math.max(1,Math.min(8,c.hard)),strength=.95-hard*.085; /* 1→.87 … 8→.27 */
@@ -2933,11 +2948,11 @@ const FEN=(()=>{
         for(let i=1;i<=steps;i++)brush(last[0]+(bx-last[0])*i/steps,last[1]+(by-last[1])*i/steps,sp)}
       else brush(bx,by,sp);
       if(snd())AU.rubLevel(Math.min(1,sp*1.6));
-      if(Math.random()<Math.min(.5,sp*.5)){puff(bx,by,2+Math.round(sp*3),1);if(snd()&&Math.random()<.22)AU.crack(.35)}
+      if(Math.random()<Math.min(.4,sp*.4)){puff(bx,by,1+Math.round(sp*2),1);if(snd()&&Math.random()<.18)AU.crack(.3)}
       last=[bx,by];lastT=now;
       if(++strokes%14===0&&!cleared&&ratio()>.72){cleared=true;
-        skin.style.transition='opacity .8s';skin.style.opacity='0';if(snd())AU.rubStop();
-        puff(skin.width/2,skin.height*.3,26,2);if(snd())AU.crack(1.2)}};
+        skin.style.transition='opacity 1.2s';skin.style.opacity='0';if(snd())AU.rubStop();
+        if(snd())AU.crack(.5)}};
     const down=e=>{if(e.target===x)return;if(e.cancelable)e.preventDefault();idle=0;last=null;lastT=performance.now();
       if(snd()){AU.wake();AU.rubStart()}
       const pid=e.pointerId;move(e);
@@ -2953,8 +2968,8 @@ const FEN=(()=>{
     let closedFlag=false;
     const close=()=>{if(closedFlag)return;closedFlag=true;if(snd())AU.rubStop();
       skin.style.transition='opacity 1s';skin.style.opacity='1';sc.globalCompositeOperation='source-over';sc.drawImage(tex,0,0);
-      panel.classList.remove('fen-on');
-      setTimeout(()=>{if(raf)cancelAnimationFrame(raf);if(url)URL.revokeObjectURL(url);wrap.remove();panel.classList.remove('fen-dim');busy=null},900)};
+      
+      setTimeout(()=>{if(raf)cancelAnimationFrame(raf);if(url)URL.revokeObjectURL(url);wrap.remove();x.remove();panel.classList.remove('fen-live');busy=null},900)};
     x.onclick=close;
     const watch=setInterval(()=>{if(closedFlag){clearInterval(watch);return}
       idle++;if(idle>(cleared?8:18))close()},1000);
@@ -2989,7 +3004,8 @@ const FEN=(()=>{
         {video:true}];
       for(const t of tries){try{stream=await navigator.mediaDevices.getUserMedia(t);break}catch(e){}}
       if(!stream)throw 0;vid.srcObject=stream;try{await vid.play()}catch(_){}}
-    let ok=true;try{await start()}catch(_){ok=false}
+    const perm=await ASKP('camera');
+    let ok=perm!=='denied';if(ok){try{await start()}catch(_){ok=false}}
     if(!ok){wrap.remove();busy=null;clearInterval(ti);
       PERM.sheet('cam');return}
     /* aspiration de la couleur vers le doigt */
@@ -3064,6 +3080,6 @@ const FEN=(()=>{
   return{cfg,save,init,setPhoto,photoUrl}})();
 try{FEN.init()}catch(e){console.warn('Fenêtre :',e)}
 
-</script><script>(function(){var V='11.16',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.17',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
