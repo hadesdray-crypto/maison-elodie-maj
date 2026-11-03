@@ -1322,14 +1322,14 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.26',date:'3 novembre 2026',
+const APP={version:'11.27',date:'3 novembre 2026',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
   apkUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie.apk',   /* le fichier d'installation complet */   /* la dernière version de l'appli */
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
-const CHANGELOG=[['11.26','3 novembre 2026',["La Perle parle : la voix attend que le téléphone soit prêt, essaie plusieurs variantes de français, et explique quoi faire si le français n'est pas installé (bouton « Installer la voix française »)","Regarder : tout est rangé dans une seule bibliothèque — Marion Caméléon en premier, puis Crime, Documentaires, Beauté, Histoire, Monde, Cuisine, Voyage, Musique et « Mes chaînes ». Plus rien en double.","Nouveau : l'Espace concepteur, un menu caché protégé par un code (5 touchers sur le numéro de version, dans Réglages)"]],['11.25','1er novembre 2026',["Grattage refait : l'écran garde exactement ses couleurs, rien ne change quand on pose le doigt — la photo apparaît trait par trait, là où on gratte","Rien ne part tout seul : tant qu'on n'a pas tout gratté, même les bords, il en reste","À la fermeture, tout est aspiré vers le É en haut, pff, et l'écran reprend sa place"]],['11.24','1er novembre 2026',["Miroir : l'heure est maintenant au milieu, et un nouveau choix « Derrière l'affichage » montre le miroir sans rien changer à l'écran","Boutons façon bijou (arrondis, reflets, petite gemme) — réglable dans Affichage","Nouvelle carte Skins dans les Réglages : vos propres images peuvent habiller les gros boutons, la barre du bas et les fenêtres"]],['11.23','1er novembre 2026',["Le téléphone sait maintenant quand la partie Android de l'appli est trop ancienne (caméra absente) : il propose alors la grande mise à jour en un bouton — télécharger, ouvrir, Installer, rien ne s'efface","Les liens de téléchargement réparés (ils menaient à une page privée)"]],['11.22','1er novembre 2026',["« Le miroir secret » : au premier lancement, une jolie présentation explique les 3 touchers, et un seul bouton ✨ prépare tout","Si le téléphone exige un détour par ses réglages : une belle bannière illustrée en 3 vignettes, un seul bouton, et au retour le miroir s'ouvre tout seul","Dans Réglages → La Perle : « Redécouvrir le miroir secret » pour revoir la présentation"]],['11.21','1er novembre 2026',["La caméra et le micro sont demandés une seule fois, au démarrage de l'appli, comme les autres applications : ensuite, trois touchers et le miroir s'ouvre directement, sans jamais aucune question","Si l'autorisation arrive après un détour par les réglages : « Pardon pour cette petite contrainte technique… le miroir est à vous ✨ » et il s'ouvre tout seul"]],['11.20','1er novembre 2026',["Caméra pas encore autorisée ? Une fiche toute simple avec un seul bouton qui ouvre le bon réglage — et au retour dans l'appli, le miroir s'ouvre tout seul, rien à refaire","Pareil pour le micro des mots doux"]],['11.19','1er novembre 2026',["Le miroir s'ouvre directement sur la caméra avant, sans aucune question : trois touchers et on se voit tout de suite","Un bouton 🔄 sur le miroir pour passer à la caméra de derrière et revenir"]],['11.18','31 octobre 2026',["L'encadré ne bouge plus pendant le grattage : le cadre, le bijou et les boutons restent exactement à leur place","Un gros bouton « 📷 Changer la photo du jour » tout en haut des Réglages : un toucher, on choisit la photo, c'est fait"]],['11.17','31 octobre 2026',["Caméra et micro : la vraie fenêtre d'autorisation d'Android s'affiche directement dans l'appli — un seul toucher sur « Autoriser » et c'est fait, sans sortir de Maison Élodie","Les réglages du téléphone ne sont proposés qu'en dernier recours, si l'autorisation a déjà été refusée deux fois"]],['11.16','31 octobre 2026',["Quand la caméra (pour le miroir) ou le micro (pour les mots doux) n'est pas autorisé : un message clair avec un bouton qui ouvre directement le bon écran d'autorisations du téléphone, comme dans les autres applications"]],['11.15','31 octobre 2026',["La fenêtre secrète : frottez le panneau du haut comme un miroir couvert de maquillage séché — bruits de frottement, petits craquements, poussière qui tombe — et la photo du jour apparaît derrière","Le vrai miroir : trois petits touchers (ou un cœur dessiné) sur le panneau de l'heure, toute la couleur est aspirée vers le doigt et la caméra avant devient un miroir, avec ou sans l'heure","Tout se règle dans Réglages → Fenêtre et miroir : l'endroit de chacun (haut ou bas), le geste, la dureté du grattage, les effets, les bruits, et la photo à changer quand on veut"]],['11.14','31 octobre 2026',["Perle : vraie voix de femme, plus claire et plus aiguë, choisie en priorité parmi les voix du téléphone", "Perle : trois niveaux au choix dans « Le son de la Perle » : Calme, Active, Passionnée (elle lit tout ce qui est à l'écran)", "Perle : plus de silence automatique la nuit (réglable dans les options avancées)", "Application construite en version finale signée (plus en version de test)"]],['11.13','28 octobre 2026',["Bijouterie : créez et portez votre charm (14 formes, 6 métaux, 9 pierres, chaînes, initiales, photo)", "Courses : envoi de la liste en image (WhatsApp, SMS, e-mail…) ou en texte", "Courses : corrections de reconnaissance (lait, pâtes)"]],['11.12','28 octobre 2026',["Barre du bas rétablie comme avant", "Boutons de validation en bijou : pointes serties d'une pierre rose", "Perle ne fait plus de bruits étranges : uniquement sa voix, à choisir parmi toutes les voix du téléphone"]],['11.11','28 octobre 2026',["Barre du bas refaite : écrin de métal rose, bulle qui s'élève, étincelles et petit carillon au toucher", "Réglages en grandes cartes colorées, plus simples", "Son de la Perle : voix plus grave ou plus aiguë, vitesse, choix de la voix", "Mode simple (enfant) dans les réglages", "Accordéons des sous-menus plus jolis"]],['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
+const CHANGELOG=[['11.27','3 novembre 2026',["Nouveau menu « Apparence » dans Réglages : 15 styles de boutons et de cadres (bijou, bijou pavé, métal brossé, tricot cocooning, fourrure, cristal, cuir, porcelaine, bois, et les thèmes or rose, argent, émeraude, rose poudré, soirée), 16 fonds d'écran, et la couleur du velours, du métal et du fond au choix", "Les charms du collier existent dans chaque style (cœur, rose, étoile, clé, papillon, lune, trèfle, É)", "Album surprise (Espace concepteur) : jusqu'à 14 photos, une nouvelle derrière la fenêtre chaque jour ou matin et soir, au hasard sans répétition", "Miroir : bouton appareil photo (la photo reste dans l'appli) et bouton lumière pour se maquiller"]],['11.26','3 novembre 2026',["La Perle parle : la voix attend que le téléphone soit prêt, essaie plusieurs variantes de français, et explique quoi faire si le français n'est pas installé (bouton « Installer la voix française »)","Regarder : tout est rangé dans une seule bibliothèque — Marion Caméléon en premier, puis Crime, Documentaires, Beauté, Histoire, Monde, Cuisine, Voyage, Musique et « Mes chaînes ». Plus rien en double.","Nouveau : l'Espace concepteur, un menu caché protégé par un code (5 touchers sur le numéro de version, dans Réglages)"]],['11.25','1er novembre 2026',["Grattage refait : l'écran garde exactement ses couleurs, rien ne change quand on pose le doigt — la photo apparaît trait par trait, là où on gratte","Rien ne part tout seul : tant qu'on n'a pas tout gratté, même les bords, il en reste","À la fermeture, tout est aspiré vers le É en haut, pff, et l'écran reprend sa place"]],['11.24','1er novembre 2026',["Miroir : l'heure est maintenant au milieu, et un nouveau choix « Derrière l'affichage » montre le miroir sans rien changer à l'écran","Boutons façon bijou (arrondis, reflets, petite gemme) — réglable dans Affichage","Nouvelle carte Skins dans les Réglages : vos propres images peuvent habiller les gros boutons, la barre du bas et les fenêtres"]],['11.23','1er novembre 2026',["Le téléphone sait maintenant quand la partie Android de l'appli est trop ancienne (caméra absente) : il propose alors la grande mise à jour en un bouton — télécharger, ouvrir, Installer, rien ne s'efface","Les liens de téléchargement réparés (ils menaient à une page privée)"]],['11.22','1er novembre 2026',["« Le miroir secret » : au premier lancement, une jolie présentation explique les 3 touchers, et un seul bouton ✨ prépare tout","Si le téléphone exige un détour par ses réglages : une belle bannière illustrée en 3 vignettes, un seul bouton, et au retour le miroir s'ouvre tout seul","Dans Réglages → La Perle : « Redécouvrir le miroir secret » pour revoir la présentation"]],['11.21','1er novembre 2026',["La caméra et le micro sont demandés une seule fois, au démarrage de l'appli, comme les autres applications : ensuite, trois touchers et le miroir s'ouvre directement, sans jamais aucune question","Si l'autorisation arrive après un détour par les réglages : « Pardon pour cette petite contrainte technique… le miroir est à vous ✨ » et il s'ouvre tout seul"]],['11.20','1er novembre 2026',["Caméra pas encore autorisée ? Une fiche toute simple avec un seul bouton qui ouvre le bon réglage — et au retour dans l'appli, le miroir s'ouvre tout seul, rien à refaire","Pareil pour le micro des mots doux"]],['11.19','1er novembre 2026',["Le miroir s'ouvre directement sur la caméra avant, sans aucune question : trois touchers et on se voit tout de suite","Un bouton 🔄 sur le miroir pour passer à la caméra de derrière et revenir"]],['11.18','31 octobre 2026',["L'encadré ne bouge plus pendant le grattage : le cadre, le bijou et les boutons restent exactement à leur place","Un gros bouton « 📷 Changer la photo du jour » tout en haut des Réglages : un toucher, on choisit la photo, c'est fait"]],['11.17','31 octobre 2026',["Caméra et micro : la vraie fenêtre d'autorisation d'Android s'affiche directement dans l'appli — un seul toucher sur « Autoriser » et c'est fait, sans sortir de Maison Élodie","Les réglages du téléphone ne sont proposés qu'en dernier recours, si l'autorisation a déjà été refusée deux fois"]],['11.16','31 octobre 2026',["Quand la caméra (pour le miroir) ou le micro (pour les mots doux) n'est pas autorisé : un message clair avec un bouton qui ouvre directement le bon écran d'autorisations du téléphone, comme dans les autres applications"]],['11.15','31 octobre 2026',["La fenêtre secrète : frottez le panneau du haut comme un miroir couvert de maquillage séché — bruits de frottement, petits craquements, poussière qui tombe — et la photo du jour apparaît derrière","Le vrai miroir : trois petits touchers (ou un cœur dessiné) sur le panneau de l'heure, toute la couleur est aspirée vers le doigt et la caméra avant devient un miroir, avec ou sans l'heure","Tout se règle dans Réglages → Fenêtre et miroir : l'endroit de chacun (haut ou bas), le geste, la dureté du grattage, les effets, les bruits, et la photo à changer quand on veut"]],['11.14','31 octobre 2026',["Perle : vraie voix de femme, plus claire et plus aiguë, choisie en priorité parmi les voix du téléphone", "Perle : trois niveaux au choix dans « Le son de la Perle » : Calme, Active, Passionnée (elle lit tout ce qui est à l'écran)", "Perle : plus de silence automatique la nuit (réglable dans les options avancées)", "Application construite en version finale signée (plus en version de test)"]],['11.13','28 octobre 2026',["Bijouterie : créez et portez votre charm (14 formes, 6 métaux, 9 pierres, chaînes, initiales, photo)", "Courses : envoi de la liste en image (WhatsApp, SMS, e-mail…) ou en texte", "Courses : corrections de reconnaissance (lait, pâtes)"]],['11.12','28 octobre 2026',["Barre du bas rétablie comme avant", "Boutons de validation en bijou : pointes serties d'une pierre rose", "Perle ne fait plus de bruits étranges : uniquement sa voix, à choisir parmi toutes les voix du téléphone"]],['11.11','28 octobre 2026',["Barre du bas refaite : écrin de métal rose, bulle qui s'élève, étincelles et petit carillon au toucher", "Réglages en grandes cartes colorées, plus simples", "Son de la Perle : voix plus grave ou plus aiguë, vitesse, choix de la voix", "Mode simple (enfant) dans les réglages", "Accordéons des sous-menus plus jolis"]],['11.10','28 octobre 2026',["Nouveau jeu Les Bonbons : bonbons rayés, emballés, chocolat, explosions, niveaux et objectifs", "Salon de jeux plus coloré, confettis de victoire dans tous les jeux"]],['11.9','28 octobre 2026',["Courses : liste complète avec catalogue en images, dictée, saisie et photo des articles", "Mots doux : enregistrez des vocaux pour Élodie et ajoutez des mots écrits", "Écrire dans un champ déjà rempli remplace son contenu"]],['11.8','28 octobre 2026',["Voix française plus claire et plus lente, meilleure voix choisie automatiquement", "Les heures, pourcentages, sigles et symboles sont prononcés correctement"]],['11.7','28 octobre 2026',["Mise à jour réparée : elle s'installe maintenant à coup sûr, sans dépendre du téléphone", "Boutons en écrin : bouts en pointe, reflets de tube de métal rose"]],['11.6','28 octobre 2026',["Mise à jour plus sûre : si elle ne s'installe pas, un bouton mène directement à l'APK"]],['11.5','28 octobre 2026',["Recherche prédictive des métiers, compétences et villes (tolérante aux fautes)", "Micro de dictée dans tous les champs de saisie"]],['11.4','28 octobre 2026',["Le son en trois gros choix, et réparation de la voix pas à pas", "La Perle déteste être de travers : faites-la rouler pour la redresser", "Afficher ou cacher les paroles de la Perle", "Voix native d'Android et dictée native dans l'APK"]],['11.3','28 octobre 2026',["La Perle parle avec la voix native d'Android, comme les autres applications","Bouton portrait / paysage natif dans l'APK","Réparation de la voix : installer ou réparer en un toucher"]],['11.2','28 octobre 2026',["Mises à jour automatiques avec jauge de progression","Installation en APK, utilisable sans connexion","Voix de la Perle : tous les réglages et un dépannage"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit comme une fleur vivante"]],['11.1','28 octobre 2026',["Couleur du thème : Noir, Bordeaux, Bleu nuit, Vert, Violet","La Perle parle partout, voix réglable dans Réglages","Le charm est une vraie chaîne qui pèse et suit le doigt et l'inclinaison","Bouton portrait / paysage en haut","Le menu de la Perle la suit quand on la déplace"]],['11.0','28 octobre 2026',["La Perle, votre compagnon qui parle et explique chaque écran","Regarder : Crime, Documentaires et Beauté, en un toucher","Espace Pro complet : fiche de poste, entretiens qui écoutent, clients, objectifs, RGPD, export Excel","Réglages : connexion, voix, taille du texte, sauvegarde, mises à jour","Nouveaux jeux : le Mot du jour, le Pendu, le Puzzle photo","Corrections : agenda, micro, charm, liens de l'accueil"]],
  ['10.0','octobre 2026',["Style N°9 cuir et or rose","15 jeux en 4 familles"]]];
 const ANDROID=/Android/i.test(navigator.userAgent);
 const NATIVE=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
@@ -1404,9 +1404,10 @@ const DEV=(()=>{
     b.querySelector('#dv-go').onclick=go;b.querySelector('#dv-c').onkeydown=e=>{if(e.key==='Enter')go()};setTimeout(()=>b.querySelector('#dv-c').focus(),300)}
   function menu(){const b=sheet('Espace concepteur',`
     <p class="small muted">Ces réglages ne sont pas visibles ailleurs dans l'appli.</p>
-    <div class="jewel stack"><p class="sec-title">Album surprise</p><p class="small">Bientôt (prochaine mise à jour) : choisir 7 ou 14 photos, et l'appli en cache une nouvelle derrière la fenêtre chaque jour ou matin et soir.</p></div>
+    <div class="jewel stack"><p class="sec-title">Album surprise</p><div class="stack" id="dv-album"></div></div>
     <div class="jewel stack"><p class="sec-title">État de la voix</p><p class="small" id="dv-voice"></p><button class="pill" id="dv-say">Faire parler la Perle</button></div>
     <div class="jewel stack"><p class="sec-title">Code</p><button class="pill" id="dv-chg">Changer le code concepteur</button></div>`,{closeLabel:'Quitter l\'espace concepteur'});
+    try{ALB.mount(b.querySelector('#dv-album'))}catch(e){console.warn('Album',e)}
     const st=()=>{try{const i=Pearl.status();b.querySelector('#dv-voice').textContent=(i.diag||'Pas encore parlé.')+(i.native?' · module natif présent':' · module natif absent')}catch(_){}};st();
     b.querySelector('#dv-say').onclick=()=>{Pearl.say('Je suis là, et ma voix fonctionne.','joie',null,true);setTimeout(st,1500)};
     b.querySelector('#dv-chg').onclick=()=>{popBack();setTimeout(create,250)}}
@@ -1949,6 +1950,7 @@ const tg=(id,on,label,sub)=>`<label class="todo set"><input type="checkbox" id="
 function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),n=NET.cfg(),f=S.get('font',0),lb=S.get('lastBackup',0),fw=FEN.cfg();
   const b=sheet('Réglages',`
   <div class="row" style="align-items:center;gap:10px;margin-bottom:4px"><img id="stp-prev" class="fen-chip-img" alt="" hidden><button class="btn-gold" id="st-photo" style="flex:1;justify-content:center">📷 Changer la photo du jour</button></div>
+  <details class="setg" ${focus==='look'?'open':''}><summary>Apparence : styles, couleurs et fonds</summary><div class="stack" id="lk-host"></div></details>
   <details class="setg" ${focus==='pearl'||!focus?'open':''}><summary>La Perle</summary><div class="stack">
     ${tg('st-pon',Pearl.visible(),'Afficher la Perle')}
     <div class="row"><span class="small">Taille :</span>${[[60,'Petite'],[72,'Moyenne'],[88,'Grande']].map(([s,l])=>`<button class="chip" data-psz="${s}" aria-pressed="${v.size===s}">${l}</button>`).join('')}</div>
@@ -2048,6 +2050,7 @@ function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),
       if(await SKINS.set(k,fl)){const bl=await IDB.get('b_skin_'+k);if(bl){pv.src=URL.createObjectURL(bl);pv.hidden=false}toast('Le skin est en place ✨',2500)}else toast("Cette image n'a pas pu être lue.",3000)};
     if(xx)xx.onclick=async()=>{await SKINS.clear(k);pv.hidden=true;toast('Skin retiré.',2000)}});
   q('#st-upd').onclick=()=>UPD.check(true);
+  try{LOOK.mount(q('#lk-host'))}catch(e){console.warn('Apparence',e)}
   {let n=0,t0=0;q('#st-ver').onclick=()=>{const now=Date.now();n=now-t0<1500?n+1:1;t0=now;if(n>=5){n=0;DEV.open()}}}q('#st-auto').onchange=e=>S.set('autoUpd',e.target.checked);try{setCards(b,focus)}catch(e){console.warn(e)}}
 /* --- le son, version simple : trois gros choix --- */
 const SNDI={voice:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12"/></svg>',sounds:'<svg viewBox="0 0 24 24"><path d="M9 17V6l10-2v11"/><circle cx="7" cy="17" r="2.3"/><circle cx="17" cy="15" r="2.3"/></svg>',off:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l4 5M21 9.5l-4 5"/></svg>'};
@@ -2573,7 +2576,7 @@ const fxConf=(()=>{let cv,cx,ps=[],on=false;
 const KID={on:()=>S.get('kid',false),apply(){document.documentElement.classList.toggle('kid',this.on())},
   set(v){S.set('kid',v);this.apply();if(v){const c=Object.assign({},VOICE0,S.get('voice',{}));S.set('voice',Object.assign(S.get('voice',{}),{narr:true,showText:true,rate:Math.min(c.rate,.9)}))}try{Pearl.speak(v?'Mode simple activé. Touche les gros dessins.':'Mode complet activé.',true)}catch(_){}}};
 KID.apply();
-const SET_CARDS=[['Voix et son','🔊','#ff5d8f',null,'son'],['La Perle','🫧','#c177ff','La Perle'],['Mode simple','🧒','#43b97f',null,'kid'],['Affichage','🎨','#7fae63','Affichage'],['Connexion','📶','#4aa8ff','Connexion internet'],['Sauvegarde','💾','#8f6cf0','Sauvegarde'],['Skins','🖼️','#c98fb2','Skins'],['Fenêtre et miroir','🪞','#e0789c','Fenêtre et miroir'],['Mises à jour','⬆️','#38c2c8','Mises à jour'],['Bijouterie','💍','#e8a04a',null,'bij']];
+const SET_CARDS=[['Apparence','✨','#e0a86a','Apparence'],['Voix et son','🔊','#ff5d8f',null,'son'],['La Perle','🫧','#c177ff','La Perle'],['Mode simple','🧒','#43b97f',null,'kid'],['Affichage','🎨','#7fae63','Affichage'],['Connexion','📶','#4aa8ff','Connexion internet'],['Sauvegarde','💾','#8f6cf0','Sauvegarde'],['Skins','🖼️','#c98fb2','Skins'],['Fenêtre et miroir','🪞','#e0789c','Fenêtre et miroir'],['Mises à jour','⬆️','#38c2c8','Mises à jour'],['Bijouterie','💍','#e8a04a',null,'bij']];
 function setCards(b,focus){const ds=[...b.querySelectorAll('details.setg')];if(!ds.length)return;const sec=t=>ds.find(d=>d.querySelector('summary').textContent.trim().startsWith(t));
   const grid=document.createElement('div');grid.className='setgrid';
   grid.innerHTML=SET_CARDS.map(([n,e,c,t,k],i)=>{const on=k==='kid'&&KID.on();return `<button class="setc${on?' on':''}" data-i="${i}" style="--gc:${c}"><span class="gic">${e}</span><b>${n}</b>${k==='kid'?`<small>${on?'Activé':'Désactivé'}</small>`:''}</button>`}).join('')+`<button class="setc wide" data-i="adv" style="--gc:#9aa7c7"><span class="gic">⚙️</span><b>Réglages avancés de la voix</b></button>`;
@@ -2586,7 +2589,7 @@ function setCards(b,focus){const ds=[...b.querySelectorAll('details.setg')];if(!
     if(k==='bij'){popBack();setTimeout(()=>BJ.open(),120);return}
     if(k==='kid'){KID.set(!KID.on());x.classList.toggle('on',KID.on());x.querySelector('small').textContent=KID.on()?'Activé':'Désactivé';return}
     const d=sec(t);if(d)showSec(d)});
-  const map={pearl:'La Perle',voice:'Voix et son',fix:'Dépannage',net:'Connexion',display:'Affichage',backup:'Sauvegarde',update:'Mises à jour'};
+  const map={look:'Apparence',pearl:'La Perle',voice:'Voix et son',fix:'Dépannage',net:'Connexion',display:'Affichage',backup:'Sauvegarde',update:'Mises à jour'};
   if(focus&&map[focus]){const d=sec(map[focus]);if(d)showSec(d)}}
 const _v=S.get('voice',{});if(!S.get('voiceMig2')){if(_v.engine==='sounds')S.set('voice',Object.assign(_v,{engine:'auto'}));S.set('voiceMig2',1)}
 
@@ -2644,7 +2647,7 @@ const Charm=(()=>{
 function setCharm(k){S.set('charm',k);Charm.setKind(k);Charm.kick(6);document.querySelectorAll('[data-ch]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.ch===k))}
 let chAsked=false;
 function askMotion(){if(!chAsked&&window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function'){chAsked=true;DeviceOrientationEvent.requestPermission().catch(()=>{})}}
-(function(){Charm.init();const showC=S.get('charmOn',true);Charm.show(showC);setCharm(CH.includes(S.get('charm','e'))||String(S.get('charm','e')).startsWith('x:')?S.get('charm','e'):'e');
+(function(){Charm.init();const showC=S.get('charmOn',true);Charm.show(showC);setCharm(CH.includes(S.get('charm','e'))||/^(x|lk):/.test(String(S.get('charm','e')))?S.get('charm','e'):'e');
   $('set-charm').checked=showC;$('set-gyro').checked=gyroOn();
   $('set-charm').onchange=e=>{S.set('charmOn',e.target.checked);Charm.show(e.target.checked)};
   $('set-gyro').onchange=e=>{S.set('gyro',e.target.checked);if(e.target.checked)askMotion()};
@@ -2898,6 +2901,171 @@ const PERM={
      (bruits de frottement, craquements, poussière) et une photo apparaît derrière.
    - Le miroir : trois petits touchers (ou un cœur dessiné) et toute la couleur du
      panneau est aspirée vers le doigt ; la caméra avant devient un vrai miroir. */
+/* ===================== Apparence : styles en images, couleurs, fonds d'écran, charms ===================== */
+const LOOK=(()=>{
+  const DEF={style:'defaut',couleur:null,metal:null,fond:'aucun',fondCouleur:null};
+  const cfg=()=>Object.assign({},DEF,S.get('look',{}));
+  const NAMES={defaut:'Or rose dessiné (comme avant)',orrose:'Or rose et bordeaux',argent:'Argent et bleu nuit',emeraude:'Or et émeraude',poudre:'Rose poudré',noir:'Soirée noir et or',
+    bijou:'Bijou',pave:'Bijou pavé',metal:'Métal brossé',cocooning:'Cocooning tricot',fourrure:'Fourrure',cristal:'Cristal',cuir:'Cuir cousu',porcelaine:'Porcelaine',bois:'Bois'};
+  const FNAMES={aucun:'Velours dessiné (comme avant)','velours-bordeaux':'Velours bordeaux',emeraude:'Velours émeraude','rose-poudre':'Satin rose poudré','noir-or':'Soirée noir et or',noel:'Noël',automne:'Automne',printemps:'Printemps',
+    'neutre-velours':'Velours (à colorer)','neutre-velours-2':'Velours uni (à colorer)',fourrure:'Fourrure (à colorer)','laine-1':'Pull en laine (à colorer)','laine-2':'Torsades (à colorer)','laine-torsades':'Grosses torsades (à colorer)','laine-jacquard':'Jacquard nordique (à colorer)','laine-gilet':'Gilet en laine (à colorer)','laine-crochet':'Crochet (à colorer)'};
+  const NEUTRES=['bijou','pave','metal','cocooning','fourrure','cristal','cuir','porcelaine'];
+  const FONDS_NEUTRES=['neutre-velours','neutre-velours-2','fourrure','laine-1','laine-2','laine-torsades','laine-jacquard','laine-gilet','laine-crochet'];
+  const COULEURS=[['#6b1f2e','Bordeaux'],['#8e2f3e','Grenat'],['#1b2a4a','Bleu nuit'],['#3f6fb5','Bleu clair'],['#1f5a3c','Émeraude'],['#5f8a5a','Vert tendre'],['#5a2e6b','Violet'],['#b05c7a','Rose'],['#d9a3b0','Rose poudré'],['#8a5a2b','Caramel'],['#3b3b3b','Anthracite'],['#111111','Noir'],['#e8e0d6','Ivoire']];
+  const METAUX=[['#e8b9a5','Or rose'],['#e6c35a','Or'],['#d9dde3','Argent'],['#c97b4a','Cuivre'],['#f1e9dc','Nacre'],['#5b5f66','Acier sombre']];
+  const CHARMS=['coeur','rose','etoile','cle','papillon','lune','trefle','e'];
+  /* rôle → sélecteur et façon de découper l'image en 9 (coins gardés, milieu étiré) */
+  const ROLES={btn:{s:'demi',w:26},btn2:{s:'demi',w:20},cadre:{s:.13,w:26},carte:{s:.13,w:22},tuile:{s:.14,w:20},barre:{s:.25,w:16},capsule:{s:'demi',w:18},rond:{s:.49,w:28},sep:{s:.1,w:4},ruban:{s:.2,w:14},bulle:{s:.2,w:18},saisie:{s:.3,w:14},bandeau:{s:.3,w:14}};
+  const css=document.createElement('style');css.id='look';css.textContent=`
+  #fond{position:fixed;inset:0;z-index:-1;background:var(--sk-fond) center top/cover no-repeat;pointer-events:none}
+  body.look-fond{background:#1a0d10}
+  body.look-on .btn-plum,body.look-on .btn-gold,body.look-on .chip[aria-pressed="true"],body.look-on .tab[aria-current="page"]{background:none!important;border:2px solid transparent!important;border-image:var(--sk-btn) var(--sk-btn-s) fill / var(--sk-btn-w) / 0 stretch!important;color:var(--sk-ink);text-shadow:0 1px 2px rgba(0,0,0,.45);padding:12px 26px}
+  body.look-on .btn-plum::before,body.look-on .btn-plum::after{display:none}
+  body.look-on .btn-plum:active{filter:brightness(.92);transform:scale(.98)}
+  body.look-on.has-capsule .tab[aria-current="page"]{border-image:var(--sk-capsule) var(--sk-capsule-s) fill / var(--sk-capsule-w) / 0 stretch}
+  body.look-on .pill,body.look-on .chip,body.look-on button.small,body.look-on .choice,body.look-on .src a{background:none;border:2px solid transparent;border-image:var(--sk-btn2) var(--sk-btn2-s) fill / var(--sk-btn2-w) / 0 stretch;color:var(--sk-ink2)}
+  body.look-on .chip[aria-pressed="true"]{color:var(--sk-ink)}
+  body.look-on .sheet{background:none;border:2px solid transparent;border-image:var(--sk-cadre) var(--sk-cadre-s) fill / var(--sk-cadre-w) / 0 stretch;box-shadow:0 20px 40px -20px rgba(0,0,0,.9);padding:22px 20px;color:var(--sk-ink2)}
+  body.look-on .jewel,body.look-on .plate,body.look-on .gamecard{background:none;border:2px solid transparent;border-image:var(--sk-carte) var(--sk-carte-s) fill / var(--sk-carte-w) / 0 stretch;color:var(--sk-ink2)}
+  body.look-on .sheet .jewel{border-image:var(--sk-carte) var(--sk-carte-s) fill / var(--sk-carte-w) / 0 stretch}
+  body.look-on .tile{background:none;border:2px solid transparent;border-image:var(--sk-tuile) var(--sk-tuile-s) fill / var(--sk-tuile-w) / 0 stretch;color:var(--sk-ink2)}
+  body.look-on .tabbar{background:none;border:0;border-image:var(--sk-barre) var(--sk-barre-s) fill / var(--sk-barre-w) / 0 stretch;box-shadow:0 -10px 24px -12px rgba(0,0,0,.8)}
+  body.look-on .tab{color:var(--sk-ink2)}
+  body.look-on .rule{background:var(--sk-sep) center/100% 100% no-repeat;height:10px;opacity:1}
+  body.look-on .mono,body.look-on .medal{background:var(--sk-rond) center/100% 100% no-repeat;padding:0}
+  body.look-on .mono span,body.look-on .medal span{background:none}
+  body.look-on .muted{color:var(--sk-muted)} body.look-on .eyebrow{color:var(--sk-muted)}
+  body.look-on .sec-title,body.look-on h2,body.look-on h3,body.look-on .brand{color:var(--sk-ink2)}
+  body.look-on .item{border-bottom-color:rgba(128,128,128,.35)}
+  body.look-on input,body.look-on select,body.look-on textarea{background:rgba(0,0,0,.18);color:var(--sk-ink2);border-color:rgba(128,128,128,.45)}
+  body.look-on .pearl .pin{filter:none}
+  .lk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .lk-sw{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;border-radius:14px;border:2px solid transparent;background:rgba(0,0,0,.15);font-size:.78rem;text-align:center;line-height:1.15;min-height:0;color:inherit}
+  .lk-sw img{width:100%;height:34px;object-fit:contain} .lk-sw .lk-f{width:100%;height:62px;object-fit:cover;border-radius:8px}
+  .lk-sw[aria-pressed="true"]{border-color:#F3CDB8;box-shadow:0 0 0 2px #F3CDB8}
+  .lk-col{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,255,255,.35);padding:0;min-height:0;flex:none}
+  .lk-col[aria-pressed="true"]{box-shadow:0 0 0 3px #F3CDB8}
+  .lk-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}`;
+  document.head.appendChild(css);
+  const fond=document.createElement('div');fond.id='fond';fond.hidden=true;document.body.prepend(fond);
+
+  let MAN=null;const manifest=()=>MAN||(MAN=fetch('skins/manifest.json').then(r=>r.json()).catch(()=>({styles:{}})));
+  const imgs={};
+  function load(src){if(imgs[src])return imgs[src];return imgs[src]=new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src})}
+  const lum=hex=>{const n=parseInt(hex.slice(1),16),r=n>>16&255,g=n>>8&255,b=n&255;return(.3*r+.59*g+.11*b)/255};
+  const rgb=hex=>{const n=parseInt(hex.slice(1),16);return[n>>16&255,n>>8&255,n&255]};
+  /* colorisation d'une image neutre (grise) : la couleur suit la lumière de l'image ; le bord (métal) peut avoir sa propre couleur */
+  function teinte(im,couleur,metal,rim){const W=im.naturalWidth||im.width,H=im.naturalHeight||im.height;const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');g.drawImage(im,0,0);
+    if(!couleur&&!metal)return cv;
+    const d=g.getImageData(0,0,W,H),p=d.data,C=couleur?rgb(couleur):null,M=metal?rgb(metal):null;
+    let mask=null;if(M&&rim){/* bord = pixels proches d'une zone transparente ou du bord de l'image */
+      const r=Math.max(6,Math.round(Math.min(W,H)*rim));const a=new Float32Array(W*H);for(let i=0;i<W*H;i++)a[i]=p[i*4+3]>40?1:0;
+      const b=new Float32Array(W*H);/* flou boîte séparable */
+      for(let y=0;y<H;y++){let s=0;for(let x=-r;x<=r;x++)s+=x<0||x>=W?0:a[y*W+x];for(let x=0;x<W;x++){b[y*W+x]=s/(2*r+1);const o=x-r,n=x+r+1;s+=(n<W?a[y*W+n]:0)-(o>=0?a[y*W+o]:0)}}
+      mask=new Float32Array(W*H);for(let x=0;x<W;x++){let s=0;for(let y=-r;y<=r;y++)s+=y<0||y>=H?0:b[y*W+x];for(let y=0;y<H;y++){mask[y*W+x]=s/(2*r+1);const o=y-r,n=y+r+1;s+=(n<H?b[n*W+x]:0)-(o>=0?b[o*W+x]:0)}}}
+    const tint=(L,c)=>{const f=L/.66;if(f<=1)return[c[0]*f,c[1]*f,c[2]*f];const k=Math.min(1,(L-.66)/.34)*.85;return[c[0]+(255-c[0])*k,c[1]+(255-c[1])*k,c[2]+(255-c[2])*k]};
+    for(let i=0;i<W*H;i++){const o=i*4;if(p[o+3]<8)continue;const L=(.3*p[o]+.59*p[o+1]+.11*p[o+2])/255;
+      let c=C?tint(L,C):[p[o],p[o+1],p[o+2]];
+      if(M){const m=mask?Math.min(1,Math.max(0,(0.97-mask[i])/0.25)):(C?0:1);if(m>0){const t=tint(L,M);c=[c[0]+(t[0]-c[0])*m,c[1]+(t[1]-c[1])*m,c[2]+(t[2]-c[2])*m]}}
+      p[o]=c[0];p[o+1]=c[1];p[o+2]=c[2]}
+    g.putImageData(d,0,0);return cv}
+  const urls={};
+  async function sprite(style,role,c){const m=await manifest();if(m.styles&&m.styles[style]&&!m.styles[style].includes(role))return null;const im=await load('skins/'+style+'/'+role+'.webp');if(!im)return null;
+    const neutre=NEUTRES.includes(style)&&(c.couleur||c.metal);if(!neutre)return{src:im.src,w:im.naturalWidth,h:im.naturalHeight};
+    const key=style+'/'+role+'/'+c.couleur+'/'+c.metal;if(urls[key])return urls[key];
+    const cv=teinte(im,c.couleur,c.metal,role==='sep'||role.startsWith('charm')?0:.12);
+    const bl=await new Promise(r=>cv.toBlob(r,'image/png'));return urls[key]={src:URL.createObjectURL(bl),w:cv.width,h:cv.height}}
+  let seq=0;
+  async function apply(){const c=cfg(),id=++seq,root=document.documentElement.style;
+    /* fond d'écran */
+    if(c.fond&&c.fond!=='aucun'){const im=await load('fonds/'+c.fond+'.webp');if(id!==seq)return;
+      if(im){let src=im.src;if(FONDS_NEUTRES.includes(c.fond)&&c.fondCouleur){const k='fond/'+c.fond+'/'+c.fondCouleur;if(!urls[k]){const cv=teinte(im,c.fondCouleur,null,0);const bl=await new Promise(r=>cv.toBlob(r,'image/jpeg',.9));urls[k]={src:URL.createObjectURL(bl)}}src=urls[k].src}
+        root.setProperty('--sk-fond',`url(${src})`);fond.hidden=false;document.body.classList.add('look-fond')}}
+    else{fond.hidden=true;document.body.classList.remove('look-fond');root.removeProperty('--sk-fond')}
+    if(c.style==='defaut'){document.body.classList.remove('look-on','has-capsule');charms(null);return}
+    const got={};await Promise.all(Object.keys(ROLES).map(async r=>{got[r]=await sprite(c.style,r,c)}));if(id!==seq)return;
+    if(!got.btn||!got.cadre){document.body.classList.remove('look-on');return}
+    if(!got.carte)got.carte=got.cadre;if(!got.btn2)got.btn2=got.btn;if(!got.tuile)got.tuile=got.carte;if(!got.rond)got.rond=got.btn;if(!got.sep)got.sep=null;
+    for(const[r,sp]of Object.entries(got)){if(!sp){root.removeProperty('--sk-'+r);continue}const R=ROLES[r];const s=R.s==='demi'?Math.max(2,Math.round(sp.h/2)-2):Math.round(Math.min(sp.w,sp.h)*R.s);
+      root.setProperty('--sk-'+r,`url(${sp.src})`);root.setProperty('--sk-'+r+'-s',String(s));root.setProperty('--sk-'+r+'-w',R.w+'px')}
+    document.body.classList.toggle('has-capsule',!!got.capsule);
+    /* couleur du texte selon la clarté du velours */
+    const base=NEUTRES.includes(c.style)?(c.couleur?lum(c.couleur):.62):({orrose:.15,argent:.12,emeraude:.14,poudre:.72,noir:.05,bois:.7}[c.style]||.3);
+    const clair=base>.55;root.setProperty('--sk-ink',clair?'#2a1518':'#FFF4EE');root.setProperty('--sk-ink2',clair?'#2a1518':'#FBEDE8');root.setProperty('--sk-muted',clair?'#5a3a40':'#E0C2BB');
+    document.body.classList.add('look-on');charms(c)}
+  /* charms du style (le collier de l'accueil) */
+  async function charms(c){if(!c){return}
+    for(const k of CHARMS){const sp=await sprite(c.style,'charm-'+k,c);if(!sp)continue;const im=await load(sp.src);if(!im)continue;
+      const W=200,TOP=255,sc=Math.min(190/im.naturalWidth,330/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc;
+      const cv=document.createElement('canvas');cv.width=W;cv.height=Math.round(TOP-30+h+10);const g=cv.getContext('2d');g.drawImage(im,(W-w)/2,TOP-30,w,h);
+      try{Charm.custom('lk:'+k,cv,{h:cv.height,ring:42,top:TOP,com:Math.round(TOP-30+h*.6),cx:100})}catch(_){}}
+    const cur=S.get('charm','e');if(String(cur).startsWith('lk:'))try{Charm.setKind(cur)}catch(_){}
+    const row=document.querySelector('[data-ch="rose"]');if(row&&row.parentElement){row.parentElement.querySelectorAll('[data-ch^="lk:"]').forEach(x=>x.remove());
+      const L={coeur:'Cœur du style',rose:'Rose du style',etoile:'Étoile',cle:'Clé',papillon:'Papillon',lune:'Lune',trefle:'Trèfle',e:'É du style'};
+      CHARMS.forEach(k=>{const b=document.createElement('button');b.className='chip';b.dataset.ch='lk:'+k;b.textContent=L[k];b.setAttribute('aria-pressed',String(cur==='lk:'+k));b.onclick=()=>setCharm('lk:'+k);row.parentElement.appendChild(b)})}}
+  const save=o=>{S.set('look',Object.assign(cfg(),o));apply()};
+  /* ---- réglages : Apparence ---- */
+  function ui(){const c=cfg();
+    const sw=(k,on,inner,label)=>`<button class="lk-sw" data-lk="${k}" aria-pressed="${on}">${inner}<span>${label}</span></button>`;
+    const styles=Object.keys(NAMES).map(k=>sw(k,c.style===k,k==='defaut'?'<span style="height:34px;display:flex;align-items:center">✒️</span>':`<img src="skins/${k}/btn.webp" alt="">`,NAMES[k])).join('');
+    const fonds=Object.keys(FNAMES).map(k=>`<button class="lk-sw" data-lf="${k}" aria-pressed="${c.fond===k}">${k==='aucun'?'<span class="lk-f" style="background:radial-gradient(ellipse at 50% 0,#3E2427,#2A1618 70%)"></span>':`<img class="lk-f" src="fonds/${k}.webp" alt="">`}<span>${FNAMES[k]}</span></button>`).join('');
+    const cols=(attr,cur)=>`<div class="lk-row"><button class="lk-col" ${attr}="" aria-pressed="${!cur}" title="Sans couleur" style="background:repeating-linear-gradient(45deg,#777 0 6px,#aaa 6px 12px)"></button>${COULEURS.map(([h,n])=>`<button class="lk-col" ${attr}="${h}" aria-pressed="${cur===h}" title="${n}" aria-label="${n}" style="background:${h}"></button>`).join('')}<input type="color" ${attr}-libre value="${cur||'#6b1f2e'}" aria-label="Couleur libre" style="width:48px;min-height:38px;padding:2px"></div>`;
+    const metaux=`<div class="lk-row"><button class="lk-col" data-lm="" aria-pressed="${!c.metal}" title="Comme l'image" style="background:repeating-linear-gradient(45deg,#777 0 6px,#aaa 6px 12px)"></button>${METAUX.map(([h,n])=>`<button class="lk-col" data-lm="${h}" aria-pressed="${c.metal===h}" title="${n}" aria-label="${n}" style="background:${h}"></button>`).join('')}</div>`;
+    return `<p class="small">Choisissez le style des boutons et des cadres, puis la couleur si le style s'y prête, et le fond d'écran. Tout se voit tout de suite.</p>
+    <p class="eyebrow">Style des boutons et des cadres</p><div class="lk-grid" id="lk-styles">${styles}</div>
+    <div id="lk-couleurs" ${NEUTRES.includes(c.style)?'':'hidden'}><p class="eyebrow" style="margin-top:8px">Couleur du velours</p>${cols('data-lc',c.couleur)}<p class="eyebrow" style="margin-top:8px">Couleur du métal (le bord)</p>${metaux}</div>
+    <p class="eyebrow" style="margin-top:8px">Fond d'écran</p><div class="lk-grid" id="lk-fonds">${fonds}</div>
+    <div id="lk-fcol" ${FONDS_NEUTRES.includes(c.fond)?'':'hidden'}><p class="eyebrow" style="margin-top:8px">Couleur du fond</p>${cols('data-lfc',c.fondCouleur)}</div>
+    <button class="pill" id="lk-reset" style="margin-top:6px">Remettre l'apparence d'origine</button>`}
+  function wire(b,rerender){const q=s=>b.querySelector(s),qa=s=>b.querySelectorAll(s);
+    qa('[data-lk]').forEach(x=>x.onclick=()=>{save({style:x.dataset.lk});rerender()});
+    qa('[data-lf]').forEach(x=>x.onclick=()=>{save({fond:x.dataset.lf});rerender()});
+    qa('[data-lc]').forEach(x=>x.onclick=()=>{save({couleur:x.dataset.lc||null});rerender()});
+    qa('[data-lm]').forEach(x=>x.onclick=()=>{save({metal:x.dataset.lm||null});rerender()});
+    qa('[data-lfc]').forEach(x=>x.onclick=()=>{save({fondCouleur:x.dataset.lfc||null});rerender()});
+    const lc=q('[data-lc-libre]');if(lc)lc.onchange=e=>{save({couleur:e.target.value});rerender()};
+    const lf=q('[data-lfc-libre]');if(lf)lf.onchange=e=>{save({fondCouleur:e.target.value});rerender()};
+    q('#lk-reset').onclick=()=>{S.set('look',{});apply();rerender();toast("L'apparence d'origine est revenue.",2500)}}
+  function mount(host){const render=()=>{host.innerHTML=ui();wire(host,render)};render()}
+  return{cfg,apply,save,mount,NAMES,charmKinds:()=>CHARMS.map(k=>'lk:'+k)}})();
+
+/* ===================== Album surprise : plusieurs photos derrière la fenêtre, une nouvelle chaque jour ===================== */
+const ALB=(()=>{
+  const DEF={ids:[],mode:'jour',order:[],pos:0,key:''};
+  const cfg=()=>Object.assign({},DEF,S.get('album',{}));
+  const save=o=>S.set('album',Object.assign(cfg(),o));
+  const keyNow=()=>{const d=new Date(),k=iso(d);return cfg().mode==='soir'?k+(d.getHours()<14?'m':'s'):k};
+  const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+  async function small(file,M){const bm=await createImageBitmap(file);const sc=Math.min(1,M/Math.max(bm.width,bm.height));const cv=document.createElement('canvas');cv.width=Math.round(bm.width*sc);cv.height=Math.round(bm.height*sc);cv.getContext('2d').drawImage(bm,0,0,cv.width,cv.height);return new Promise(r=>cv.toBlob(r,'image/jpeg',.86))}
+  async function add(files){const c=cfg();let n=0;for(const f of files){if(c.ids.length>=14){break}try{const bl=await small(f,1600);const id=Date.now()+'_'+n;await IDB.put('b_alb_'+id,bl);c.ids.push(id);n++}catch(_){}}
+    save({ids:c.ids,order:[],pos:0,key:''});return n}
+  async function addBlob(bl){const c=cfg();if(c.ids.length>=14)return false;const id=Date.now()+'_s';await IDB.put('b_alb_'+id,bl);c.ids.push(id);save({ids:c.ids,order:[],pos:0,key:''});return true}
+  async function remove(id){const c=cfg();await IDB.del('b_alb_'+id);save({ids:c.ids.filter(x=>x!==id),order:[],pos:0,key:''})}
+  function current(){const c=cfg();if(!c.ids.length)return null;const k=keyNow();let{order,pos}=c;
+    const stale=!order.length||order.length!==c.ids.length||order.some(id=>!c.ids.includes(id));
+    if(c.key!==k||stale){if(stale){order=shuffle(c.ids);pos=0}else{pos++;if(pos>=order.length){order=shuffle(c.ids);pos=0}}save({key:k,order,pos})}
+    return cfg().order[cfg().pos]}
+  async function url(id){try{const b=await IDB.get('b_alb_'+id);return b?URL.createObjectURL(b):null}catch(_){return null}}
+  /* photos prises dans le miroir */
+  const selfies=()=>S.get('selfies',[]);
+  async function keep(bl){const id=String(Date.now());await IDB.put('b_selfie_'+id,bl);const l=[id,...selfies()].slice(0,30);S.set('selfies',l);return id}
+  async function dropSelfie(id){await IDB.del('b_selfie_'+id);S.set('selfies',selfies().filter(x=>x!==id))}
+  const selfieUrl=async id=>{try{const b=await IDB.get('b_selfie_'+id);return b?URL.createObjectURL(b):null}catch(_){return null}};
+  /* écran de gestion (Espace concepteur) */
+  async function mount(host){const c=cfg();const next=c.mode==='soir'?'une nouvelle photo le matin et une autre à partir de 14 h':'une nouvelle photo chaque jour';
+    host.innerHTML=`<p class="small">${c.ids.length?c.ids.length+' photo'+(c.ids.length>1?'s':'')+' dans l\'album, '+next+', au hasard, sans répéter avant d\'avoir fait le tour.':'Aucune photo dans l\'album : c\'est la photo du jour (Réglages) qui est utilisée.'}</p>
+      <div class="row">${[['jour','Une par jour (7 photos)'],['soir','Matin et soir (14 photos)']].map(([k,l])=>`<button class="chip" data-am="${k}" aria-pressed="${c.mode===k}">${l}</button>`).join('')}</div>
+      <label class="btn pill" for="alb-file" style="justify-content:center">➕ Ajouter des photos (jusqu'à 14)</label><input type="file" id="alb-file" accept="image/*" multiple hidden>
+      <div class="lk-grid" id="alb-grid"></div>
+      <p class="eyebrow" style="margin-top:6px">Photos prises dans le miroir</p><div class="lk-grid" id="alb-self"></div><p class="small muted" id="alb-self-n"></p>`;
+    host.querySelectorAll('[data-am]').forEach(b=>b.onclick=()=>{save({mode:b.dataset.am,key:''});mount(host)});
+    host.querySelector('#alb-file').onchange=async e=>{const n=await add(Array.from(e.target.files||[]));toast(n?n+' photo'+(n>1?'s':'')+' ajoutée'+(n>1?'s':'')+' à l\'album':'Album plein ou photos illisibles.',3000);mount(host)};
+    const g=host.querySelector('#alb-grid');for(const id of c.ids){const u=await url(id);const d=document.createElement('div');d.className='lk-sw';d.innerHTML=`<img class="lk-f" src="${u||''}" alt=""><button class="pill" style="min-height:0;padding:2px 10px">Retirer</button>`;d.querySelector('button').onclick=async()=>{await remove(id);mount(host)};g.appendChild(d)}
+    const sg=host.querySelector('#alb-self'),ids=selfies();host.querySelector('#alb-self-n').textContent=ids.length?'':'Aucune pour l\'instant : dans le miroir, touchez l\'appareil photo.';
+    for(const id of ids){const u=await selfieUrl(id);const d=document.createElement('div');d.className='lk-sw';d.innerHTML=`<img class="lk-f" src="${u||''}" alt=""><div class="row" style="gap:4px"><button class="pill" style="min-height:0;padding:2px 8px">Dans l'album</button><button class="pill" style="min-height:0;padding:2px 8px">✕</button></div>`;
+      const[b1,b2]=d.querySelectorAll('button');b1.onclick=async()=>{const bl=await IDB.get('b_selfie_'+id);if(bl&&await addBlob(bl)){toast('Ajoutée à l\'album',2000);mount(host)}else toast('Album plein (14 photos).',2500)};b2.onclick=async()=>{await dropSelfie(id);mount(host)};sg.appendChild(d)}}
+  return{cfg,current,url,keep,mount,count:()=>cfg().ids.length}})();
+
 const FEN=(()=>{
   const DEF={top:'photo',hero:'mirror',gesture:'triple',hard:4,fx:true,snd:true,mclock:true,mstyle:'plein',photo:null};
   const cfg=()=>Object.assign({},DEF,S.get('fen',{}));
@@ -2915,6 +3083,10 @@ const FEN=(()=>{
   
   .mir-wrap{position:absolute;inset:0;border-radius:inherit;overflow:hidden;z-index:8;background:#1a1012}
   .mir-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+  .mir-light .mir-glass{box-shadow:inset 0 0 0 16px rgba(255,246,232,.92),inset 0 0 60px 20px rgba(255,240,220,.55)!important}
+  .mir-light video{filter:brightness(1.18) contrast(.96)}
+  .mir-flash::after{content:"";position:absolute;inset:0;background:#fff;opacity:.85;z-index:20;animation:mirflash .26s ease-out forwards;border-radius:inherit}
+  @keyframes mirflash{to{opacity:0}}
   .mir-glass{position:absolute;inset:0;pointer-events:none;border-radius:inherit;
     background:linear-gradient(115deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 70%,rgba(255,235,220,.08) 100%);
     box-shadow:inset 0 0 26px rgba(20,8,10,.55),inset 0 0 4px rgba(255,220,200,.35)}
@@ -3032,7 +3204,8 @@ const FEN=(()=>{
   const interactive=t=>t.closest('button,a,input,select,textarea,label,summary,video,.fen-x,.mir-b,.pearl,.charm,#charm,[role="button"]');
   let busy=null; /* une seule surprise ouverte à la fois */
 
-  async function photoUrl(){const c=cfg();if(!c.photo)return null;
+  async function photoUrl(){try{const id=ALB.current();if(id){const u=await ALB.url(id);if(u)return u}}catch(_){}
+    const c=cfg();if(!c.photo)return null;
     try{const b=await IDB.get('b_'+c.photo);return b?URL.createObjectURL(b):null}catch(_){return null}}
 
   /* ======================= LA FENÊTRE À GRATTER ======================= */
@@ -3143,7 +3316,14 @@ const FEN=(()=>{
     const bFlip=document.createElement('button');bFlip.className='mir-b';bFlip.textContent='🔄';
     bFlip.setAttribute('aria-label','Passer à la caméra de derrière ou revenir');bFlip.setAttribute('aria-pressed','false');
     const bX=document.createElement('button');bX.className='mir-b';bX.textContent='✕';bX.setAttribute('aria-label','Refermer le miroir');
-    bar.append(bClk,bFlip,bX);
+    const bCam=document.createElement('button');bCam.className='mir-b';bCam.textContent='📷';bCam.setAttribute('aria-label','Prendre la photo (gardée dans l\'appli)');
+    const bLum=document.createElement('button');bLum.className='mir-b';bLum.textContent='💡';bLum.setAttribute('aria-label','Lumière du miroir');bLum.setAttribute('aria-pressed','false');
+    bar.append(bClk,bFlip,bCam,bLum,bX);
+    bLum.onclick=e=>{e.stopPropagation();const on=wrap.classList.toggle('mir-light');bLum.setAttribute('aria-pressed',String(on))};
+    bCam.onclick=async e=>{e.stopPropagation();try{if(!vid.videoWidth){toast('La caméra n\'est pas encore prête.',2000);return}const cv=document.createElement('canvas');cv.width=vid.videoWidth;cv.height=vid.videoHeight;const g=cv.getContext('2d');
+        if(vid.classList.contains('mir-flip')||!vid.style.transform||/scaleX\(-1\)/.test(vid.style.transform)){g.translate(cv.width,0);g.scale(-1,1)}g.drawImage(vid,0,0);
+        wrap.classList.add('mir-flash');setTimeout(()=>wrap.classList.remove('mir-flash'),260);
+        const bl=await new Promise(r=>cv.toBlob(r,'image/jpeg',.9));await ALB.keep(bl);toast('Photo gardée dans l\'appli (Espace concepteur, Album).',3000)}catch(_){toast('La photo n\'a pas pu être prise.',2500)}};
     const fond=c.mstyle==='fond';
     const skin=document.createElement('canvas');skin.className='fen-skin';skin.style.zIndex='8';
     skin.width=rect.width*dpr;skin.height=rect.height*dpr;
@@ -3252,7 +3432,8 @@ const FEN=(()=>{
     catch(_){return false}}
   return{cfg,save,init,setPhoto,photoUrl,mirror:openMirror}})();
 try{FEN.init()}catch(e){console.warn('Fenêtre :',e)}
+try{LOOK.apply()}catch(e){console.warn('Apparence :',e)}
 
-</script><script>(function(){var V='11.26',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.27',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
