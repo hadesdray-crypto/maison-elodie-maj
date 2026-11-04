@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.77',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.78',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.77',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.78','4 novembre 2026',['Oiseau : ailes dressées dans le dos comme au tout début, bien attachées','Danse calée sur le rythme : les ailes réagissent à chaque temps, plus vite et plus nettes','Mouvements d\'épaule fluides, plus d\'ouverture brusque ni de changement d\'image']],
 ['11.77','4 novembre 2026',['Les ailes repliées remontent de nouveau un peu au-dessus du micro, comme au tout début','L’oiseau se pose où l’on veut, même tout au bord de l’écran : seule la boule reste visible','Menu de la queue plus petit, avec un bouton pour le fermer ; les boutons se rangent le long du bord si l’oiseau est collé au bord']],
 ['11.76','4 novembre 2026',['Retour des ailes d’avant (dans le dos, comme tu les aimais)','Nouvelle queue : de vraies plumes dessinées, très nettes, qui se déploient une à une et ondulent doucement','La queue part toujours de l’oiseau, même près du bord de l’écran ; les boutons restent toujours accessibles']],
 ['11.75','4 novembre 2026',['La queue de l’oiseau s’ouvre maintenant pile sous lui, même quand il est près du bord de l’écran','Boutons de la queue plus nets sur les écrans très fins']],
@@ -3215,10 +3216,10 @@ const BIRD=(()=>{
   const cvs=[];let singing=false,raf=0,tmo=0,last=0,fx=null,fxc=null;
   const rnd=(a,b)=>a+Math.random()*(b-a);const sm=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
   /* ressorts amortis : tous les mouvements sont fluides, sans à-coup, avec un léger dépassement naturel */
-  const mkS=(k,z)=>({x:0,v:0,k,c:2*Math.sqrt(k)*z});const sp={x:mkS(26,.85),y:mkS(34,.8),rot:mkS(30,.8),oL:mkS(16,1),oR:mkS(16,1),pL:mkS(18,.95),pR:mkS(18,.95),lift:mkS(30,.9)};
+  const mkS=(k,z)=>({x:0,v:0,k,c:2*Math.sqrt(k)*z});const sp={x:mkS(26,.85),y:mkS(34,.8),rot:mkS(30,.8),oL:mkS(70,.6),oR:mkS(70,.6),pL:mkS(18,.95),pR:mkS(18,.95),lift:mkS(30,.9)};
   sp.pL.x=-80;sp.pR.x=-80;
   const stepS=(s,t,dt)=>{const n=Math.max(1,Math.ceil(dt/.008)),h=dt/n;for(let i=0;i<n;i++){const a=s.k*(t-s.x)-s.c*s.v;s.v+=a*h;s.x+=s.v*h}return s.x};
-  const st={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,sq:1,ev:null,nextEv:0,bp:0,bpm:110,style:'pop',styleName:'',auto:'pop',autoN:0,autoT:0,wmOpen:true,wmT:0,seenOn:0,tw:0,lastN:-1,nextSt:0,o:0,phi:-80};
+  const st={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,sq:1,ev:null,nextEv:0,bp:0,bpm:110,style:'pop',styleName:'',auto:'pop',autoN:0,autoT:0,wmOpen:true,wmT:0,seenOn:0,acT:0,acc:0,tw:0,lastN:-1,nextSt:0,o:0,phi:-80};
   const DC=()=>Object.assign({on:true,style:'auto',wings:'auto',int:1,free:false,fx:false},S.get('musDance',{}));
   const on=()=>S.get('musBird',true)&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
   const STY={techno:['Techno',128],afro:['Afro',100],rock:['Rock',120],pop:['Pop',110],hiphop:['Hip-hop',90],douce:['Douce',72]};
@@ -3271,11 +3272,12 @@ const BIRD=(()=>{
     if(!st.eg||now>st.eg.end){if(!st.eg||now>st.eg.end+rnd(free?2:4,free?5:9))st.eg={side:Math.random()<.5?-1:1,t0:now,end:now+rnd(1.1,1.8)}}
     let gL=0,gR=0;if(st.eg&&now<st.eg.end){const u=(now-st.eg.t0)/(st.eg.end-st.eg.t0),g=Math.pow(Math.sin(Math.PI*u),2);if(st.eg.side<0)gL=g;else gR=g}
     const drL=.5+.5*dr(.31,.4),drR=.5+.5*dr(.27,3.3);
-    if(st.wmOpen){const base=free?.7:.5,mx=free?1:.62;
-      T.oL=Math.min(mx,base+(pulse*.5)*(.6+.4*drL)+.1*gL-.04*gR);T.oR=Math.min(mx,base+(pulse*.5)*(.6+.4*drR)+.1*gR-.04*gL);
-      T.pL=-4+pL*(.8+.4*drL)+(free?4:0);T.pR=-4+pR*(.8+.4*drR)+(free?4:0)}
-    else{/* ailes repliées : elles montent et descendent depuis leur attache dans le dos, une à une */
-      const mx=free?.34:.25;T.oL=Math.min(mx,.03+.11*bL+.05*drL*(.4+bL)+(free?.12:.1)*gL);T.oR=Math.min(mx,.03+.11*bR+.05*drR*(.4+bR)+(free?.12:.1)*gR);T.pL=T.pR=-30}
+    {const NR={techno:.1,afro:.08,rock:.11,hiphop:.07,douce:.05,pop:.08}[style]||.08;
+      if(E.onsetT>st.acT){st.acT=E.onsetT;st.acc=1}st.acc=(st.acc||0)*Math.exp(-dt*7);
+      let bt=Math.min(1,pulse/(NR*A+1e-3));let bL=bt*(.8+.2*drL),bR=bt*(.8+.2*drR);
+      if(style==='afro'||style==='hiphop'){bL=Math.min(1,Math.max(0,pL-2)/10);bR=Math.min(1,Math.max(0,pR-2)/10)}
+      const a2=st.acc*.7,g=free?1.15:.85;
+      T.oL=Math.min(.9,.05+g*Math.max(bL,a2)*.62*(.6+.4*A)+.14*gL);T.oR=Math.min(.9,.05+g*Math.max(bR,a2)*.62*(.6+.4*A)+.14*gR);T.pL=T.pR=-30}
     T.lift=0}
   function update(dt,now){
     const E=(window.MUSEN?window.MUSEN():{lo:.3,bass:.3,treb:.3,bpm:0,conf:0,onsetT:0,lvl:.3});const D=DC();
@@ -3296,23 +3298,18 @@ const BIRD=(()=>{
   function drawFrame(c,im,i,ang,alpha){if(!im.complete||!im.naturalWidth||alpha<=.01)return;const d=INFO[i];c.save();c.globalAlpha=alpha;c.rotate(ang);c.drawImage(im,-d.px*c._s,-d.py*c._s,d.w*c._s,d.h*c._s);c.restore()}
   /* une aile : fermée, elle se soulève sans changer d'image (comme un coude qui monte) ; ouverte, on change de pose par un très court fondu
      où l'ancienne pose reste opaque dessous (jamais de transparence ni de flou durable) */
-  const WS=[{c:-1,p:-1,t0:0},{c:-1,p:-1,t0:0}];
-  function wing(c,side,o,phi,k){const w=WS[k],now=performance.now();c.save();c.scale(side,1);
-    let want,eff=0,sh=0;
-    if(o<.35){want=-1;sh=sm(0,.35,o)*34*Math.PI/180}
-    else{eff=-80+(phi+80)*sm(.3,.9,o);let bi=0,bd=1e9;for(let j=0;j<OPEN.length;j++){const d=Math.abs(eff-OPEN[j].phi)-(j===w.c?7:0);if(d<bd){bd=d;bi=j}}want=bi}
-    if(want!==w.c&&now-w.t0>60){w.p=w.c;w.c=want;w.t0=now}
-    const f=Math.min(1,(now-w.t0)/150);
-    const one=(s_,al)=>{if(s_<0){c.save();c.translate(0,-sh*7*c._s);drawFrame(c,IM[0],0,sh,al);c.restore()}else{const fr=OPEN[s_];drawFrame(c,IM[fr.i],fr.i,(eff-fr.phi)*Math.PI/180,al)}};
-    if(f<1&&w.p!==w.c&&w.p>=-1&&(w.p>=0||w.c>=0||true)){one(w.p,1);one(w.c,sm(0,1,f))}else one(w.c,1);
-    c.restore()}
+  const WG=new Image();WG.src='skins/mus/aile-pliee.webp';
+  /* aile d'origine, dressée dans le dos : une seule image, pivotée autour de l'épaule par des ressorts (aucun changement d'image, aucun fondu) */
+  function wing(c,side,o,phi,k,R){if(!WG.complete||!WG.naturalWidth)return;c.save();c.scale(side,1);
+    const hh=R*2.5*(1+.05*o),ww=hh*WG.naturalWidth/WG.naturalHeight,ax=.8,ay=.2;
+    c.rotate(.05+.62*o+(phi>-60?phi*.004:0));c.imageSmoothingQuality='high';c.drawImage(WG,-ax*ww,-ay*hh,ww,hh);c.restore()}
   function paint(cv){if(!cv.isConnected)return false;const r=cv.getBoundingClientRect();if(!r.width)return true;const dpr=Math.min(2,devicePixelRatio||1);
     const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
     const c=cv.getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,W,H);
     const D=W*(cv._k==='bead'?.27:.28),R=D/2;c._s=Math.min(R*2*1.45/231,(W/2-.78*R-R*.1-3)/231);const k2=cv._k==='bead'?1:2.2;
     const cx=W/2+st.x*R,cy=Math.max(R*1.12,Math.min(H*.56,H-4-185*c._s+.05*R-R*.12))+st.lift*dpr*k2+st.y*R;const br=1+.008*Math.sin(performance.now()/1400);
     c.save();c.translate(cx,cy);c.rotate(st.rot);c.scale(br,br);
-    const up=o=>-R*.05-R*1.0*(1-sm(0,.5,o)),sx=o=>R*(.78+.32*(1-sm(0,.5,o)));c.save();c.translate(-sx(st.oL),up(st.oL));wing(c,1,st.oL,st.pL,0);c.restore();c.save();c.translate(sx(st.oR),up(st.oR));wing(c,-1,st.oR,st.pR,1);c.restore();
+    const AX=R*.66,AY=o=>-R*.42-R*.16*o;c.save();c.translate(-AX,AY(st.oL));wing(c,1,st.oL,st.pL,0,R);c.restore();c.save();c.translate(AX,AY(st.oR));wing(c,-1,st.oR,st.pR,1,R);c.restore();
     if(BALL.complete&&BALL.naturalWidth)c.drawImage(BALL,-R,-R,D,D*BALL.naturalHeight/BALL.naturalWidth);c.restore();return true}
   function origin(){const v=cvs.filter(c=>c.isConnected);const cv=v.find(c=>c._k==='panel')||v.find(c=>c._k==='bead');if(!cv)return null;const r=cv.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height*.55,w:r.width}}
   function burst(n){if(!on())return;const o=origin();if(!o)return;for(let i=0;i<n;i++)add(o,'f',true)}
@@ -4649,6 +4646,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.77',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.78',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
