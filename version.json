@@ -1,8 +1,8 @@
 {
- "version": "11.68",
+ "version": "11.69",
  "date": "4 novembre 2026",
  "natif": 7,
- "notes": "Petit volet de commandes sous l'oiseau (2 touchers), grand lecteur (3 touchers)",
+ "notes": "Recherche de mise à jour aussi au retour dans l'appli",
  "v": 5,
  "apk": "MaisonElodie-V5.apk",
  "minApk": "11.63"
