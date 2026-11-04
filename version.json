@@ -1,9 +1,10 @@
 {
-  "version": "11.86",
+  "version": "11.87",
   "date": "4 novembre 2026",
   "natif": 7,
   "notes": [
-    "Quand on garde une voix, Perle (ou le chef) la dit tout de suite pour confirmer"
+    "Perle parle quand on la touche une fois (phrases variées) et deux fois (elle annonce son menu)",
+    "Si Perle ne peut pas parler, un message affiche la raison au lieu de rester muette"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

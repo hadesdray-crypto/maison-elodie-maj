@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.86',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.87',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.86',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.87','4 novembre 2026',["Perle parle quand on la touche une fois (phrases variées) et deux fois (elle annonce son menu)", "Si Perle ne peut pas parler, un message affiche la raison au lieu de rester muette"]],
 ['11.86','4 novembre 2026',["Quand on garde une voix, Perle (ou le chef) la dit tout de suite pour confirmer"]],
 ['11.85','4 novembre 2026',["Plus de texte « En ligne » : seule la lumière reste, en-tête symétrique, logo bien au centre", "Perle peut se poser sur le logo, joliment", "L'oiseau a un nid : touche le bouton musique pour qu'il y revienne en volant", "L'oiseau peut ne pas aimer un style : il râle, arrête de danser, va se reposer dans un coin puis revient", "Cris d'oiseau (réglable) ; réglages « Ce qu'il n'aime pas » dans l'onglet Oiseau"]],
 ['11.84','4 novembre 2026',['Voix : la musique descend presque à zéro avant que Perle ou le chef parle, puis remonte après','Nouveau style de danse « Freestyle » : tous les mouvements, plumes et notes, et l\'oiseau s\'envole faire un tour dans l\'écran avant de revenir à sa place']],
@@ -1657,7 +1658,7 @@ const Pearl=(()=>{
     if(c.engine==='off'&&!force||(!force&&quietNow())){mouthOnly();return}
     const id=++speakSeq,cs=chunks(t);try{if(allVoices().length&&(speechSynthesis.speaking||speechSynthesis.pending))speechSynthesis.cancel()}catch(_){}
     if(c.engine==='sounds'){babble(t,id);return}
-    const webSpeak=()=>{const give=()=>{if(id!==speakSeq)return;diag='Aucune voix du téléphone n\'a répondu.';vst='muette';mouthOnly();if(Date.now()-(speak.w||0)>90000){speak.w=Date.now();console.warn('Voix : aucune voix du téléphone')}
+    const webSpeak=()=>{const give=()=>{if(id!==speakSeq)return;diag='Aucune voix du téléphone n\'a répondu.';vst='muette';mouthOnly();if(Date.now()-(speak.tt||0)>60000){speak.tt=Date.now();try{toast('Perle ne peut pas parler : '+diag+' Réglages > Voix de Perle.',6000)}catch(_){}}if(Date.now()-(speak.w||0)>90000){speak.w=Date.now();console.warn('Voix : aucune voix du téléphone')}
       if(!spokeFallback){spokeFallback=true;try{VOIX&&VOIX.relancer()}catch(_){}}};
     if(!('speechSynthesis' in window)){diag="Ce navigateur n'a pas de synthèse vocale.";give();return}
     const list=cands(c);let k=0;
@@ -1703,10 +1704,10 @@ const Pearl=(()=>{
   function pu(e){clearTimeout(pressT);if(!down)return;if(rolled&&!drag){rolled=false;down=null;if(Math.abs(rollV)>7){vel={x:rollV,y:0};startPhys()}else settle();return}const wasDrag=drag;down=null;
     if(wasDrag){el.classList.remove('big');drag=null;const p=wasDrag.pts;if(p.length>1){const a=p[0],b=p[p.length-1],dt=Math.max(16,b[2]-a[2]);vel={x:(b[0]-a[0])/dt*16,y:(b[1]-a[1])/dt*16}}else vel={x:0,y:0};
       if(Math.hypot(vel.x,vel.y)>6){startPhys();expr('rire')}else{save();expr('joie',1500)}return}
-    unlock();const now=performance.now();if(now-lastTap<320){clearTimeout(tapT);lastTap=0;if(menu)popBack();else openMenu()}else{lastTap=now;tapT=setTimeout(menu?bounce:single,320)}}
+    unlock();const now=performance.now();if(now-lastTap<320){clearTimeout(tapT);lastTap=0;if(menu)popBack();else{try{say(pick(["Voici mon menu !","Que voulez-vous faire ?","À votre service !"],'tap2'),'joie')}catch(_){}openMenu()}}else{lastTap=now;tapT=setTimeout(menu?bounce:single,320)}}
   function single(){const n=S.get('pearlTaps',0);S.set('pearlTaps',n+1);bounce();
     if(tilted){vel={x:rot>0?-5:5,y:0};startPhys();say(pick(["Hihi ! Encore un peu, ou glissez le doigt sur moi.","Oh ! Ça roule ! Continuez.","Doucement… plus que quelques degrés."],'nudge'),'rire');return}
-    if(n<4)bubble("Touchez-moi deux fois pour ouvrir mon menu. Restez appuyée pour me déplacer ou me lancer.",null,5000);else{const r=['joie','clin','rire','fier','curieuse'][n%5];expr(r,1600)}}
+    if(n<4)bubble("Touchez-moi deux fois pour ouvrir mon menu. Restez appuyée pour me déplacer ou me lancer.",null,5000);else{const r=['joie','clin','rire','fier','curieuse'][n%5];say(pick(["Oui ? Je suis là !","Coucou, vous m'avez appelée ?","Hihi, ça chatouille !","Je vous écoute.","Un petit câlin ? Avec plaisir !","Besoin d'un coup de main ?"],'tap1'),r)}}
   function bounce(){el.classList.remove('hop');void el.offsetWidth;el.classList.add('hop')}
   function save(){S.set('pearlPos',{x:pos.x/innerWidth,y:pos.y/innerHeight});S.set('pearlHome',atHome())}
   /* ---- physique : gravité du téléphone ---- */
@@ -4767,6 +4768,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.86',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.87',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
