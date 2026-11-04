@@ -1,13 +1,9 @@
 {
-  "version": "11.85",
+  "version": "11.86",
   "date": "4 novembre 2026",
   "natif": 7,
   "notes": [
-    "Plus de texte « En ligne » : seule la lumière reste, en-tête symétrique, logo bien au centre",
-    "Perle peut se poser sur le logo, joliment",
-    "L'oiseau a un nid : touche le bouton musique pour qu'il y revienne en volant",
-    "L'oiseau peut ne pas aimer un style : il râle, arrête de danser, va se reposer dans un coin puis revient",
-    "Cris d'oiseau (réglable) ; réglages « Ce qu'il n'aime pas » dans l'onglet Oiseau"
+    "Quand on garde une voix, Perle (ou le chef) la dit tout de suite pour confirmer"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",
