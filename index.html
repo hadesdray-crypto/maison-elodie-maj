@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.83',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.84',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.83',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.84','4 novembre 2026',['Voix : la musique descend presque à zéro avant que Perle ou le chef parle, puis remonte après','Nouveau style de danse « Freestyle » : tous les mouvements, plumes et notes, et l\'oiseau s\'envole faire un tour dans l\'écran avant de revenir à sa place']],
 ['11.83','4 novembre 2026',['Une chorégraphie propre à chaque style choisi : Techno, Hip-hop / Rap, Afro, Rock, Pop, Douce','« Selon la musique » reste comme avant (mouvements choisis selon le tempo)']],
 ['11.82','4 novembre 2026',['Danse refondue : le tempo de la musique choisit le mouvement (balancé lent, step-touch, twist, pogo, point disco, charleston)','Corps qui balance, se penche, rebondit et avance/recule, enchaînés par phrases de 8 temps en douceur','Ailes qui accompagnent chaque mouvement, plus ou moins selon Discret / Moyen / Libre']],
 ['11.81','4 novembre 2026',['Agenda : étapes Quoi / Quand / Où cliquables, jour et heure choisis visibles, récapitulatif avant d\'ajouter','Dates lisibles (ven. 6 nov.), champs date et heure entiers','Messages d\'information : plus de bulle blanche, un cartouche sombre plat aux bords or rose']],
@@ -1647,7 +1648,10 @@ const Pearl=(()=>{
       words.forEach(w=>{const n=Math.max(1,Math.min(3,Math.round(w.length/4)));for(let i=0;i<n;i++){const o=actx.createOscillator(),g=actx.createGain(),f=(300+Math.random()*180)*c.pitch/1.1;o.type='sine';o.frequency.setValueAtTime(f,at);o.frequency.linearRampToValueAtTime(f*(.9+Math.random()*.3),at+.09/c.rate);
           g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(.22*c.vol,at+.015);g.gain.linearRampToValueAtTime(0,at+.1/c.rate);o.connect(g);g.connect(actx.destination);o.start(at);o.stop(at+.12/c.rate);at+=.12/c.rate}at+=.07/c.rate;if(/[.,;:!?]$/.test(w))at+=.16/c.rate});
       setTimeout(()=>{if(id===speakSeq)talk(false)},Math.max(500,(at-actx.currentTime)*1000));vst='secours'}catch(_){talk(true,String(t));setTimeout(()=>talk(false),Math.min(6000,300+t.length*50));vst='muette'}}
-  function speak(t,force){if(!t)return;if(window.__cooking&&!force)return;const c=cfg();console.log('[PERLE] speak engine='+c.engine+' mute='+c.mute+' quiet='+quietNow()+' texte='+String(t).slice(0,40));const mouthOnly=()=>{talk(true,String(t));clearTimeout(speak.m);speak.m=setTimeout(()=>talk(false),Math.min(8000,300+t.length*55))};
+  /* avant toute voix : la musique descend presque à zéro (≈ 0,3 s), puis seulement Perle ou le chef parle ; elle remonte une fois la voix finie */
+  function speak(t,force){if(!t)return;if(window.__cooking&&!force)return;const tk=speak.tk=(speak.tk||0)+1;let pl=false;try{pl=window.MUSPLAYING&&window.MUSPLAYING()}catch(_){}
+    if(pl){try{window.MUSDUCK(true)}catch(_){}setTimeout(()=>{if(tk===speak.tk)speak0(t,force)},380);return}speak0(t,force)}
+  function speak0(t,force){const c=cfg();console.log('[PERLE] speak engine='+c.engine+' mute='+c.mute+' quiet='+quietNow()+' texte='+String(t).slice(0,40));const mouthOnly=()=>{talk(true,String(t));clearTimeout(speak.m);speak.m=setTimeout(()=>talk(false),Math.min(8000,300+t.length*55))};
     if(c.engine==='off'&&!force||(!force&&quietNow())){mouthOnly();return}
     const id=++speakSeq,cs=chunks(t);try{if(allVoices().length&&(speechSynthesis.speaking||speechSynthesis.pending))speechSynthesis.cancel()}catch(_){}
     if(c.engine==='sounds'){babble(t,id);return}
@@ -1669,7 +1673,7 @@ const Pearl=(()=>{
   function testVoice(v,text,cb){if(v&&v.native&&TTSN){shut();const c=cfg();TTSN.speak({text,lang:v.lang||'fr-FR',rate:c.rate,pitch:c.pitch,volume:c.vol,voice:v.idx,category:'ambient'}).then(()=>cb('ok')).catch(()=>cb('non'));return}if(!('speechSynthesis' in window)){cb('non');return}shut();const c=cfg();let done=false;const fin=r=>{if(done)return;done=true;clearTimeout(tm);cb(r)};
     try{const u=new SpeechSynthesisUtterance(text);u.lang=(v&&v.lang)||'fr-FR';if(v)u.voice=v;u.rate=c.rate;u.pitch=c.pitch;u.volume=c.vol;u.onstart=()=>{talk(true,text);fin('ok')};u.onboundary=e=>{if(e&&typeof e.charIndex==='number')mouthWordAt(e.charIndex)};u.onend=()=>talk(false);u.onerror=()=>{talk(false);fin('non')};keep=[u];speechSynthesis.speak(u);try{speechSynthesis.resume()}catch(_){}}catch(_){fin('non');return}
     const tm=setTimeout(()=>{try{speechSynthesis.cancel()}catch(_){}fin('non')},3000)}
-  function shut(){over=null;speakSeq++;clearTimeout(okT);try{speechSynthesis.cancel()}catch(_){}try{TTSN&&TTSN.stop()}catch(_){}try{VOIX&&VOIX.arreter()}catch(_){}talk(false)}
+  function shut(){over=null;speak.tk=(speak.tk||0)+1;speakSeq++;clearTimeout(okT);try{speechSynthesis.cancel()}catch(_){}try{TTSN&&TTSN.stop()}catch(_){}try{VOIX&&VOIX.arreter()}catch(_){}talk(false)}
   /* ---- bulle ---- */
   function placeBub(){const w=Math.min(300,innerWidth-24);bub.style.width=w+'px';const h=bub.offsetHeight;let x=Math.max(12,Math.min(innerWidth-w-12,pos.x-w/2));
     let y=pos.y-sz()/2-h-12;if(y<12)y=pos.y+sz()/2+12;if(y+h>innerHeight-8)y=Math.max(8,innerHeight-h-8);bub.style.left=x+'px';bub.style.top=y+'px'}
@@ -3231,13 +3235,13 @@ const BIRD=(()=>{
   const cvs=[];let singing=false,raf=0,tmo=0,last=0,fx=null,fxc=null;
   const rnd=(a,b)=>a+Math.random()*(b-a);const sm=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
   /* ressorts amortis : tous les mouvements sont fluides, sans à-coup, avec un léger dépassement naturel */
-  const mkS=(k,z)=>({x:0,v:0,k,c:2*Math.sqrt(k)*z});const sp={x:mkS(26,.85),y:mkS(34,.8),rot:mkS(30,.8),oL:mkS(130,.55),oR:mkS(130,.55),pL:mkS(18,.95),pR:mkS(18,.95),lift:mkS(30,.9),uL:mkS(110,.85),uR:mkS(110,.85),fL:mkS(150,.75),fR:mkS(150,.75),sc:mkS(40,.8)};sp.fL.x=sp.fR.x=4;
+  const mkS=(k,z)=>({x:0,v:0,k,c:2*Math.sqrt(k)*z});const sp={x:mkS(26,.85),y:mkS(34,.8),rot:mkS(30,.8),oL:mkS(130,.55),oR:mkS(130,.55),pL:mkS(18,.95),pR:mkS(18,.95),lift:mkS(30,.9),fx:mkS(16,.8),fy:mkS(16,.8),uL:mkS(110,.85),uR:mkS(110,.85),fL:mkS(150,.75),fR:mkS(150,.75),sc:mkS(40,.8)};sp.fL.x=sp.fR.x=4;
   sp.pL.x=-80;sp.pR.x=-80;
   const stepS=(s,t,dt)=>{const n=Math.max(1,Math.ceil(dt/.008)),h=dt/n;for(let i=0;i<n;i++){const a=s.k*(t-s.x)-s.c*s.v;s.v+=a*h;s.x+=s.v*h}return s.x};
-  const st={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,sq:1,ev:null,nextEv:0,bp:0,bpm:110,style:'pop',styleName:'',auto:'pop',autoN:0,autoT:0,wmOpen:true,wmT:0,seenOn:0,acT:0,acc:0,uL:0,uR:0,fL:4,fR:4,fk:null,fkL:-1,fg:null,fgN:-1,sc:0,fkN:0,fkNeed:12,tw:0,lastN:-1,nextSt:0,o:0,phi:-80};
-  const DC=()=>{const d=Object.assign({on:true,style:'auto',wings:'auto',int:1,free:false,fx:false},S.get('musDance',{}));const m=d.mode||(d.free?'libre':'moyen');d.mode=m;d.free=m==='libre';d.int=m==='discret'?0:m==='libre'?2:1;return d};
+  const st={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,sq:1,ev:null,nextEv:0,bp:0,bpm:110,style:'pop',styleName:'',auto:'pop',autoN:0,autoT:0,wmOpen:true,wmT:0,seenOn:0,acT:0,acc:0,uL:0,uR:0,fL:4,fR:4,fk:null,fkL:-1,fl:null,flN:0,flNeed:10,fx:0,fy:0,fg:null,fgN:-1,sc:0,fkN:0,fkNeed:12,tw:0,lastN:-1,nextSt:0,o:0,phi:-80};
+  const DC=()=>{const d=Object.assign({on:true,style:'auto',wings:'auto',int:1,free:false,fx:false},S.get('musDance',{}));let m=d.mode||(d.free?'libre':'moyen');if(d.style==='freestyle')m='libre';d.mode=m;d.free=m==='libre';d.int=m==='discret'?0:m==='libre'?2:1;return d};
   const on=()=>S.get('musBird',true)&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const STY={techno:['Techno',128],afro:['Afro',100],rock:['Rock',120],pop:['Pop',110],hiphop:['Hip-hop',90],douce:['Douce',72]};
+  const STY={freestyle:['Freestyle',118],techno:['Techno',128],afro:['Afro',100],rock:['Rock',120],pop:['Pop',110],hiphop:['Hip-hop',90],douce:['Douce',72]};
   const parts=[];
   function attach(cv,kind){if(!cv)return;cv._k=kind;cvs.push(cv);wake()}
   function sing(v){v=!!v;if(v===singing)return;singing=v;if(v){st.ev=null;st.wmT=0}wake()}
@@ -3299,9 +3303,9 @@ const BIRD=(()=>{
   };
   const CHOREO={techno:['pump','pump','raise','pump','jack','pump','raise','pump'],hiphop:['bobl','roll','throw_','bobl','roll','throw_'],afro:['hipsway','shimmy','shaku','hipsway','shaku'],rock:['headbang','headbang','windmill','headbang'],pop:['steptouch','clap','point','charleston'],douce:['balance','wave','balance','wave']};
   const FCLS=[[0,88,['balance','balance','headbob']],[88,118,['steptouch','headbob','twist','charleston']],[118,146,['pogo','jack','point','steptouch']],[146,999,['balance','jack','pogo']]];
-  const FSTY={techno:{b:1.25,s:.75,r:.9},afro:{b:.9,s:1.3,r:1.2},rock:{b:1.2,s:.9,r:1.3},hiphop:{b:1,s:1,r:1.2},douce:{b:.5,s:.85,r:.8},pop:{b:1,s:1,r:1}};
-  function figMix(b,bpm,style,nb,ex){const cl=FCLS.find(c=>bpm>=c[0]&&bpm<c[1])||FCLS[1],ph=Math.floor(b/8),g=st.fg||(st.fg={cur:null,prev:null,t0:b,cl:-1});
-    if(st.fgN!==ph||!g.cur||g.cl!==(ex?style:FCLS.indexOf(cl))){st.fgN=ph;const lst=cl[2].filter(f=>f!==g.cur);g.prev=g.cur;g.cur=ex&&CHOREO[style]?CHOREO[style][ph%CHOREO[style].length]:lst[Math.floor(Math.random()*lst.length)];g.cl=ex?style:FCLS.indexOf(cl);g.t0=b}
+  const FSTY={freestyle:{b:1.2,s:1.25,r:1.25},techno:{b:1.25,s:.75,r:.9},afro:{b:.9,s:1.3,r:1.2},rock:{b:1.2,s:.9,r:1.3},hiphop:{b:1,s:1,r:1.2},douce:{b:.5,s:.85,r:.8},pop:{b:1,s:1,r:1}};
+  function figMix(b,bpm,style,nb,ex){const cl=FCLS.find(c=>bpm>=c[0]&&bpm<c[1])||FCLS[1],ph=Math.floor(b/(style==='freestyle'?4:8)),g=st.fg||(st.fg={cur:null,prev:null,t0:b,cl:-1});
+    if(st.fgN!==ph||!g.cur||g.cl!==(ex?style:FCLS.indexOf(cl))){st.fgN=ph;const lst=cl[2].filter(f=>f!==g.cur);g.prev=g.cur;g.cur=style==='freestyle'?(()=>{const all=Object.keys(FIG).filter(f=>f!==g.cur);return all[Math.floor(Math.random()*all.length)]})():ex&&CHOREO[style]?CHOREO[style][ph%CHOREO[style].length]:lst[Math.floor(Math.random()*lst.length)];g.cl=ex?style:FCLS.indexOf(cl);g.t0=b}
     const f1=FIG[g.cur](b),f0=g.prev?FIG[g.prev](b):f1,w=g.prev?sm(0,1.5,b-g.t0):1,o={};
     for(const k of['x','y','rot','sc','L','R','uL','uR']){o[k]=(f0[k]||0)*(1-w)+(f1[k]||0)*w}o.fp=f1.fp==null?3:f1.fp;
     const fs=FSTY[style]||FSTY.pop;o.x*=fs.s*nb;o.y*=fs.b*nb;o.rot*=fs.r*nb;o.sc*=nb;return o}
@@ -3348,7 +3352,12 @@ const BIRD=(()=>{
       if(D.mode!=='discret'){if(n!==st.fkL){st.fkL=n;if(!st.fk&&++st.fkN>=st.fkNeed){st.fkN=0;st.fkNeed=D.mode==='libre'?4+Math.floor(Math.random()*5):12+Math.floor(Math.random()*9);const kd=D.mode==='libre'?['flap','flap','spread','wave'][Math.floor(Math.random()*4)]:['spread','wave','one'][Math.floor(Math.random()*3)];st.fk={b0:st.bp,kind:kd,dur:kd==='flap'?3:kd==='wave'?2.5:1.5,side:Math.random()<.5?-1:1}}}
         if(st.fk){const e=(st.bp-st.fk.b0)/st.fk.dur;if(e>=1)st.fk=null;else{const F=st.fk,ua=sm(0,.18,e)*(1-sm(.72,1,e)),ph=(st.bp-F.b0)*TP,mx=D.mode==='libre'?1:.72;let fa=F.kind==='flap'?4.6+4.2*Math.sin(ph):F.kind==='wave'?3.2+2*Math.sin(ph/2):3.4+1.6*Math.sin(ph/2);
           let uL=ua*mx,uR=ua*mx;if(F.kind==='one'){F.side<0?uR=0:uL=0}else if(F.kind==='wave'){const h=e<.5?1:0;uL=ua*mx*(h?1:.0);uR=ua*mx*(h?0:1)}
-          T.uL=uL;T.uR=uR;T.fL=T.fR=fa;if(F.kind==='flap'){T.y-=.06*ua*Math.abs(Math.sin(ph/2))}}}}}
+          T.uL=uL;T.uR=uR;T.fL=T.fR=fa;if(F.kind==='flap'){T.y-=.06*ua*Math.abs(Math.sin(ph/2))}}}}
+      /* freestyle : de temps en temps l'oiseau s'envole et fait un tour dans l'écran, puis revient exactement à sa place */
+      if(D.style==='freestyle'){let tfx=0,tfy=0;if(!st.hold&&!dragging()){if(n!==st.flL){st.flL=n;if(!st.fl&&++st.flN>=st.flNeed){st.flN=0;st.flNeed=14+Math.floor(Math.random()*14);st.fl={b0:st.bp,dur:8+Math.floor(Math.random()*5),dir:Math.random()<.5?-1:1}}}
+        if(st.fl){const e=(st.bp-st.fl.b0)/st.fl.dur;if(e>=1)st.fl=null;else{const env=sm(0,.12,e)*(1-sm(.86,1,e)),bt=st.bp-st.fl.b0;tfx=env*88*st.fl.dir*Math.sin(2*PI_*e);tfy=-env*62*(.5-.5*Math.cos(4*PI_*e));T.uL=T.uR=env;T.fL=T.fR=5+4.4*Math.sin(2*PI_*bt*1.5);T.lift=-8*env;T.oL=T.oR=.3}}}
+        T.fxx=tfx;T.fyy=tfy}
+    }
     T.lift=0}
   function update(dt,now){
     const E=(window.MUSEN?window.MUSEN():{lo:.3,bass:.3,treb:.3,bpm:0,conf:0,onsetT:0,lvl:.3});const D=DC();
@@ -3361,10 +3370,11 @@ const BIRD=(()=>{
       if(st.ev){const ev=EVS[st.ev.n];st.ev.t+=dt;const u=st.ev.t/ev.d;if(u>=1){st.ev=null;st.nextEv=now+(D.mode==='libre'?rnd(6,14):D.mode==='discret'?rnd(22,48):rnd(10,24))}else{const r=ev.f(u),sd=st.ev.side||0;T.oL=T.oR=r.o||0;if(r.u){T.uL=sd<=0?r.u:0;T.uR=sd>=0?r.u:0;T.fL=T.fR=r.f==null?4:r.f}T.pL=T.pR=r.p==null?-80:r.p;T.lift=r.lift||0;T.rot=r.rot||0;T.y=r.y||0}}
       else{if(!st.nextEv)st.nextEv=now+rnd(5,10);if(now>st.nextEv&&on()&&!document.hidden&&!dragging()&&D.on!==false){const nm=pickEv(D.mode);st.lastEv=nm;st.ev={n:nm,t:0,side:nm==='etire'?[-1,1,0][Math.floor(Math.random()*3)]:0}}}}
     if(st.hold&&!st.ev){T.oL=T.oR=Math.max(T.oL,.55);T.pL=T.pR=Math.max(T.pL,-4)}
-    st.x=stepS(sp.x,T.x,dt);st.y=stepS(sp.y,T.y,dt);st.rot=stepS(sp.rot,T.rot,dt);st.lift=stepS(sp.lift,T.lift,dt);st.sc=stepS(sp.sc,T.sc||0,dt);
+    st.x=stepS(sp.x,T.x,dt);st.y=stepS(sp.y,T.y,dt);st.rot=stepS(sp.rot,T.rot,dt);st.lift=stepS(sp.lift,T.lift,dt);st.sc=stepS(sp.sc,T.sc||0,dt);st.fx=stepS(sp.fx,T.fxx||0,dt);st.fy=stepS(sp.fy,T.fyy||0,dt);flyApply();
     st.oL=Math.max(0,Math.min(1,stepS(sp.oL,T.oL,dt)));st.oR=Math.max(0,Math.min(1,stepS(sp.oR,T.oR,dt)));st.pL=stepS(sp.pL,T.pL,dt);st.pR=stepS(sp.pR,T.pR,dt);st.uL=Math.max(0,Math.min(1,stepS(sp.uL,T.uL,dt)));st.uR=Math.max(0,Math.min(1,stepS(sp.uR,T.uR,dt)));st.fL=stepS(sp.fL,T.fL,dt);st.fR=stepS(sp.fR,T.fR,dt);
     st.o=st.oL;st.phi=st.pL;
     moveParts(dt)}
+  function flyApply(){for(const cv of cvs){if(cv._k!=='bead'||!cv.isConnected)continue;if(Math.abs(st.fx)<.3&&Math.abs(st.fy)<.3){if(cv._fly){cv.style.transform='';cv._fly=0}continue}const pr=cv.parentNode.getBoundingClientRect(),cx=pr.left+pr.width/2,cy=pr.top+pr.height/2;const dx=Math.max(40-cx,Math.min(innerWidth-40-cx,st.fx)),dy=Math.max(60-cy,Math.min(innerHeight-100-cy,st.fy));cv.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`;cv._fly=1}}
   function dragging(){const b=document.getElementById('mus-bead');return !!(b&&b._drag)}
   function drawFrame(c,im,i,ang,alpha){if(!im.complete||!im.naturalWidth||alpha<=.01)return;const d=INFO[i];c.save();c.globalAlpha=alpha;c.rotate(ang);c.drawImage(im,-d.px*c._s,-d.py*c._s,d.w*c._s,d.h*c._s);c.restore()}
   /* une aile : fermée, elle se soulève sans changer d'image (comme un coude qui monte) ; ouverte, on change de pose par un très court fondu
@@ -3657,7 +3667,7 @@ const _mc=document.createElement('style');_mc.textContent=`
     b.innerHTML=`<div class="mp-prev" style="margin:0"><span class="wbx big">${wings()}<i class="mp-gl"></i></span></div>
     <div class="mp-card"><p class="mp-h3">Son caractère</p>${chips('mode',[['discret','Discret'],['moyen','Moyen'],['libre','Libre']])}<p class="small muted" style="margin:2px 2px 0">${MD[D.mode]}</p></div>
     <div class="mp-card"><p class="mp-h3">Sa danse</p><div class="row"><button class="pill" id="o-live" aria-pressed="${live}">Oiseau vivant : ${live?'oui':'non'}</button><button class="pill" id="o-dance" aria-pressed="${D.on}">Il danse : ${D.on?'oui':'non'}</button></div>
-    <p class="small" style="margin:8px 0 4px">Style :</p>${chips('style',[['auto','Selon la musique'],['techno','Techno'],['afro','Afro'],['rock','Rock'],['pop','Pop'],['hiphop','Hip-hop / Rap'],['douce','Douce']])}
+    <p class="small" style="margin:8px 0 4px">Style :</p>${chips('style',[['auto','Selon la musique'],['freestyle','Freestyle (fête !)'],['techno','Techno'],['afro','Afro'],['rock','Rock'],['pop','Pop'],['hiphop','Hip-hop / Rap'],['douce','Douce']])}
     <div class="row" style="margin-top:6px"><button class="pill" id="o-fx" aria-pressed="${D.fx}">Plumes et notes : ${D.fx?'oui':'non'}</button></div></div>
     <p class="small muted" id="o-info" style="margin-top:8px"></p>`;
     BIRD.attach(b.querySelector('.bcv'),'panel');
@@ -3754,9 +3764,9 @@ const _mc=document.createElement('style');_mc.textContent=`
   let dkOn=false,dkF=1,dkT=0,dkSafe=0,dkRel=0;
   const userVol=()=>S.get('musVol',.8);
   function dkApply(){try{au.volume=Math.max(0,Math.min(1,userVol()*dkF))}catch(_){}}
-  function dkRun(){clearInterval(dkT);dkT=setInterval(()=>{const tgt=dkOn?.1:1;const st=dkOn?.18:.06;if(Math.abs(dkF-tgt)<=st){dkF=tgt;clearInterval(dkT);dkT=0}else dkF+=dkF<tgt?st:-st;dkApply()},60)}
+  function dkRun(){clearInterval(dkT);dkT=setInterval(()=>{const tgt=dkOn?.02:1;const st=dkOn?.3:.05;if(Math.abs(dkF-tgt)<=st){dkF=tgt;clearInterval(dkT);dkT=0}else dkF+=dkF<tgt?st:-st;dkApply()},60)}
   function duck(on){clearTimeout(dkRel);clearTimeout(dkSafe);if(on){dkOn=true;dkRun();dkSafe=setTimeout(()=>duck(false),40000)}else{dkRel=setTimeout(()=>{dkOn=false;dkRun()},700)}}
-  window.MUSDUCK=duck;
+  window.MUSDUCK=duck;window.MUSPLAYING=()=>{try{return !!au&&!au.paused&&!au.ended&&au.currentTime>0}catch(_){return false}};
   let pByApp=false;
   function pause(by){if(au.paused||!cur())return;au.pause();pByApp=!!by}
   function resume(){if(!pByApp)return;pByApp=false;au.play().catch(()=>{})}
@@ -4733,6 +4743,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.83',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.84',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
