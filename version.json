@@ -1,10 +1,9 @@
 {
-  "version": "11.88",
-  "date": "4 novembre 2026",
+  "version": "11.89",
+  "date": "5 novembre 2026",
   "natif": 7,
   "notes": [
-    "Météo : la recherche de ville trouve mieux (accents, villes homonymes à choisir, message si introuvable, touche Entrée)",
-    "Vidéos : plus de choix dans chaque spécialisation"
+    "Menu du charm plus attrayant : grandes cartes avec aperçu de chaque charm qui se balance"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

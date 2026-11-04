@@ -276,6 +276,14 @@ html,body{margin:0}
 .ico{background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important;background-color:transparent!important;filter:drop-shadow(0 1px 1.5px rgba(40,10,15,.75))}
 .cal{grid-template-columns:repeat(7,minmax(0,1fr))}
 .day{min-height:0;min-width:0;width:100%;max-width:44px;justify-self:center}
+.chm-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.chm{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px 8px;border-radius:18px;border:1.5px solid rgba(214,160,150,.55)!important;border-image:none!important;background:linear-gradient(rgba(70,20,32,.9),rgba(40,10,18,.95))!important;color:#f7e3d6;font:inherit;font-size:.85rem;box-shadow:inset 0 1px 0 rgba(255,235,220,.25),0 3px 8px rgba(0,0,0,.35);min-height:0!important;transition:transform .2s}
+.chm i{display:block;width:44px;height:92px;background:center/contain no-repeat;filter:drop-shadow(0 6px 5px rgba(0,0,0,.5));transform-origin:50% 0;animation:chmsw 3.2s ease-in-out infinite}
+.chm:nth-child(2) i{animation-delay:-1s}.chm:nth-child(3) i{animation-delay:-2s}
+.chm[aria-pressed="true"]{background:linear-gradient(#a8566b,#6e2438)!important;border-color:#f0c9a8!important;box-shadow:inset 0 1px 0 rgba(255,235,220,.5),0 0 14px rgba(240,201,168,.4)}
+.chm:active{transform:scale(.96)}
+@keyframes chmsw{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@media(prefers-reduced-motion:reduce){.chm i{animation:none}}
 .charm-img{display:block;width:46px;height:108px;background:var(--charm-e) top center/contain no-repeat;filter:drop-shadow(0 8px 6px rgba(0,0,0,.5))}
 </style>
 <style id="games">
@@ -700,8 +708,8 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
         <p class="eyebrow">Le charm</p>
         <label class="todo"><input type="checkbox" id="set-charm"><span>Afficher le charm</span></label>
         <label class="todo"><input type="checkbox" id="set-gyro"><span>Il bouge quand on penche le téléphone</span></label><p class="small muted" id="gyro-st"></p>
-        <div class="row"><button class="chip" data-ch="e">Médaille É</button><button class="chip" data-ch="heart">Cœur</button><button class="chip" data-ch="rose">Rose</button></div>
-        <p class="small muted">Astuce : touchez deux fois le charm pour en changer.</p>
+        <div class="chm-g"><button class="chm" data-ch="e" aria-label="Médaille É"><i style="background-image:var(--charm-e)"></i><b>Médaille É</b></button><button class="chm" data-ch="heart" aria-label="Cœur"><i style="background-image:var(--charm-heart)"></i><b>Cœur</b></button><button class="chm" data-ch="rose" aria-label="Rose"><i style="background-image:var(--charm-rose)"></i><b>Rose</b></button></div>
+        <p class="small muted">Touchez-en un pour l'accrocher. Touchez deux fois le charm sur l'écran pour en changer, ou tirez-le : il se balance.</p>
         <div class="field"><label for="notes-in">Un mot doux par ligne, un s'affiche chaque jour</label><textarea id="notes-in"></textarea></div>
         <div class="row"><button class="btn-gold" id="notes-save">Enregistrer</button></div>
         <p class="small muted">Pour l'installer : ouvrir dans Chrome, menu ⋮, « Ajouter à l'écran d'accueil ».</p>
@@ -1407,7 +1415,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.88',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.89',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1415,6 +1423,7 @@ const APP={version:'11.88',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.89','5 novembre 2026',["Menu du charm plus attrayant : grandes cartes avec aperçu de chaque charm qui se balance"]],
 ['11.88','4 novembre 2026',["Météo : la recherche de ville trouve mieux (accents, villes homonymes à choisir, message si introuvable, touche Entrée)", "Vidéos : plus de choix dans chaque spécialisation"]],
 ['11.87','4 novembre 2026',["Perle parle quand on la touche une fois (phrases variées) et deux fois (elle annonce son menu)", "Si Perle ne peut pas parler, un message affiche la raison au lieu de rester muette"]],
 ['11.86','4 novembre 2026',["Quand on garde une voix, Perle (ou le chef) la dit tout de suite pour confirmer"]],
@@ -4777,6 +4786,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.88',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.89',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
