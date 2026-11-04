@@ -645,7 +645,7 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
         </div>
       </div>
       <details style="margin-top:8px"><summary>Choisir une ville</summary>
-        <div class="row"><input id="wx-city" class="grow" placeholder="Lyon" aria-label="Ville pour la météo"><button id="wx-city-go">Valider</button></div>
+        <div class="row"><input id="wx-city" class="grow" placeholder="Lyon" aria-label="Ville pour la météo"><button id="wx-city-go">Valider</button></div><div id="wx-sug"></div>
       </details>
     </div>
 
@@ -929,11 +929,16 @@ async function wxAt(lat,lon,name){const u=`https://api.open-meteo.com/v1/forecas
   const p=j.daily.precipitation_probability_max[0];
   $('wx-m').textContent=`Min ${Math.round(j.daily.temperature_2m_min[0])}° · Max ${Math.round(j.daily.temperature_2m_max[0])}° · Pluie ${p}%`+(p>=50?' · Prenez un parapluie':'')}
 function wxFail(){$('wx-t').textContent='—';$('wx-d').innerHTML='Météo indisponible dans cet aperçu.';$('wx-m').innerHTML='<a href="https://meteofrance.com" target="_blank" rel="noopener">Voir Météo-France</a>'}
-async function wxCity(c){try{const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&language=fr&name='+encodeURIComponent(c));const j=await r.json();
-  if(!j.results)throw 0;const g=j.results[0];S.set('city',c);await wxAt(g.latitude,g.longitude,g.name)}catch(e){wxFail()}}
-function loadWx(){if(navigator.onLine===false){$('wx-t').textContent='—';$('wx-d').textContent='Hors connexion';$('wx-m').textContent='La météo revient dès que le téléphone a du réseau.';return}const c=S.get('city',null);if(c){wxCity(c);return}
+async function wxFind(q){const n=q.replace(/\s+\d{5}$/,'').replace(/^\d{5}\s+/,'').trim()||q;let out=[];
+  for(const name of [n,n.normalize('NFD').replace(/[\u0300-\u036f]/g,'')]){try{const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?count=15&language=fr&name='+encodeURIComponent(name));const j=await r.json();if(j.results&&j.results.length){out=j.results;break}}catch(_){}}
+  out.sort((a,b)=>(b.country_code==='FR')-(a.country_code==='FR')||(b.population||0)-(a.population||0));return out}
+async function wxCity(c,g){const sug=$('wx-sug');if(sug)sug.innerHTML='';
+  try{if(!g){$('wx-d').textContent='Recherche de « '+c+' »…';const L=await wxFind(c);if(!L.length){$('wx-t').textContent='—';$('wx-d').textContent='Ville introuvable : « '+c+' ».';$('wx-m').textContent='Vérifiez l\'orthographe ou essayez une ville voisine.';return}
+      g=L[0];if(sug&&L.length>1){sug.innerHTML='<div class="small muted" style="margin:6px 0 4px">Plusieurs résultats, touchez la bonne :</div>'+L.slice(0,6).map((x,i)=>`<button class="pill" data-i="${i}" style="margin:0 6px 6px 0">${x.name}${x.admin1?' · '+x.admin1:''}${x.country_code&&x.country_code!=='FR'?' · '+x.country_code:''}</button>`).join('');sug.querySelectorAll('button').forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];S.set('city',x.name);S.set('cityGeo',{lat:x.latitude,lon:x.longitude,name:x.name});wxCity(x.name,x)})}}
+    S.set('city',g.name);S.set('cityGeo',{lat:g.latitude,lon:g.longitude,name:g.name});await wxAt(g.latitude,g.longitude,g.name)}catch(e){wxFail()}}
+function loadWx(){if(navigator.onLine===false){$('wx-t').textContent='—';$('wx-d').textContent='Hors connexion';$('wx-m').textContent='La météo revient dès que le téléphone a du réseau.';return}const gg=S.get('cityGeo',null);if(gg){wxAt(gg.lat,gg.lon,gg.name).catch(wxFail);return}const c=S.get('city',null);if(c){wxCity(c);return}
   if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>wxAt(p.coords.latitude,p.coords.longitude,'').catch(wxFail),()=>wxCity('Paris'),{timeout:6000})}else wxCity('Paris')}
-$('wx-refresh').onclick=loadWx;addEventListener('online',loadWx);$('wx-city-go').onclick=()=>{const c=$('wx-city').value.trim();if(c)wxCity(c)};
+$('wx-refresh').onclick=loadWx;addEventListener('online',loadWx);$('wx-city-go').onclick=()=>{const c=$('wx-city').value.trim();if(c)wxCity(c)};$('wx-city').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('wx-city-go').click()}});
 
 /* itinéraire */
 function route(dest){dest=dest.trim();if(!dest)return;$('route-in').value=dest;$('route-dest').textContent=dest;
@@ -1402,7 +1407,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.87',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.88',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1415,7 @@ const APP={version:'11.87',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.88','4 novembre 2026',["Météo : la recherche de ville trouve mieux (accents, villes homonymes à choisir, message si introuvable, touche Entrée)", "Vidéos : plus de choix dans chaque spécialisation"]],
 ['11.87','4 novembre 2026',["Perle parle quand on la touche une fois (phrases variées) et deux fois (elle annonce son menu)", "Si Perle ne peut pas parler, un message affiche la raison au lieu de rester muette"]],
 ['11.86','4 novembre 2026',["Quand on garde une voix, Perle (ou le chef) la dit tout de suite pour confirmer"]],
 ['11.85','4 novembre 2026',["Plus de texte « En ligne » : seule la lumière reste, en-tête symétrique, logo bien au centre", "Perle peut se poser sur le logo, joliment", "L'oiseau a un nid : touche le bouton musique pour qu'il y revienne en volant", "L'oiseau peut ne pas aimer un style : il râle, arrête de danser, va se reposer dans un coin puis revient", "Cris d'oiseau (réglable) ; réglages « Ce qu'il n'aime pas » dans l'onglet Oiseau"]],
@@ -2037,6 +2043,9 @@ const VLIB={
  voyage:{n:'Voyage',ph:'voyage',d:'Partir sans bouger du canapé.',subs:[['Destinations',[['q:Des racines et des ailes','Des racines et des ailes','Émission'],['q:Road trip Islande','Islande','Road trip'],['q:Voyage en Italie documentaire','Italie','Documentaire'],['q:Documentaire voyage Japon','Japon','Voyage'],['q:Documentaire voyage Grèce','Grèce','Voyage']]]],ch:[]},
  musique:{n:'Musique',ph:'musique',d:'Concerts et musique douce.',subs:[['À écouter',[['q:Taratata live','Taratata','En direct'],['q:Concert acoustique live','Concerts acoustiques','Live'],['q:Musique relaxante pour dormir','Pour s\'endormir','Relaxante'],['q:Tubes des années 80','Tubes des années 80','Playlist'],['q:Chanson française playlist','Chanson française','Playlist']]]],ch:[]},
  mes:{n:'Mes chaînes',ph:'frissons',d:'Les chaînes et émissions que vous avez ajoutées vous-même.',subs:[['Mes ajouts',[]]],ch:[],mine:true}};
+/* plus de choix : chaque rubrique reçoit des recherches complémentaires (français) */
+Object.values(VLIB).forEach(c=>{if(c.mine||!c.subs)return;c.subs.forEach(sb=>{const nm=sb[0],have=new Set(sb[1].map(x=>x[1].toLowerCase()));
+  [['épisodes complets','Épisodes complets','Recherche en français'],['meilleurs moments','Meilleurs moments','Recherche en français'],['documentaire','Documentaires','Recherche en français'],['récent','Les plus récentes','Recherche en français'],['intégrale','Intégrales','Recherche en français']].forEach(([w,t,d])=>{if(!have.has(t.toLowerCase()))sb[1].push(['q:'+nm+' '+w+' français',t,d])})})});
 let vcat2=null,vsub2=0;
 const ytThumb=id=>'https://i.ytimg.com/vi/'+id+'/mqdefault.jpg';
 function renderVcats(){$('vcats').innerHTML=Object.entries(VLIB).map(([k,v])=>`<button class="vcat${k===vcat2?' on':''}" data-vc="${k}" style="background-image:var(--ph-${v.ph})"><span><b>${v.n}</b><small>${v.mine?myVids().length+' ajout'+(myVids().length>1?'s':''):v.subs.reduce((a,s)=>a+s[1].length,0)+' vidéos'}</small></span></button>`).join('');
@@ -4768,6 +4777,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.87',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.88',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>

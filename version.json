@@ -1,10 +1,10 @@
 {
-  "version": "11.87",
+  "version": "11.88",
   "date": "4 novembre 2026",
   "natif": 7,
   "notes": [
-    "Perle parle quand on la touche une fois (phrases variées) et deux fois (elle annonce son menu)",
-    "Si Perle ne peut pas parler, un message affiche la raison au lieu de rester muette"
+    "Météo : la recherche de ville trouve mieux (accents, villes homonymes à choisir, message si introuvable, touche Entrée)",
+    "Vidéos : plus de choix dans chaque spécialisation"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",
