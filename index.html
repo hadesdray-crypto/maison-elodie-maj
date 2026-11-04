@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.78',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.79',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.78',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.79','4 novembre 2026',['Oiseau : retour des jolies ailes roses, dressées et bien attachées','Danse en rythme : impulsion nette à chaque temps, ailes en alternance selon le style','Menu de la queue : boutons alignés proprement les uns sous les autres']],
 ['11.78','4 novembre 2026',['Oiseau : ailes dressées dans le dos comme au tout début, bien attachées','Danse calée sur le rythme : les ailes réagissent à chaque temps, plus vite et plus nettes','Mouvements d\'épaule fluides, plus d\'ouverture brusque ni de changement d\'image']],
 ['11.77','4 novembre 2026',['Les ailes repliées remontent de nouveau un peu au-dessus du micro, comme au tout début','L’oiseau se pose où l’on veut, même tout au bord de l’écran : seule la boule reste visible','Menu de la queue plus petit, avec un bouton pour le fermer ; les boutons se rangent le long du bord si l’oiseau est collé au bord']],
 ['11.76','4 novembre 2026',['Retour des ailes d’avant (dans le dos, comme tu les aimais)','Nouvelle queue : de vraies plumes dessinées, très nettes, qui se déploient une à une et ondulent doucement','La queue part toujours de l’oiseau, même près du bord de l’écran ; les boutons restent toujours accessibles']],
@@ -3216,7 +3217,7 @@ const BIRD=(()=>{
   const cvs=[];let singing=false,raf=0,tmo=0,last=0,fx=null,fxc=null;
   const rnd=(a,b)=>a+Math.random()*(b-a);const sm=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
   /* ressorts amortis : tous les mouvements sont fluides, sans à-coup, avec un léger dépassement naturel */
-  const mkS=(k,z)=>({x:0,v:0,k,c:2*Math.sqrt(k)*z});const sp={x:mkS(26,.85),y:mkS(34,.8),rot:mkS(30,.8),oL:mkS(70,.6),oR:mkS(70,.6),pL:mkS(18,.95),pR:mkS(18,.95),lift:mkS(30,.9)};
+  const mkS=(k,z)=>({x:0,v:0,k,c:2*Math.sqrt(k)*z});const sp={x:mkS(26,.85),y:mkS(34,.8),rot:mkS(30,.8),oL:mkS(130,.55),oR:mkS(130,.55),pL:mkS(18,.95),pR:mkS(18,.95),lift:mkS(30,.9)};
   sp.pL.x=-80;sp.pR.x=-80;
   const stepS=(s,t,dt)=>{const n=Math.max(1,Math.ceil(dt/.008)),h=dt/n;for(let i=0;i<n;i++){const a=s.k*(t-s.x)-s.c*s.v;s.v+=a*h;s.x+=s.v*h}return s.x};
   const st={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,sq:1,ev:null,nextEv:0,bp:0,bpm:110,style:'pop',styleName:'',auto:'pop',autoN:0,autoT:0,wmOpen:true,wmT:0,seenOn:0,acT:0,acc:0,tw:0,lastN:-1,nextSt:0,o:0,phi:-80};
@@ -3272,12 +3273,17 @@ const BIRD=(()=>{
     if(!st.eg||now>st.eg.end){if(!st.eg||now>st.eg.end+rnd(free?2:4,free?5:9))st.eg={side:Math.random()<.5?-1:1,t0:now,end:now+rnd(1.1,1.8)}}
     let gL=0,gR=0;if(st.eg&&now<st.eg.end){const u=(now-st.eg.t0)/(st.eg.end-st.eg.t0),g=Math.pow(Math.sin(Math.PI*u),2);if(st.eg.side<0)gL=g;else gR=g}
     const drL=.5+.5*dr(.31,.4),drR=.5+.5*dr(.27,3.3);
-    {const NR={techno:.1,afro:.08,rock:.11,hiphop:.07,douce:.05,pop:.08}[style]||.08;
-      if(E.onsetT>st.acT){st.acT=E.onsetT;st.acc=1}st.acc=(st.acc||0)*Math.exp(-dt*7);
-      let bt=Math.min(1,pulse/(NR*A+1e-3));let bL=bt*(.8+.2*drL),bR=bt*(.8+.2*drR);
-      if(style==='afro'||style==='hiphop'){bL=Math.min(1,Math.max(0,pL-2)/10);bR=Math.min(1,Math.max(0,pR-2)/10)}
-      const a2=st.acc*.7,g=free?1.15:.85;
-      T.oL=Math.min(.9,.05+g*Math.max(bL,a2)*.62*(.6+.4*A)+.14*gL);T.oR=Math.min(.9,.05+g*Math.max(bR,a2)*.62*(.6+.4*A)+.14*gR);T.pL=T.pR=-30}
+    {/* danseur : chaque temps donne une impulsion nette (attaque vive, retombée douce), calée sur la phase du rythme qui se recale sur les attaques de la musique */
+      const nn=n&1,env=Math.pow(1-k,2.4),half=Math.pow(1-((st.bp/2)%1),2),sw=.5+.5*Math.sin(st.bp*PI);
+      let bL=env,bR=env;
+      if(style==='afro'){bL=nn?env:.3*env+.15;bR=nn?.3*env+.15:env}
+      else if(style==='hiphop'){bL=nn?half:.25*half;bR=nn?.25*half:half}
+      else if(style==='douce'){bL=.25+.6*sw;bR=.25+.6*(1-sw)}
+      else if(style==='pop'){bL=env;bR=Math.pow(1-((st.bp+.5)%1),2.4)}
+      else if(style==='rock'){bL=bR=env;if(n%4===0){bL=bR=Math.min(1,env*1.25)}}
+      if(E.onsetT>st.acT){st.acT=E.onsetT;st.acc=1}st.acc=(st.acc||0)*Math.exp(-dt*9);
+      const ga=(free?1.1:.9)*(.72+.28*Math.min(1,A));const a2=st.acc*.55;
+      T.oL=Math.min(.95,.06+ga*.8*Math.max(bL,a2)+.14*gL);T.oR=Math.min(.95,.06+ga*.8*Math.max(bR,a2)+.14*gR);T.pL=T.pR=-30}
     T.lift=0}
   function update(dt,now){
     const E=(window.MUSEN?window.MUSEN():{lo:.3,bass:.3,treb:.3,bpm:0,conf:0,onsetT:0,lvl:.3});const D=DC();
@@ -3298,10 +3304,10 @@ const BIRD=(()=>{
   function drawFrame(c,im,i,ang,alpha){if(!im.complete||!im.naturalWidth||alpha<=.01)return;const d=INFO[i];c.save();c.globalAlpha=alpha;c.rotate(ang);c.drawImage(im,-d.px*c._s,-d.py*c._s,d.w*c._s,d.h*c._s);c.restore()}
   /* une aile : fermée, elle se soulève sans changer d'image (comme un coude qui monte) ; ouverte, on change de pose par un très court fondu
      où l'ancienne pose reste opaque dessous (jamais de transparence ni de flou durable) */
-  const WG=new Image();WG.src='skins/mus/aile-pliee.webp';
+  const WG=new Image();WG.src='skins/oiseau/aile00.webp';
   /* aile d'origine, dressée dans le dos : une seule image, pivotée autour de l'épaule par des ressorts (aucun changement d'image, aucun fondu) */
   function wing(c,side,o,phi,k,R){if(!WG.complete||!WG.naturalWidth)return;c.save();c.scale(side,1);
-    const hh=R*2.5*(1+.05*o),ww=hh*WG.naturalWidth/WG.naturalHeight,ax=.8,ay=.2;
+    const hh=R*2.3*(1+.05*o),ww=hh*WG.naturalWidth/WG.naturalHeight,ax=.82,ay=.12;
     c.rotate(.05+.62*o+(phi>-60?phi*.004:0));c.imageSmoothingQuality='high';c.drawImage(WG,-ax*ww,-ay*hh,ww,hh);c.restore()}
   function paint(cv){if(!cv.isConnected)return false;const r=cv.getBoundingClientRect();if(!r.width)return true;const dpr=Math.min(2,devicePixelRatio||1);
     const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
@@ -3469,7 +3475,7 @@ const _mc=document.createElement('style');_mc.textContent=`
       m._raf=requestAnimationFrame(loop)};m._raf=requestAnimationFrame(loop);
     /* les boutons : posés sur la queue, mais toujours gardés dans l'écran et séparés les uns des autres */
     const c0=cur();const mi=n_=>`<img src="skins/mus3/${n_}.webp" alt="">`;
-    const want=[['mm-pv','Titre précédent','b-prev',-47,46,40],['mm-pp','Lecture ou pause',(!au.paused&&c0)?'b-pause':'b-play',0,66,50],['mm-nx','Titre suivant','b-next',47,46,40],['mm-st','Arrêter','b-stop',0,104,34]];
+    const want=[['mm-pv','Titre précédent','b-prev',0,27,38],['mm-pp','Lecture ou pause',(!au.paused&&c0)?'b-pause':'b-play',0,74,46],['mm-nx','Titre suivant','b-next',0,121,38],['mm-st','Arrêter','b-stop',0,161,32]];
     const sy=Math.max(8,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sat'))||0);
     const pos=want.map(([id,l,im,dx,dy,sz])=>({sz,x:cxA+dx,y:down?pyAbs+dy:pyAbs-dy}));
     const clampP=p=>{p.x=Math.max(p.sz/2+8,Math.min(innerWidth-p.sz/2-8,p.x));p.y=Math.max(p.sz/2+8+sy,Math.min(innerHeight-p.sz/2-8,p.y))};
@@ -3479,7 +3485,7 @@ const _mc=document.createElement('style');_mc.textContent=`
       b.addEventListener('pointerdown',dn);['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,up));m.appendChild(b);return b});
     const [bPv,bPp,bNx,bSt]=btns;
     const tt=document.createElement('div');tt.className='tt';tt.id='mm-t0';tt.innerHTML=`<span id="mm-t">${esc(c0?c0.title:'Aucune musique')}</span>`;
-    const tw=112,tx=Math.max(6,Math.min(innerWidth-tw-40,cxA-tw/2-14));let ty=Math.max(6+sy,Math.min(innerHeight-30,down?pyAbs+128:pyAbs-128-22));
+    const tw=112,tx=Math.max(6,Math.min(innerWidth-tw-40,cxA-tw/2-14));let ty=Math.max(6+sy,Math.min(innerHeight-30,down?pyAbs+186:pyAbs-186-22));
     /* la plaque et le bouton de fermeture ne passent jamais sur les boutons de commande */
     const hit=()=>pos.some(q=>q.x+q.sz/2+3>tx&&q.x-q.sz/2-3<tx+tw+36&&q.y+q.sz/2+3>ty&&q.y-q.sz/2-3<ty+26);
     for(let it=0;it<12&&hit();it++){ty+=down?10:-10;ty=Math.max(6+sy,Math.min(innerHeight-30,ty))}tt.style.cssText=`left:${tx-cl}px;top:${ty-ct}px;width:${tw}px;height:22px;z-index:4;font-size:9px;padding:0 12px`;m.appendChild(tt);
@@ -4646,6 +4652,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.78',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.79',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
