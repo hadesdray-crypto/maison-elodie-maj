@@ -1,8 +1,8 @@
 {
- "version": "11.67",
+ "version": "11.68",
  "date": "4 novembre 2026",
  "natif": 7,
- "notes": "Oiseau sobre et réaliste, lumière plus fluide",
+ "notes": "Petit volet de commandes sous l'oiseau (2 touchers), grand lecteur (3 touchers)",
  "v": 5,
  "apk": "MaisonElodie-V5.apk",
  "minApk": "11.63"
