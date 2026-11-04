@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.71',date:'3 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.72',date:'3 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.71',date:'3 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.72','4 novembre 2026',['Deux touchers sur l’oiseau : sa queue s’ouvre en éventail avec les boutons de commande dedans','Nouvelles ailes plus fines (18 poses) : mouvement plus fluide, sans saccade','Nouveaux boutons bijoux avec cordon doré']],
 ['11.71','4 novembre 2026',['Oiseau : ses ailes bougent séparément, une épaule ou un coude qui se lève, sans fondu ni flou','Ailes toujours entières à l’écran, jamais coupées','Petit volet de commandes redessiné avec les boutons bijoux']],
 ['11.70','4 novembre 2026',['Les mises à jour s’affichent de nouveau correctement, avec la liste de ce qui change']],
 ['11.69','4 novembre 2026',['Les mises à jour sont aussi recherchées quand on revient dans l’appli, plus seulement à l’ouverture']],
@@ -3201,11 +3202,11 @@ const PIP=(()=>{
 /* ===================== Lecteur de musique : la bulle, le lecteur, les playlists ===================== */
 
 const BIRD=(()=>{
-  const INFO=[{"i": 0, "w": 84, "h": 171, "px": 22.0, "py": 0.0, "phi": -90, "L": 172.0}, {"i": 1, "w": 185, "h": 122, "px": 185.0, "py": 52.8, "phi": -1.3, "L": 185.0}, {"i": 2, "w": 191, "h": 159, "px": 191.0, "py": 92.7, "phi": 22.9, "L": 207.3}, {"i": 3, "w": 179, "h": 176, "px": 179.0, "py": 108.5, "phi": 30.5, "L": 198.4}, {"i": 4, "w": 199, "h": 177, "px": 199.0, "py": 107.0, "phi": 27.4, "L": 215.1}, {"i": 5, "w": 228, "h": 101, "px": 228.0, "py": 41.3, "phi": 4.3, "L": 228.7}, {"i": 6, "w": 221, "h": 133, "px": 221.0, "py": 62.4, "phi": -2.8, "L": 221.3}, {"i": 7, "w": 224, "h": 122, "px": 224.0, "py": 53.8, "phi": -7.2, "L": 225.8}, {"i": 8, "w": 231, "h": 106, "px": 231.0, "py": 47.2, "phi": -1.9, "L": 231.1}, {"i": 9, "w": 218, "h": 126, "px": 218.0, "py": 49.4, "phi": -4.6, "L": 218.7}, {"i": 10, "w": 222, "h": 126, "px": 222.0, "py": 52.6, "phi": -9.9, "L": 224.3}, {"i": 11, "w": 228, "h": 123, "px": 228.0, "py": 49.3, "phi": -2.2, "L": 228.2}];const base='skins/oiseau/';
-  const IM=INFO.map(i=>{const m=new Image();m.src=base+'aile'+String(i.i).padStart(2,'0')+'.webp';return m});
+  const INFO=[{"k": 0, "src": 22, "w": 117, "h": 206, "px": 59.1, "py": 28.0, "phi": -72.9}, {"k": 1, "src": 0, "w": 123, "h": 193, "px": 36.4, "py": 26.0, "phi": -62.5}, {"k": 2, "src": 2, "w": 158, "h": 186, "px": 58.2, "py": 26.3, "phi": -58.5}, {"k": 3, "src": 3, "w": 180, "h": 177, "px": 60.4, "py": 30.6, "phi": -50.4}, {"k": 4, "src": 6, "w": 173, "h": 181, "px": 56.4, "py": 32.3, "phi": -51.8}, {"k": 5, "src": 16, "w": 195, "h": 144, "px": 25.8, "py": 53.9, "phi": -25.2}, {"k": 6, "src": 17, "w": 191, "h": 145, "px": 25.7, "py": 45.9, "phi": -27.4}, {"k": 7, "src": 15, "w": 209, "h": 117, "px": 25.0, "py": 70.9, "phi": -8.8}, {"k": 8, "src": 7, "w": 207, "h": 140, "px": 31.4, "py": 107.0, "phi": 19.8}, {"k": 9, "src": 8, "w": 175, "h": 149, "px": 32.1, "py": 119.9, "phi": 39.9}, {"k": 10, "src": 9, "w": 147, "h": 177, "px": 31.4, "py": 148.3, "phi": 53.3}, {"k": 11, "src": 10, "w": 138, "h": 185, "px": 30.6, "py": 155.7, "phi": 57.3}];const base='skins/oiseau2/';
+  const IM=INFO.map(i=>{const m=new Image();m.src=base+'p'+String(i.k).padStart(2,'0')+'.webp';return m});
   const BALL=new Image();BALL.src='skins/mus/bille.webp';
-  const PF=[],PN=[],PE=[];for(let i=0;i<12;i++){const m=new Image();m.src=base+'plume'+i+'.webp';PF.push(m)}for(let i=0;i<6;i++){const m=new Image();m.src=base+'note'+i+'.webp';PN.push(m);const e=new Image();e.src=base+'etin'+i+'.webp';PE.push(e)}
-  const OPEN=INFO.filter(i=>i.i>0).sort((a,b)=>a.phi-b.phi);
+  const PF=[],PN=[],PE=[];for(let i=0;i<12;i++){const m=new Image();m.src='skins/oiseau/plume'+i+'.webp';PF.push(m)}for(let i=0;i<6;i++){const m=new Image();m.src='skins/oiseau/note'+i+'.webp';PN.push(m);const e=new Image();e.src='skins/oiseau/etin'+i+'.webp';PE.push(e)}
+  const OPEN=INFO.slice().sort((a,b)=>a.phi-b.phi);
   const cvs=[];let singing=false,raf=0,tmo=0,last=0,fx=null,fxc=null;
   const rnd=(a,b)=>a+Math.random()*(b-a);const sm=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
   /* ressorts amortis : tous les mouvements sont fluides, sans à-coup, avec un léger dépassement naturel */
@@ -3288,23 +3289,19 @@ const BIRD=(()=>{
     moveParts(dt)}
   function dragging(){const b=document.getElementById('mus-bead');return !!(b&&b._drag)}
   function drawFrame(c,im,i,ang,alpha){if(!im.complete||!im.naturalWidth||alpha<=.01)return;const d=INFO[i];c.save();c.globalAlpha=alpha;c.rotate(ang);c.drawImage(im,-d.px*c._s,-d.py*c._s,d.w*c._s,d.h*c._s);c.restore()}
-  /* une aile : fermée, elle se soulève sans changer d'image (comme un coude qui monte) ; ouverte, on change de pose par un très court fondu
-     où l'ancienne pose reste opaque dessous (jamais de transparence ni de flou durable) */
-  const WS=[{c:-1,p:-1,t0:0},{c:-1,p:-1,t0:0}];
-  function wing(c,side,o,phi,k){const w=WS[k],now=performance.now();c.save();c.scale(side,1);
-    let want,eff=0,sh=0;
-    if(o<.35){want=-1;sh=sm(0,.35,o)*34*Math.PI/180}
-    else{eff=-80+(phi+80)*sm(.3,.9,o);let bi=0,bd=1e9;for(let j=0;j<OPEN.length;j++){const d=Math.abs(eff-OPEN[j].phi)-(j===w.c?7:0);if(d<bd){bd=d;bi=j}}want=bi}
-    if(want!==w.c&&now-w.t0>60){w.p=w.c;w.c=want;w.t0=now}
-    const f=Math.min(1,(now-w.t0)/150);
-    const one=(s_,al)=>{if(s_<0){c.save();c.translate(0,-sh*7*c._s);drawFrame(c,IM[0],0,sh,al);c.restore()}else{const fr=OPEN[s_];drawFrame(c,IM[fr.i],fr.i,(eff-fr.phi)*Math.PI/180,al)}};
-    if(f<1&&w.p!==w.c&&w.p>=-1&&(w.p>=0||w.c>=0||true)){one(w.p,1);one(w.c,sm(0,1,f))}else one(w.c,1);
+  /* une aile : une chaîne de poses voisines, toujours tournée exactement à l'angle voulu autour de l'épaule.
+     La pose la plus proche reste opaque dessous, la suivante apparaît par-dessus : jamais de transparence qui laisse voir le fond. */
+  function wing(c,side,o,phi,k){c.save();c.scale(-side,1);
+    const e=sm(0,1,o);const eff=Math.max(OPEN[0].phi,Math.min(OPEN[OPEN.length-1].phi,-72+130*e+(phi+4)*.35));
+    let lo=OPEN[0],hi=OPEN[OPEN.length-1];for(let j=0;j<OPEN.length-1;j++){if(eff>=OPEN[j].phi&&eff<=OPEN[j+1].phi){lo=OPEN[j];hi=OPEN[j+1];break}}
+    const w0=hi.phi===lo.phi?0:Math.max(0,Math.min(1,(eff-lo.phi)/(hi.phi-lo.phi))),w=sm(.38,.62,w0);const rd=x=>-(eff-x.phi)*Math.PI/180;
+    if(w<.999)drawFrame(c,IM[lo.k],lo.k,rd(lo),1);if(w>.02)drawFrame(c,IM[hi.k],hi.k,rd(hi),w);
     c.restore()}
   function paint(cv){if(!cv.isConnected)return false;const r=cv.getBoundingClientRect();if(!r.width)return true;const dpr=Math.min(2,devicePixelRatio||1);
     const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
     const c=cv.getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,W,H);
-    const D=W*(cv._k==='bead'?.27:.28),R=D/2;c._s=Math.min(R*2*1.45/231,(W/2-.78*R-R*.1-3)/231);const k2=cv._k==='bead'?1:2.2;
-    const cx=W/2+st.x*R,cy=Math.max(R*1.12,Math.min(H*.56,H-4-185*c._s+.05*R-R*.12))+st.lift*dpr*k2+st.y*R;const br=1+.008*Math.sin(performance.now()/1400);
+    const D=W*(cv._k==='bead'?.27:.28),R=D/2;c._s=Math.min(R*2*1.45/231*1.2,(W/2-.78*R-R*.1-3)/200);const k2=cv._k==='bead'?1:2.2;
+    const cx=W/2+st.x*R,cy=Math.max(R*1.12,Math.min(H*.56,H-4-190*c._s+.05*R-R*.12))+st.lift*dpr*k2+st.y*R;const br=1+.008*Math.sin(performance.now()/1400);
     c.save();c.translate(cx,cy);c.rotate(st.rot);c.scale(br,br);
     c.save();c.translate(-R*.78,-R*.05);wing(c,1,st.oL,st.pL,0);c.restore();c.save();c.translate(R*.78,-R*.05);wing(c,-1,st.oR,st.pR,1);c.restore();
     if(BALL.complete&&BALL.naturalWidth)c.drawImage(BALL,-R,-R,D,D*BALL.naturalHeight/BALL.naturalWidth);c.restore();return true}
@@ -3356,12 +3353,15 @@ const MUS=(()=>{
   function toggleFav(id){const l=LS();id=String(id);const f=l[0];const i=f.ids.indexOf(id);if(i>=0)f.ids.splice(i,1);else f.ids.unshift(id);lsSave(l);return i<0}
   
 const _mc=document.createElement('style');_mc.textContent=`
-.mus-mini{position:fixed;z-index:47;width:136px;box-sizing:border-box;padding:3px 2px 4px;border:12px solid transparent;border-image:url(skins/mus/plaque.webp) 20 fill/12px stretch;border-top-width:6px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.55));overflow:visible;transform-origin:50% 0;transform:scaleY(0);opacity:0;transition:transform .45s cubic-bezier(.25,.9,.3,1),opacity .3s}
-.mus-mini.on{transform:scaleY(1);opacity:1}
-.mus-mini .mm-t{font-size:10px;line-height:1.2;color:#f3d9cf;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 3px;letter-spacing:.02em}
-.mus-mini .mm-r{display:flex;justify-content:space-between;align-items:center;gap:1px}
-.mus-mini button{width:26px;height:26px;padding:0;border:0;background:none;border-radius:50%;flex:none;-webkit-tap-highlight-color:transparent}.mus-mini button img{width:100%;height:100%;display:block;pointer-events:none}
-.mus-mini button.big{width:32px;height:32px}.mus-mini button:active{filter:brightness(1.25)}
+.mus-tail{position:fixed;z-index:47;width:220px;height:196px;pointer-events:none;-webkit-tap-highlight-color:transparent}
+.mus-tail .tf{position:absolute;left:92px;top:0;width:36px;transform-origin:50% 0;will-change:transform,opacity;filter:drop-shadow(0 2px 3px rgba(40,10,20,.45))}
+.mus-tail .tf svg{display:block;width:100%;height:100%;overflow:visible;transform-origin:50% 0;animation:tfsw var(--sw,4s) ease-in-out infinite alternate}
+@keyframes tfsw{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+.mus-tail .tb{position:absolute;pointer-events:auto;padding:0;border:0;background:none;border-radius:50%;opacity:0;transform:scale(.4);transition:opacity .28s ease,transform .38s cubic-bezier(.3,1.6,.5,1);-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 3px 4px rgba(30,5,15,.55))}
+.mus-tail.on .tb{opacity:1;transform:scale(1)}.mus-tail .tb img{width:100%;height:100%;display:block;pointer-events:none}.mus-tail .tb:active{filter:brightness(1.25) drop-shadow(0 3px 4px rgba(30,5,15,.55))}
+.mus-tail .tt{position:absolute;left:45px;width:130px;height:25px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s .15s;background:url(skins/mus2/pl-titre.webp) center/100% 100% no-repeat;color:#f3d9cf;font-size:9.5px;letter-spacing:.02em;padding:0 12px;box-sizing:border-box;filter:drop-shadow(0 3px 4px rgba(30,5,15,.55))}
+.mus-tail.on .tt{opacity:1}.mus-tail .tt span{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%}
+@media (prefers-reduced-motion:reduce){.mus-tail .tf svg{animation:none}}
 .mus-bead{position:fixed;z-index:48;width:140px;height:92px;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
 .mus-bead[hidden]{display:none}
 .wbx{position:relative;isolation:isolate;display:block;width:100%;height:100%}.wbx.big{width:min(86vw,300px);height:calc(min(86vw,300px)*.68);margin:0 auto}
@@ -3415,15 +3415,39 @@ const _mc=document.createElement('style');_mc.textContent=`
   let bead=null,panel=null,tab='lecteur',sub='styles',grp=null,listId=null,gemI=S.get('musGem',0);
   const ico=k=>`<img src="${MIC[k]}" alt="">`;
   const wings=()=>`<canvas class="bcv" aria-hidden="true"></canvas>`;
-  let mini=null,minOff=null;
-  function closeMini(){if(!mini)return;const m=mini;mini=null;BIRD.hold(false);m.classList.remove('on');setTimeout(()=>m.remove(),360);document.removeEventListener('pointerdown',minOff,true);clearTimeout(m._t)}
-  function openMini(){if(mini||!bead)return;const m=mini=document.createElement('div');m.className='mus-mini';m.setAttribute('role','group');m.setAttribute('aria-label','Commandes du lecteur');
-    const c=cur();const mi=n=>`<img src="skins/mus/b-${n}.webp" alt="">`;m.innerHTML=`<p class="mm-t" id="mm-t">${esc(c?c.title:'Aucune musique')}</p><div class="mm-r"><button id="mm-pv" aria-label="Titre précédent">${mi('prev')}</button><button id="mm-pp" class="big" aria-label="Lecture ou pause">${mi(!au.paused&&c?'pause':'play')}</button><button id="mm-nx" aria-label="Titre suivant">${mi('next')}</button><button id="mm-st" aria-label="Arrêter">${mi('stop')}</button></div>`;
-    document.body.appendChild(m);const br=bead.getBoundingClientRect();const w=136;let x=br.left+br.width/2-w/2;x=Math.max(4,Math.min(innerWidth-w-4,x));let y=br.top+br.height*.78;if(y+70>innerHeight)y=Math.max(4,br.top-48);m.style.left=x+'px';m.style.top=y+'px';
-    const q=i=>m.querySelector(i);q('#mm-pp').onclick=()=>{toggle();q('#mm-pp').innerHTML=mi(!au.paused&&cur()?'pause':'play');q('#mm-t').textContent=cur()?cur().title:'Aucune musique'};q('#mm-pv').onclick=()=>{prev();setTimeout(()=>{q('#mm-t')&&(q('#mm-t').textContent=cur()?cur().title:'')},300)};q('#mm-nx').onclick=()=>{next();setTimeout(()=>{q('#mm-t')&&(q('#mm-t').textContent=cur()?cur().title:'')},300)};q('#mm-st').onclick=()=>{stop();q('#mm-pp').innerHTML=mi('play')};
-    BIRD.hold(true);requestAnimationFrame(()=>m.classList.add('on'));
-    minOff=e=>{if(m.contains(e.target)||(bead&&bead.contains(e.target)))return;closeMini()};setTimeout(()=>document.addEventListener('pointerdown',minOff,true),50);m._t=setTimeout(closeMini,12000)}
-  function buildBead(){if(bead)return;bead=document.createElement('div');bead.className='mus-bead';bead.id='mus-bead';bead.setAttribute('role','button');bead.setAttribute('tabindex','0');bead.setAttribute('aria-label','Lecteur de musique. Toucher : lecture ou pause. Deux fois : les commandes. Trois fois : le grand menu. Glisser : déplacer.');
+  /* la queue de l'oiseau : deux touchers, les plumes de la queue s'ouvrent en éventail et les boutons sont posés dedans */
+  let mini=null,minOff=null,minBk=null;
+  function featherSVG(L,wd,id,dark){const g1=dark?['#d89aae','#b86982','#8f4560']:['#fbd5de','#ec9fb6','#cf7b95'];const o=[`<svg viewBox="0 0 ${wd} ${L}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="${g1[2]}"/><stop offset=".45" stop-color="${g1[0]}"/><stop offset=".6" stop-color="${g1[1]}"/><stop offset="1" stop-color="${g1[2]}"/></linearGradient></defs>`];
+    const c=wd/2,pw=wd*.5;const d=`M${c},0 C${c-pw*1.05},${L*.22} ${c-pw*1.1},${L*.78} ${c},${L} C${c+pw*1.1},${L*.78} ${c+pw*1.05},${L*.22} ${c},0 Z`;
+    o.push(`<path d="${d}" fill="url(#${id})" stroke="#d9b36a" stroke-width="1.1" stroke-linejoin="round"/>`);
+    for(let t=.08;t<.97;t+=.032){const y=t*L,half=pw*(.2+.85*Math.sin(Math.min(1,t*1.05)*Math.PI*.92)**.7);const k=L*.045;o.push(`<path d="M${c},${y} L${c-half},${y+k} M${c},${y} L${c+half},${y+k}" stroke="${dark?'#7a3550':'#c46b88'}" stroke-opacity=".42" stroke-width=".55" fill="none"/>`)}
+    o.push(`<path d="M${c},2 L${c},${L-2}" stroke="#e9cf8d" stroke-width="1.1" stroke-linecap="round" opacity=".9"/><path d="M${c+.8},4 L${c+.8},${L-5}" stroke="#fff3d6" stroke-width=".4" opacity=".7"/></svg>`);return o.join('')}
+  function closeMini(fromBack){if(!mini)return;const m=mini;mini=null;BIRD.hold(false);clearTimeout(m._t);document.removeEventListener('pointerdown',minOff,true);
+    if(!fromBack&&minBk){const f=minBk;minBk=null;try{dropBack(f)}catch(_){}}else minBk=null;
+    m.classList.remove('on');const fs=[...m.querySelectorAll('.tf')];
+    fs.forEach((f,i)=>{try{f._an&&f._an.cancel()}catch(_){}const to=f._to;f.animate([{transform:to,opacity:1},{transform:to.replace(/scale\([^)]*\)/,'scale(.9,.2)'),opacity:0}],{duration:300,delay:(fs.length-i)*12,easing:'cubic-bezier(.5,0,.8,.5)',fill:'forwards'})});
+    setTimeout(()=>m.remove(),700)}
+  function openMini(){if(mini||!bead)return;const m=mini=document.createElement('div');m.className='mus-tail';m.setAttribute('role','group');m.setAttribute('aria-label','Commandes du lecteur : la queue de l’oiseau');
+    const br=bead.getBoundingClientRect();const W=220,Hh=196;let down=br.top+br.height*.62+Hh<innerHeight-70;const dir=down?1:-1;
+    let x=br.left+br.width/2-W/2;x=Math.max(2,Math.min(innerWidth-W-2,x));const pyAbs=br.top+br.height*.62;m.style.left=x+'px';m.style.top=(down?pyAbs:pyAbs-Hh)+'px';
+    const cx=br.left+br.width/2-x;/* pivot de l'éventail (sous la boule) */const px0=Math.max(40,Math.min(W-40,cx)),py0=down?0:Hh;
+    /* plumes : un plan arrière plus sombre, un plan avant plus clair */
+    const lay=[[-50,-38,-25,-12,0,12,25,38,50],[-44,-31,-18,-6,6,18,31,44]];let n=0;
+    const mk=(deg,L,wd,dark,delay)=>{const f=document.createElement('div');f.className='tf';f.style.cssText=`left:${px0-wd/2}px;top:${py0}px;width:${wd}px;height:${L}px;z-index:${dark?1:2}`;f.style.setProperty('--sw',(3.2+Math.random()*2.2).toFixed(2)+'s');f.innerHTML=featherSVG(L,wd,'tfg'+(n++),dark);
+      const rot=(down?0:180)+deg;const to=`rotate(${rot}deg) scale(1,1)`;f._to=to;m.appendChild(f);
+      f._an=f.animate([{transform:`rotate(${down?0:180}deg) scale(.5,.12)`,opacity:0},{transform:to,opacity:1}],{duration:560,delay,easing:'cubic-bezier(.25,1.45,.5,1)',fill:'forwards'});f.style.transform=to;f.style.opacity=1};
+    lay[0].forEach((d,i)=>mk(d,160-Math.abs(d)*.55,30,true,i*20));lay[1].forEach((d,i)=>mk(d,176-Math.abs(d)*.7,32,false,60+i*22));
+    const c=cur();const mi=n_=>`<img src="skins/mus2/${n_}.webp" alt="">`;const pol=(r,a)=>[px0+(down?1:-1)*0+r*Math.sin(a*Math.PI/180),down?py0+r*Math.cos(a*Math.PI/180):py0-r*Math.cos(a*Math.PI/180)];
+    const btn=(id,lbl,img,r,a,sz,dl)=>{const b=document.createElement('button');b.id=id;b.className='tb';b.setAttribute('aria-label',lbl);b.innerHTML=mi(img);const [bx,by]=pol(r,a);b.style.cssText=`left:${bx-sz/2}px;top:${by-sz/2}px;width:${sz}px;height:${sz}px;z-index:5;transition-delay:${dl}ms`;m.appendChild(b);return b};
+    const bPv=btn('mm-pv','Titre précédent','b-prev',98,-30,36,330),bPp=btn('mm-pp','Lecture ou pause',(!au.paused&&c)?'b-pause':'b-play',104,0,46,300),bNx=btn('mm-nx','Titre suivant','b-next',98,30,36,360),bSt=btn('mm-st','Arrêter','b-stop',146,0,32,390);
+    const tt=document.createElement('div');tt.className='tt';tt.id='mm-tt';tt.innerHTML=`<span id="mm-t">${esc(c?c.title:'Aucune musique')}</span>`;const ty=down?Hh-26:1;tt.style.top=ty+'px';tt.style.left=(px0-65)+'px';tt.style.zIndex=4;m.appendChild(tt);
+    document.body.appendChild(m);
+    const refresh=()=>{const cc=cur();bPp.innerHTML=mi(!au.paused&&cc?'b-pause':'b-play');const t=m.querySelector('#mm-t');if(t)t.textContent=cc?cc.title:'Aucune musique'};const keep=()=>{clearTimeout(m._t);m._t=setTimeout(()=>closeMini(),12000)};
+    bPp.onclick=()=>{toggle();refresh();keep()};bPv.onclick=()=>{prev();setTimeout(refresh,300);keep()};bNx.onclick=()=>{next();setTimeout(refresh,300);keep()};bSt.onclick=()=>{stop();bPp.innerHTML=mi('b-play');keep()};
+    BIRD.hold(true);requestAnimationFrame(()=>requestAnimationFrame(()=>m.classList.add('on')));
+    minOff=e=>{if(m.contains(e.target)||(bead&&bead.contains(e.target)))return;closeMini()};setTimeout(()=>document.addEventListener('pointerdown',minOff,true),50);keep();
+    try{pushBack(minBk=()=>{minBk=null;closeMini(true)})}catch(_){}}
+  function buildBead(){if(bead)return;bead=document.createElement('div');bead.className='mus-bead';bead.id='mus-bead';bead.setAttribute('role','button');bead.setAttribute('tabindex','0');bead.setAttribute('aria-label','Lecteur de musique. Toucher : lecture ou pause. Deux fois : la queue s’ouvre avec les commandes. Trois fois : le grand menu. Glisser : déplacer.');
     bead.innerHTML=`<i class="mb-g"></i><span class="wbx">${wings()}</span>`;BIRD.attach(bead.querySelector('.bcv'),'bead');document.body.appendChild(bead);
     let sx,sy,ox,oy,drag=false,id=0,tm=0,taps=0;
     bead.addEventListener('pointerdown',e=>{bead._drag=false;id=e.pointerId;sx=e.clientX;sy=e.clientY;const r=bead.getBoundingClientRect();ox=r.left;oy=r.top;drag=false;try{bead.setPointerCapture(id)}catch(_){}});
@@ -4578,6 +4602,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.71',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.72',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
