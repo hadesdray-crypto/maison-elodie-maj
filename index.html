@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.73',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.74',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.73',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.74','4 novembre 2026',['Nouvelles ailes dessinées pour un vrai battement : elles se replient et se déploient en douceur, plume après plume','Les ailes ne sont plus jamais coupées sur les bords de l’écran']],
 ['11.73','4 novembre 2026',['La queue de l’oiseau est maintenant une vraie queue de plumes roses qui s’ouvre en éventail, avec les boutons bijoux dedans','Nouvelles ailes plus grandes et plus détaillées, mouvement fluide','Le grand lecteur a un nouveau fond (plumes, oiseaux, notes) et un cadre en cordon doré avec plumes','Nouveaux boutons bijoux partout dans le lecteur']],
 ['11.72','4 novembre 2026',['Deux touchers sur l’oiseau : sa queue s’ouvre en éventail avec les boutons de commande dedans','Nouvelles ailes plus fines (18 poses) : mouvement plus fluide, sans saccade','Nouveaux boutons bijoux avec cordon doré']],
 ['11.71','4 novembre 2026',['Oiseau : ses ailes bougent séparément, une épaule ou un coude qui se lève, sans fondu ni flou','Ailes toujours entières à l’écran, jamais coupées','Petit volet de commandes redessiné avec les boutons bijoux']],
@@ -3203,7 +3204,7 @@ const PIP=(()=>{
 /* ===================== Lecteur de musique : la bulle, le lecteur, les playlists ===================== */
 
 const BIRD=(()=>{
-  const INFO=[{"k":0,"w":86,"h":173,"px":61.5,"py":7.7,"phi":-99.0},{"k":1,"w":186,"h":123,"px":5.7,"py":53.2,"phi":-1.2},{"k":2,"w":203,"h":140,"px":5.6,"py":71.2,"phi":15.6},{"k":3,"w":201,"h":166,"px":5.5,"py":97.7,"phi":21.0},{"k":4,"w":202,"h":178,"px":5.7,"py":108.4,"phi":27.7},{"k":5,"w":219,"h":154,"px":5.6,"py":80.8,"phi":17.4},{"k":6,"w":228,"h":136,"px":5.6,"py":65.7,"phi":12.1}];const base='skins/oiseau3/';
+  const INFO=[{"k":0,"w":113,"h":138,"px":10,"py":55,"phi":-42},{"k":1,"w":129,"h":134,"px":10,"py":54,"phi":-34},{"k":2,"w":173,"h":143,"px":10,"py":69,"phi":-4},{"k":3,"w":213,"h":129,"px":10,"py":55,"phi":-10},{"k":4,"w":229,"h":133,"px":10,"py":59,"phi":6},{"k":5,"w":223,"h":156,"px":11,"py":82,"phi":16},{"k":6,"w":223,"h":168,"px":10,"py":92,"phi":14}];const base='skins/oiseau4/';
   const IM=INFO.map(i=>{const m=new Image();m.src=base+'w'+i.k+'.webp';return m});
   const BALL=new Image();BALL.src='skins/mus/bille.webp';
   const PF=[],PN=[],PE=[];for(let i=0;i<12;i++){const m=new Image();m.src='skins/oiseau/plume'+i+'.webp';PF.push(m)}for(let i=0;i<6;i++){const m=new Image();m.src='skins/oiseau/note'+i+'.webp';PN.push(m);const e=new Image();e.src='skins/oiseau/etin'+i+'.webp';PE.push(e)}
@@ -4610,6 +4611,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.73',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.74',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
