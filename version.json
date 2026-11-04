@@ -1,10 +1,13 @@
 {
-  "version": "11.84",
+  "version": "11.85",
   "date": "4 novembre 2026",
   "natif": 7,
   "notes": [
-    "Musique quasi coupée pendant que Perle ou le chef parle",
-    "Danse Freestyle avec vol dans l'écran"
+    "Plus de texte « En ligne » : seule la lumière reste, en-tête symétrique, logo bien au centre",
+    "Perle peut se poser sur le logo, joliment",
+    "L'oiseau a un nid : touche le bouton musique pour qu'il y revienne en volant",
+    "L'oiseau peut ne pas aimer un style : il râle, arrête de danser, va se reposer dans un coin puis revient",
+    "Cris d'oiseau (réglable) ; réglages « Ce qu'il n'aime pas » dans l'onglet Oiseau"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

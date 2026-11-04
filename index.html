@@ -349,10 +349,10 @@ html[data-fs="2"]{font-size:125%}html[data-fs="2"] body{font-size:22px}
 .toast{z-index:80;display:flex;align-items:center;gap:10px}
 .toast .undo{min-height:30px;padding:2px 12px;font-size:.85rem;background:var(--rose);color:#3A2023;border:0}
 .top{position:relative}
-.tools{position:absolute;left:12px;top:12px;z-index:3;display:flex;align-items:center;gap:6px}#pearl-slot{display:block;width:60px;height:46px;flex:none}
+.tools{position:absolute;left:12px;top:12px;z-index:3;display:flex;align-items:center;gap:6px}
 .tools-r{position:absolute;right:12px;top:12px;display:flex;gap:6px;z-index:3}
-.netp{min-height:28px;padding:2px 9px 2px 8px;font-size:.64rem;gap:5px;border-radius:999px;background:rgba(40,16,20,.55);border:1.5px solid #E8B9A5;color:#FFF4EE}
-.netp .nd{width:9px;height:9px;border-radius:50%;background:#9BD7B6;flex:none}
+.netp{width:38px;height:38px;min-height:0;padding:0;justify-content:center;font-size:.64rem;gap:0;border-radius:50%;background:rgba(40,16,20,.55);border:1.5px solid #E8B9A5;color:#FFF4EE}
+.netp span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.netp .nd{width:12px;height:12px;border-radius:50%;background:#9BD7B6;flex:none}
 .netp[data-st=off] .nd{background:#B9A39C}.netp[data-st=cut] .nd{background:#E08A8A;box-shadow:0 0 0 2px rgba(0,0,0,.3)}
 .ck-th{width:64px;height:64px;object-fit:cover;border-radius:12px;border:1.5px solid #E8B9A5;flex:none}.ck-ph{display:block;width:100%;max-height:240px;object-fit:cover;border-radius:16px;border:2px solid #E8B9A5;margin:4px 0 8px;cursor:zoom-in}
 .ck-vis{display:flex!important;flex-direction:row!important;gap:8px;flex-wrap:wrap;align-items:flex-end;justify-content:center;margin:8px 0 2px}.ck-vis img.g{height:104px!important;width:auto!important;max-width:100%!important;object-fit:contain}.ck-vis img.t{height:46px!important;width:auto!important;max-width:30%!important;object-fit:contain}.ck-vis.sm{justify-content:flex-start}.ck-vis.sm img.g{height:72px!important}.ck-vis.sm img.t{height:34px!important}
@@ -459,7 +459,7 @@ html[data-theme] body{background:radial-gradient(ellipse at 50% 0,var(--bg2),var
 #charm-layer{position:absolute;left:0;z-index:8;height:250px;pointer-events:none;overflow:hidden}
 #charm-layer canvas{position:absolute;left:0;top:0;pointer-events:none}
 #charm-hit{position:absolute;left:0;top:0;width:68px;height:68px;border-radius:50%;pointer-events:auto;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent;will-change:transform}
-.tools-r{gap:4px;right:10px}.rb{width:34px;height:34px}.rb i{width:23px;height:23px}#orient svg{width:20px;height:20px}
+.tools-r{gap:6px;right:12px}.tools{gap:6px}.bigtext #net.netp{padding:0!important;min-width:0!important}#net.netp{width:40px!important;height:40px!important;min-height:0!important}.netp{width:34px;height:34px}.rb{width:34px;height:34px}.rb i{width:23px;height:23px}#orient svg{width:20px;height:20px}
 .pmenu.set .petal{transition:none!important}.pmenu.set .feather{transition:opacity .3s}
 /* repris de la version publiée par l'autre session */
 #mm-g .wc{width:auto;height:auto;min-width:0;aspect-ratio:1;padding:0;border:0;border-radius:6px;background:rgba(0,0,0,.22);font-family:inherit;font-size:1rem;font-weight:500;color:var(--ink)}#mm-g .wc.f{background:#8E525A;color:#FFF4EE}#mm-g .wc.sel{background:#F2C4B7;color:#5A2A30}
@@ -610,7 +610,7 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
   <header class="top plate">
     <div class="mono" aria-hidden="true"><span>É</span></div>
     <div class="brand">Maison Élodie<small id="topdate">—</small></div>
-    <div class="tools"><button id="net" class="netp" data-st="on" aria-label="Connexion"><i class="nd"></i><span>En ligne</span></button><button id="mus-b" class="rb" aria-pressed="false" aria-label="Lecteur de musique : un appui montre ou cache l'oiseau"><i></i></button></div><div class="tools-r"><span id="pearl-slot" aria-hidden="true"></span><button id="pearl-btn" class="rb" aria-pressed="true" aria-label="Ranger la Perle"><i class="pb-i"></i></button><button id="orient" class="rb" data-o="port" hidden style="display:none" aria-label="Portrait ou paysage"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="ph" x="7" y="3" width="10" height="18" rx="2.2"/><path class="ar" d="M3.5 9.5a8 8 0 0 1 3-4.6M20.5 14.5a8 8 0 0 1-3 4.6"/></svg></button><button id="gear" class="rb" aria-label="Réglages"><i class="gr-i"></i></button></div><span class="rivet" aria-hidden="true"></span>
+    <div class="tools"><button id="net" class="netp" data-st="on" aria-label="Connexion"><i class="nd"></i><span>En ligne</span></button><button id="mus-b" class="rb" aria-pressed="false" aria-label="Lecteur de musique : un appui montre ou cache l'oiseau"><i></i></button></div><div class="tools-r"><button id="pearl-btn" class="rb" aria-pressed="true" aria-label="Ranger la Perle"><i class="pb-i"></i></button><button id="orient" class="rb" data-o="port" hidden style="display:none" aria-label="Portrait ou paysage"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="ph" x="7" y="3" width="10" height="18" rx="2.2"/><path class="ar" d="M3.5 9.5a8 8 0 0 1 3-4.6M20.5 14.5a8 8 0 0 1-3 4.6"/></svg></button><button id="gear" class="rb" aria-label="Réglages"><i class="gr-i"></i></button></div><span class="rivet" aria-hidden="true"></span>
     <div class="charm" id="charm" aria-hidden="true"><span class="charm-img" id="charm-img"></span></div>
   </header>
 
@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.84',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.85',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.84',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.85','4 novembre 2026',["Plus de texte « En ligne » : seule la lumière reste, en-tête symétrique, logo bien au centre", "Perle peut se poser sur le logo, joliment", "L'oiseau a un nid : touche le bouton musique pour qu'il y revienne en volant", "L'oiseau peut ne pas aimer un style : il râle, arrête de danser, va se reposer dans un coin puis revient", "Cris d'oiseau (réglable) ; réglages « Ce qu'il n'aime pas » dans l'onglet Oiseau"]],
 ['11.84','4 novembre 2026',['Voix : la musique descend presque à zéro avant que Perle ou le chef parle, puis remonte après','Nouveau style de danse « Freestyle » : tous les mouvements, plumes et notes, et l\'oiseau s\'envole faire un tour dans l\'écran avant de revenir à sa place']],
 ['11.83','4 novembre 2026',['Une chorégraphie propre à chaque style choisi : Techno, Hip-hop / Rap, Afro, Rock, Pop, Douce','« Selon la musique » reste comme avant (mouvements choisis selon le tempo)']],
 ['11.82','4 novembre 2026',['Danse refondue : le tempo de la musique choisit le mouvement (balancé lent, step-touch, twist, pogo, point disco, charleston)','Corps qui balance, se penche, rebondit et avance/recule, enchaînés par phrases de 8 temps en douceur','Ailes qui accompagnent chaque mouvement, plus ou moins selon Discret / Moyen / Libre']],
@@ -1534,7 +1535,7 @@ const Pearl=(()=>{
   const sz=()=>cfg().size;
   const floor=()=>{const tb=document.querySelector('.tabbar');return innerHeight-(tb?tb.offsetHeight:70)-sz()/2-8};
   /* emplacement d'origine : à côté du bouton Perle, en haut */
-  const homeXY=()=>{const e=document.getElementById('pearl-slot');if(!e)return null;const r=e.getBoundingClientRect();return (r.width&&r.bottom>20&&r.top<innerHeight-60)?{x:r.left+r.width/2,y:r.top+r.height/2+4}:null};
+  const homeXY=()=>{const e=document.querySelector('.top .mono');if(!e)return null;const r=e.getBoundingClientRect();return (r.width&&r.bottom>20&&r.top<innerHeight-60)?{x:r.left+r.width/2,y:r.top+r.height/2+4}:null};
   function goHome(){const h=homeXY();if(!h||!pos)return false;stopPhys();vel={x:0,y:0};rot=0;tilted=false;pos.x=h.x;pos.y=h.y;el.classList.add('settle');place();save();S.set('pearlHome',true);return true}
   const atHome=()=>{const h=homeXY();return !h||!pos||Math.hypot(pos.x-h.x,pos.y-h.y)<sz()*.5};
   function clamp(){const s=sz()/2;pos.x=Math.max(s+4,Math.min(innerWidth-s-4,pos.x));pos.y=Math.max(s+6,Math.min(floor(),pos.y))}
@@ -3239,12 +3240,18 @@ const BIRD=(()=>{
   sp.pL.x=-80;sp.pR.x=-80;
   const stepS=(s,t,dt)=>{const n=Math.max(1,Math.ceil(dt/.008)),h=dt/n;for(let i=0;i<n;i++){const a=s.k*(t-s.x)-s.c*s.v;s.v+=a*h;s.x+=s.v*h}return s.x};
   const st={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,sq:1,ev:null,nextEv:0,bp:0,bpm:110,style:'pop',styleName:'',auto:'pop',autoN:0,autoT:0,wmOpen:true,wmT:0,seenOn:0,acT:0,acc:0,uL:0,uR:0,fL:4,fR:4,fk:null,fkL:-1,fl:null,flN:0,flNeed:10,fx:0,fy:0,fg:null,fgN:-1,sc:0,fkN:0,fkNeed:12,tw:0,lastN:-1,nextSt:0,o:0,phi:-80};
-  const DC=()=>{const d=Object.assign({on:true,style:'auto',wings:'auto',int:1,free:false,fx:false},S.get('musDance',{}));let m=d.mode||(d.free?'libre':'moyen');if(d.style==='freestyle')m='libre';d.mode=m;d.free=m==='libre';d.int=m==='discret'?0:m==='libre'?2:1;return d};
+  const DC=()=>{const d=Object.assign({on:true,style:'auto',wings:'auto',int:1,free:false,fx:false,dislike:[],chirp:true},S.get('musDance',{}));let m=d.mode||(d.free?'libre':'moyen');if(d.style==='freestyle')m='libre';d.mode=m;d.free=m==='libre';d.int=m==='discret'?0:m==='libre'?2:1;return d};
   const on=()=>S.get('musBird',true)&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
   const STY={freestyle:['Freestyle',118],techno:['Techno',128],afro:['Afro',100],rock:['Rock',120],pop:['Pop',110],hiphop:['Hip-hop',90],douce:['Douce',72]};
   const parts=[];
   function attach(cv,kind){if(!cv)return;cv._k=kind;cvs.push(cv);wake()}
-  function sing(v){v=!!v;if(v===singing)return;singing=v;if(v){st.ev=null;st.wmT=0}wake()}
+  /* cris d'oiseau synthétisés (très discrets) : content = petits trilles aigus ; pas content = deux râles graves */
+  let ac=null,lastCh=0;
+  function chirp(kind){try{const D=DC();if(D.chirp===false)return;if(window.MUSDUCKING&&window.MUSDUCKING())return;const nw=performance.now();if(nw-lastCh<(kind==='grumpy'?2500:9000))return;lastCh=nw;
+    ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();let at=ac.currentTime+.02;
+    if(kind==='happy'){const n=2+Math.floor(Math.random()*3),base=2300+Math.random()*900;for(let i=0;i<n;i++){const o=ac.createOscillator(),g=ac.createGain(),f=base*(1+.1*i*(Math.random()<.5?1:-.5));o.type='sine';o.frequency.setValueAtTime(f,at);o.frequency.exponentialRampToValueAtTime(f*1.4,at+.07);o.frequency.exponentialRampToValueAtTime(f*1.1,at+.12);g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(.07,at+.015);g.gain.exponentialRampToValueAtTime(.001,at+.14);o.connect(g);g.connect(ac.destination);o.start(at);o.stop(at+.16);at+=.11+Math.random()*.05}}
+    else{for(let i=0;i<2;i++){const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter(),l=ac.createOscillator(),lg=ac.createGain();o.type='sawtooth';o.frequency.setValueAtTime(560-i*40,at);o.frequency.exponentialRampToValueAtTime(320,at+.24);f.type='lowpass';f.frequency.value=1500;l.frequency.value=34;lg.gain.value=.035;l.connect(lg);lg.connect(g.gain);g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(.08,at+.03);g.gain.linearRampToValueAtTime(0,at+.26);o.connect(f);f.connect(g);g.connect(ac.destination);o.start(at);l.start(at);o.stop(at+.28);l.stop(at+.28);at+=.34}}}catch(_){}}
+  function sing(v){v=!!v;if(v===singing)return;singing=v;if(v){st.ev=null;st.wmT=0;if(Math.random()<.5)setTimeout(()=>chirp('happy'),700)}else{st.sk=0;st.skTgt=null;st.dsT=0}wake()}
   /* petits gestes d'oiseau au repos : secouer les plumes, se lisser, s'étirer (rare). Chacun est une courbe douce. */
   const EVS={
     secoue:{d:1.3,f:u=>{const a=sm(0,.15,u)*(1-sm(.6,1,u));const k=Math.sin(u*Math.PI*4.5)*a;return{o:.12*a+.08*Math.abs(k),p:-62+10*Math.abs(k),rot:k*.018,y:-.012*Math.abs(k)}}},
@@ -3362,19 +3369,31 @@ const BIRD=(()=>{
   function update(dt,now){
     const E=(window.MUSEN?window.MUSEN():{lo:.3,bass:.3,treb:.3,bpm:0,conf:0,onsetT:0,lvl:.3});const D=DC();
     const T={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0,uL:0,uR:0,fL:4,fR:4,sc:0};
+    /* comportement : un style qu'il n'aime pas -> il râle, arrête de danser, va se poser dans un coin, et revient quand ça change */
+    let sk=st.sk|0;{let dis=false;const dl=D.dislike||[];if(singing&&D.on!==false&&on()&&D.style==='auto'&&dl.length&&!st.hold&&!dragging()){const sty=chooseStyle(E,now,D);st.cs=sty;dis=dl.includes(sty)&&st.forgive!==sty}
+      st.dsT=dis?(st.dsT||0)+dt:Math.max(0,(st.dsT||0)-dt*2);
+      if(!sk&&st.dsT>4){sk=st.sk=1;st.skT=0;st.skTgt=null;chirp('grumpy')}
+      else if(sk&&(!singing||st.dsT<=0||st.hold||dragging())){st.sk=sk=0;st.skTgt=null;st.flapDur=1.5;if(singing)setTimeout(()=>chirp('happy'),900)}}
     if(singing){st.ev=null;
-      if(D.on&&on())dance(dt,now,E,D,T);
+      if(sk){st.skT+=dt;const t=st.skT;
+        if(t<1.5){const env=sm(0,.15,t)*(1-sm(1.2,1.5,t));T.rot=.05*Math.sin(t*34)*env;T.x=.05*Math.sin(t*34+1)*env;T.oL=T.oR=.55*env;T.pL=T.pR=-30}
+        else{const b=document.getElementById('mus-bead');if(b&&!st.skTgt){const cx=b.offsetLeft+b.offsetWidth/2,cy=b.offsetTop+b.offsetHeight/2;st.skTgt={x:(cx<innerWidth/2?innerWidth-46:46)-cx,y:Math.max(60,innerHeight-175)-cy}}
+          if(st.skTgt){T.fxx=st.skTgt.x;T.fyy=st.skTgt.y}
+          if(t<3.2){T.uL=T.uR=1-sm(2.6,3.2,t);T.fL=T.fR=5+4.4*Math.sin(2*PI_*t*3.2);T.oL=T.oR=.3}else{T.oL=T.oR=.03;T.rot=.02*Math.sin(now*.9)}}}
+      else if(D.on&&on())dance(dt,now,E,D,T);
       else{st.styleName='';const t=now*1;T.oL=.03+.05*(.5+.5*Math.sin(t*.8));T.oR=.03+.05*(.5+.5*Math.sin(t*.8+1.7));T.pL=T.pR=-30;T.rot=Math.sin(t)*.008}
       if(D.free||D.fx)spawn(dt,E,now)}
     else{st.styleName='';
       if(st.ev){const ev=EVS[st.ev.n];st.ev.t+=dt;const u=st.ev.t/ev.d;if(u>=1){st.ev=null;st.nextEv=now+(D.mode==='libre'?rnd(6,14):D.mode==='discret'?rnd(22,48):rnd(10,24))}else{const r=ev.f(u),sd=st.ev.side||0;T.oL=T.oR=r.o||0;if(r.u){T.uL=sd<=0?r.u:0;T.uR=sd>=0?r.u:0;T.fL=T.fR=r.f==null?4:r.f}T.pL=T.pR=r.p==null?-80:r.p;T.lift=r.lift||0;T.rot=r.rot||0;T.y=r.y||0}}
-      else{if(!st.nextEv)st.nextEv=now+rnd(5,10);if(now>st.nextEv&&on()&&!document.hidden&&!dragging()&&D.on!==false){const nm=pickEv(D.mode);st.lastEv=nm;st.ev={n:nm,t:0,side:nm==='etire'?[-1,1,0][Math.floor(Math.random()*3)]:0}}}}
+      else{if(!st.nextEv)st.nextEv=now+rnd(5,10);if(now>st.nextEv&&on()&&!document.hidden&&!dragging()&&D.on!==false){const nm=pickEv(D.mode);st.lastEv=nm;if((nm==='batt'||nm==='envol'||nm==='etire')&&Math.random()<.5)setTimeout(()=>chirp('happy'),300);st.ev={n:nm,t:0,side:nm==='etire'?[-1,1,0][Math.floor(Math.random()*3)]:0}}}}
+    if(st.flapDur){st.flapUntil=now+st.flapDur;st.flapDur=0}
+    if(st.flapUntil>now){T.uL=T.uR=1;T.fL=T.fR=5+4.4*Math.sin(now*2*PI_*3.2);T.oL=T.oR=Math.max(T.oL,.3)}
     if(st.hold&&!st.ev){T.oL=T.oR=Math.max(T.oL,.55);T.pL=T.pR=Math.max(T.pL,-4)}
     st.x=stepS(sp.x,T.x,dt);st.y=stepS(sp.y,T.y,dt);st.rot=stepS(sp.rot,T.rot,dt);st.lift=stepS(sp.lift,T.lift,dt);st.sc=stepS(sp.sc,T.sc||0,dt);st.fx=stepS(sp.fx,T.fxx||0,dt);st.fy=stepS(sp.fy,T.fyy||0,dt);flyApply();
     st.oL=Math.max(0,Math.min(1,stepS(sp.oL,T.oL,dt)));st.oR=Math.max(0,Math.min(1,stepS(sp.oR,T.oR,dt)));st.pL=stepS(sp.pL,T.pL,dt);st.pR=stepS(sp.pR,T.pR,dt);st.uL=Math.max(0,Math.min(1,stepS(sp.uL,T.uL,dt)));st.uR=Math.max(0,Math.min(1,stepS(sp.uR,T.uR,dt)));st.fL=stepS(sp.fL,T.fL,dt);st.fR=stepS(sp.fR,T.fR,dt);
     st.o=st.oL;st.phi=st.pL;
     moveParts(dt)}
-  function flyApply(){for(const cv of cvs){if(cv._k!=='bead'||!cv.isConnected)continue;if(Math.abs(st.fx)<.3&&Math.abs(st.fy)<.3){if(cv._fly){cv.style.transform='';cv._fly=0}continue}const pr=cv.parentNode.getBoundingClientRect(),cx=pr.left+pr.width/2,cy=pr.top+pr.height/2;const dx=Math.max(40-cx,Math.min(innerWidth-40-cx,st.fx)),dy=Math.max(60-cy,Math.min(innerHeight-100-cy,st.fy));cv.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`;cv._fly=1}}
+  function flyApply(){for(const cv of cvs){if(cv._k!=='bead'||!cv.isConnected)continue;const w=cv.closest('.mus-bead');if(!w)continue;if(Math.abs(st.fx)<.3&&Math.abs(st.fy)<.3){if(w._fly){w.style.transform='';w._fly=0}continue}const cx=w.offsetLeft+w.offsetWidth/2,cy=w.offsetTop+w.offsetHeight/2;const dx=Math.max(40-cx,Math.min(innerWidth-40-cx,st.fx)),dy=Math.max(60-cy,Math.min(innerHeight-100-cy,st.fy));w.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`;w._fly=1}}
   function dragging(){const b=document.getElementById('mus-bead');return !!(b&&b._drag)}
   function drawFrame(c,im,i,ang,alpha){if(!im.complete||!im.naturalWidth||alpha<=.01)return;const d=INFO[i];c.save();c.globalAlpha=alpha;c.rotate(ang);c.drawImage(im,-d.px*c._s,-d.py*c._s,d.w*c._s,d.h*c._s);c.restore()}
   /* une aile : fermée, elle se soulève sans changer d'image (comme un coude qui monte) ; ouverte, on change de pose par un très court fondu
@@ -3425,7 +3444,7 @@ const BIRD=(()=>{
     if(busy)raf=requestAnimationFrame(frame);else tmo=setTimeout(()=>frame(performance.now()),200)}
   function wake(){if(raf||tmo)return;last=performance.now()/1000;raf=requestAnimationFrame(frame)}
   document.addEventListener('visibilitychange',()=>{if(!document.hidden){clearTimeout(tmo);tmo=0;if(!raf)wake()}});
-  return{attach,sing,wake,state:st,on,STY,hold:v=>{st.hold=!!v;wake()}}})();
+  return{attach,sing,wake,state:st,on,STY,chirp,hold:v=>{st.hold=!!v;wake()},flap:sec=>{st.flapDur=sec||1.4;wake()},land:()=>{sp.fx.x=sp.fy.x=0;sp.fx.v=sp.fy.v=0;st.fx=st.fy=0;st.fl=null},poke:()=>{if(st.sk){st.forgive=st.cs;st.sk=0;st.skTgt=null;st.dsT=0;st.flapDur=1.2;wake()}}}})();
 const MUS=(()=>{
   const MP=(()=>{try{return NATIVE&&window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Music||null}catch(_){return null}})();
   const MIC={play:'skins/mus3/b-play.webp',pause:'skins/mus3/b-pause.webp',prev:'skins/mus3/b-prev.webp',next:'skins/mus3/b-next.webp',rew:'skins/mus/b-rew.webp',ff:'skins/mus/b-ff.webp',eject:'skins/mus3/b-eject.webp',repeat1:'skins/mus3/b-repeat1.webp',knob:'skins/mus/knob2.webp',vol:'skins/mus3/b-vol.webp',close:'skins/mus3/close.webp',fav:'skins/mus3/b-heart.webp',search:'skins/mus/search.webp',bead:'skins/mus/bille.webp',shuffle:'skins/mus3/b-shuffle.webp',repeat:'skins/mus3/b-repeat.webp',list:'skins/mus3/b-list.webp',add:'skins/mus/addmusic.webp',scan:'skins/mus/gear.webp',stop:'skins/mus3/b-stop.webp',eye:'skins/mus/eye.webp',eyeoff:'skins/mus/eyeoff.webp',trash:'skins/mus/trash.webp',edit:'skins/mus/edit.webp',folder:'skins/mus/folder.webp'};
@@ -3592,16 +3611,19 @@ const _mc=document.createElement('style');_mc.textContent=`
   function buildBead(){if(bead)return;bead=document.createElement('div');bead.className='mus-bead';bead.id='mus-bead';bead.setAttribute('role','button');bead.setAttribute('tabindex','0');bead.setAttribute('aria-label','Lecteur de musique. Toucher : lecture ou pause. Deux fois : la queue s’ouvre avec les commandes. Trois fois : le grand menu. Glisser : déplacer.');
     bead.innerHTML=`<i class="mb-g"></i><span class="wbx">${wings()}</span>`;BIRD.attach(bead.querySelector('.bcv'),'bead');document.body.appendChild(bead);
     let sx,sy,ox,oy,drag=false,id=0,tm=0,taps=0;
-    bead.addEventListener('pointerdown',e=>{bead._drag=false;id=e.pointerId;sx=e.clientX;sy=e.clientY;const r=bead.getBoundingClientRect();ox=r.left;oy=r.top;drag=false;try{bead.setPointerCapture(id)}catch(_){}});
+    bead.addEventListener('pointerdown',e=>{try{BIRD.poke();if(bead.style.transform){const r0=bead.getBoundingClientRect();bead.style.transform='';bead.style.left=r0.left+'px';bead.style.top=r0.top+'px';BIRD.land()}}catch(_){}bead._drag=false;id=e.pointerId;sx=e.clientX;sy=e.clientY;const r=bead.getBoundingClientRect();ox=r.left;oy=r.top;drag=false;try{bead.setPointerCapture(id)}catch(_){}});
     bead.addEventListener('pointermove',e=>{if(e.pointerId!==id||!(e.buttons||e.pressure))return;if(!drag&&Math.hypot(e.clientX-sx,e.clientY-sy)>8){drag=true;bead._drag=true}if(drag)place(ox+e.clientX-sx,oy+e.clientY-sy)});
     bead.addEventListener('pointerup',e=>{if(e.pointerId!==id)return;try{bead.releasePointerCapture(id)}catch(_){}
       if(drag){const r=bead.getBoundingClientRect();stSave({x:Math.round(r.left),y:Math.round(r.top)});drag=false;bead._drag=false;return}
       taps++;clearTimeout(tm);tm=setTimeout(()=>{const n=taps;taps=0;if(n>=3){closeMini();openPlayer('lecteur')}else if(n===2){mini?closeMini():openMini()}else toggle()},360)});
     bead.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
     place();paint()}
+  const defPos=()=>{let hr=null;try{hr=(document.querySelector('.jewel.hero')||document.querySelector('#v-accueil .jewel')).getBoundingClientRect()}catch(_){}return{x:hr?hr.left+12:14,y:hr?Math.max(70,hr.top+10):150}};
+  /* retour au nid : l'oiseau vole jusqu'à sa place de base */
+  function flyHome(){if(!bead)return;const h=defPos();bead.style.transform='';try{BIRD.land()}catch(_){}bead.style.transition='left 1.1s cubic-bezier(.45,.05,.3,1),top 1.1s cubic-bezier(.45,.05,.3,1)';stSave({x:null,y:null});place(h.x,h.y);try{BIRD.flap(1.3);BIRD.chirp('happy')}catch(_){}setTimeout(()=>{bead.style.transition='';stSave({x:null,y:null});place()},1250)}
+  const awayHome=()=>{if(!bead||bead.hidden)return false;const h=defPos(),r=bead.getBoundingClientRect();return Math.hypot(r.left-h.x,r.top-h.y)>14};
   function place(x,y){const w=innerWidth,h=innerHeight,s=ST();if(x==null){x=s.x;y=s.y}
-    if(x==null){let hr=null;try{hr=(document.querySelector('.jewel.hero')||document.querySelector('#v-accueil .jewel')).getBoundingClientRect()}catch(_){}
-      x=hr?hr.left+12:14;y=hr?Math.max(70,hr.top+10):150}
+    if(x==null){const d=defPos();x=d.x;y=d.y}
     const BR=19+4;x=Math.max(BR-70,Math.min(w-70-BR,x));y=Math.max(BR-46,Math.min(h-46-BR,y));bead.style.left=x+'px';bead.style.top=y+'px'}
   function show(on){const s=ST();const v=on==null?!s.vis:on;stSave({vis:v});if(v){buildBead();place()}if(bead)bead.hidden=!v;if(!v)closeMini();const b=$('mus-b');if(b){b.setAttribute('aria-pressed',String(v));}paint()}
   function paint(){const pl=!au.paused&&!!cur();if(bead)bead.classList.toggle('on',pl);BIRD.sing(pl);lightLoop(pl);
@@ -3668,10 +3690,11 @@ const _mc=document.createElement('style');_mc.textContent=`
     <div class="mp-card"><p class="mp-h3">Son caractère</p>${chips('mode',[['discret','Discret'],['moyen','Moyen'],['libre','Libre']])}<p class="small muted" style="margin:2px 2px 0">${MD[D.mode]}</p></div>
     <div class="mp-card"><p class="mp-h3">Sa danse</p><div class="row"><button class="pill" id="o-live" aria-pressed="${live}">Oiseau vivant : ${live?'oui':'non'}</button><button class="pill" id="o-dance" aria-pressed="${D.on}">Il danse : ${D.on?'oui':'non'}</button></div>
     <p class="small" style="margin:8px 0 4px">Style :</p>${chips('style',[['auto','Selon la musique'],['freestyle','Freestyle (fête !)'],['techno','Techno'],['afro','Afro'],['rock','Rock'],['pop','Pop'],['hiphop','Hip-hop / Rap'],['douce','Douce']])}
-    <div class="row" style="margin-top:6px"><button class="pill" id="o-fx" aria-pressed="${D.fx}">Plumes et notes : ${D.fx?'oui':'non'}</button></div></div>
+    <div class="row" style="margin-top:6px"><button class="pill" id="o-fx" aria-pressed="${D.fx}">Plumes et notes : ${D.fx?'oui':'non'}</button><button class="pill" id="o-chirp" aria-pressed="${D.chirp!==false}">Cris d'oiseau : ${D.chirp!==false?'oui':'non'}</button></div></div>
+    <div class="mp-card"><p class="mp-h3">Ce qu'il n'aime pas</p><p class="small muted" style="margin:0 2px 6px">Si la musique est de ce style (mode « Selon la musique »), il râle, arrête de danser et va se poser dans un coin. Toucher l'oiseau lui fait pardonner.</p><div class="mp-subs">${[['techno','Techno'],['afro','Afro'],['rock','Rock'],['pop','Pop'],['hiphop','Hip-hop / Rap'],['douce','Douce']].map(([v,l])=>`<button class="mp-sub" data-dis="${v}" aria-pressed="${(D.dislike||[]).includes(v)}">${l}</button>`).join('')}</div></div>
     <p class="small muted" id="o-info" style="margin-top:8px"></p>`;
     BIRD.attach(b.querySelector('.bcv'),'panel');
-    b.querySelector('#o-live').onclick=()=>{S.set('musBird',!S.get('musBird',true));vOis(b)};b.querySelector('#o-dance').onclick=()=>set({on:!D.on});b.querySelector('#o-fx').onclick=()=>set({fx:!D.fx});
+    b.querySelector('#o-live').onclick=()=>{S.set('musBird',!S.get('musBird',true));vOis(b)};b.querySelector('#o-dance').onclick=()=>set({on:!D.on});b.querySelector('#o-fx').onclick=()=>set({fx:!D.fx});b.querySelector('#o-chirp').onclick=()=>{const v=D.chirp===false;set({chirp:v});if(v)try{BIRD.chirp('happy')}catch(_){}};b.querySelectorAll('[data-dis]').forEach(x=>x.onclick=()=>{const k=x.dataset.dis,a=(D.dislike||[]).slice();const i=a.indexOf(k);i>=0?a.splice(i,1):a.push(k);set({dislike:a})});
     b.querySelectorAll('[data-k]').forEach(x=>x.onclick=()=>set({[x.dataset.k]:x.dataset.v}));
     const info=b.querySelector('#o-info');const iv=setInterval(()=>{if(!info.isConnected){clearInterval(iv);return}info.textContent=au.paused?'Lancez une musique pour le voir danser.':(st.styleName?('Il danse en style '+st.styleName+(st.bpm?' (environ '+Math.round(st.bpm)+' temps par minute).':'.')):'')},800)}
   /* ---- aide : Perle explique à voix haute ---- */
@@ -3758,7 +3781,7 @@ const _mc=document.createElement('style');_mc.textContent=`
       L.querySelectorAll('[data-id]').forEach(x=>x.onclick=()=>{const all=LS();const l=all.find(z=>z.id===x.dataset.id);const s=String(tid);if(l.ids.includes(s))l.ids=l.ids.filter(z=>z!==s);else l.ids.unshift(s);lsSave(all);fill();if(panel)paint()})};fill();
     b.querySelector('#pk-c').onclick=()=>{const nm=cap(b.querySelector('#pk-n').value).slice(0,30);if(!nm)return;const all=LS();all.push({id:uid(),kind:'pl',name:nm,ids:[String(tid)]});lsSave(all);b.querySelector('#pk-n').value='';fill()}}
   /* ---- bouton de l'en-tête : un appui = montrer / cacher la bulle ; deux appuis = arrêter la musique ---- */
-  function initBtn(){const b=$('mus-b');if(!b)return;let n=0,tm=0;b.onclick=()=>{n++;clearTimeout(tm);tm=setTimeout(()=>{const k=n;n=0;if(k>=2){stop();toast('Musique arrêtée',1200)}else show()},280)};b.setAttribute('aria-pressed',String(ST().vis));if(ST().vis){buildBead()}else{}
+  function initBtn(){const b=$('mus-b');if(!b)return;let n=0,tm=0;b.onclick=()=>{n++;clearTimeout(tm);tm=setTimeout(()=>{const k=n;n=0;if(k>=2){stop();toast('Musique arrêtée',1200)}else if(awayHome())flyHome();else show()},280)};b.setAttribute('aria-pressed',String(ST().vis));if(ST().vis){buildBead()}else{}
     if(bead)bead.hidden=!ST().vis}
   /* la musique s'efface pendant que Perle ou le chef parlent */
   let dkOn=false,dkF=1,dkT=0,dkSafe=0,dkRel=0;
@@ -3766,7 +3789,7 @@ const _mc=document.createElement('style');_mc.textContent=`
   function dkApply(){try{au.volume=Math.max(0,Math.min(1,userVol()*dkF))}catch(_){}}
   function dkRun(){clearInterval(dkT);dkT=setInterval(()=>{const tgt=dkOn?.02:1;const st=dkOn?.3:.05;if(Math.abs(dkF-tgt)<=st){dkF=tgt;clearInterval(dkT);dkT=0}else dkF+=dkF<tgt?st:-st;dkApply()},60)}
   function duck(on){clearTimeout(dkRel);clearTimeout(dkSafe);if(on){dkOn=true;dkRun();dkSafe=setTimeout(()=>duck(false),40000)}else{dkRel=setTimeout(()=>{dkOn=false;dkRun()},700)}}
-  window.MUSDUCK=duck;window.MUSPLAYING=()=>{try{return !!au&&!au.paused&&!au.ended&&au.currentTime>0}catch(_){return false}};
+  window.MUSDUCKING=()=>dkOn;window.MUSDUCK=duck;window.MUSPLAYING=()=>{try{return !!au&&!au.paused&&!au.ended&&au.currentTime>0}catch(_){return false}};
   let pByApp=false;
   function pause(by){if(au.paused||!cur())return;au.pause();pByApp=!!by}
   function resume(){if(!pByApp)return;pByApp=false;au.play().catch(()=>{})}
@@ -4743,6 +4766,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.84',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.85',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
