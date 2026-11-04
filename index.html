@@ -87,7 +87,7 @@ input::placeholder,textarea::placeholder{color:#A88F86}
 textarea{min-height:90px;resize:vertical}
 label{font-size:.85rem;color:var(--muted);display:block;margin-bottom:4px}
 .field{display:flex;flex-direction:column}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grid2.gd{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}#ag-s2 input{font-size:.95rem;padding-left:10px;padding-right:4px}#ag-wiz .chip[aria-pressed=true]{background:linear-gradient(#d9a48f,#b4766a);color:#2b0e18;font-weight:700;border-color:#f3d2c4}#ag-wiz .tag{cursor:pointer;border:1px solid rgba(232,185,165,.35)}#ag-wiz .tag.on{background:linear-gradient(#d9a48f,#b4766a);color:#2b0e18;font-weight:700}
 .mic{width:56px;height:56px;border-radius:50%;padding:2px;background:var(--bezel);border:0;flex:none;min-height:0}
 .mic span{display:flex;width:100%;height:100%;border-radius:50%;background:linear-gradient(160deg,#F2C9C1,#C98389);align-items:center;justify-content:center}
 .mic.rec span{animation:pulse 1s infinite}
@@ -182,7 +182,7 @@ label{font-size:.85rem;color:var(--muted);display:block;margin-bottom:4px}
 .status-0{background:var(--rose-soft);color:var(--rose)}
 .status-4{background:var(--ok);color:#13261C}
 details summary{cursor:pointer;color:var(--rose);font-size:.95rem;padding:6px 0}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;z-index:30;max-width:90vw;text-align:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,0)),rgba(46,15,26,.96);color:#FBEDE8;border:1px solid rgba(232,185,165,.6);padding:10px 18px;border-radius:16px;font-size:.92rem;line-height:1.35;z-index:30;max-width:88vw;text-align:center;box-shadow:0 10px 22px -8px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.1)}
 .seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -749,8 +749,8 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
         </div>
         <div id="ag-s2" class="stack" hidden>
           <div class="row"><button class="chip" data-qd="0">Aujourd'hui</button><button class="chip" data-qd="1">Demain</button><button class="chip" data-qd="2">Après-demain</button></div>
-          <p class="small muted">Ou touchez un jour dans le calendrier, en haut de la page.</p>
-          <div class="grid2"><div class="field"><label for="f-date">Date</label><input id="f-date" type="date"></div><div class="field"><label for="f-time">Heure</label><input id="f-time" type="time"></div></div>
+          <p class="small muted">Ou touchez un jour dans le calendrier, en haut de la page.</p><p class="small" id="ag-sum" aria-live="polite" style="font-weight:700"></p>
+          <div class="grid2 gd"><div class="field"><label for="f-date">Date</label><input id="f-date" type="date"></div><div class="field"><label for="f-time">Heure</label><input id="f-time" type="time"></div></div>
           <div class="row"><button class="chip" data-qt="09:00">9h</button><button class="chip" data-qt="12:00">Midi</button><button class="chip" data-qt="14:00">14h</button><button class="chip" data-qt="18:00">18h</button></div>
         </div>
         <div id="ag-s3" class="stack" hidden>
@@ -758,7 +758,7 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
           <div class="field"><label for="f-cat">Catégorie</label><select id="f-cat"><option>Perso</option><option>Travail</option><option>Entretien candidat</option><option>Client</option><option>Santé</option><option>Beauté</option><option>Famille</option></select></div></div>
           <div class="field"><label for="f-lieu">Lieu</label><input id="f-lieu" placeholder="Adresse ou visio"></div>
           <div class="field"><label for="f-who">Avec qui</label><input id="f-who" placeholder="Nom, téléphone"></div>
-          <div class="field"><label for="f-notes">Notes</label><textarea id="f-notes" placeholder="Documents à apporter, code d'accès…"></textarea></div>
+          <p class="small" id="ag-sum3" style="font-weight:700"></p><div class="field"><label for="f-notes">Notes</label><textarea id="f-notes" placeholder="Documents à apporter, code d'accès…"></textarea></div>
         </div>
         <div class="row" style="justify-content:space-between"><button class="pill back" id="ag-prev" style="visibility:hidden">← Retour</button><button class="btn-plum" id="ag-next">Suivant →</button><button class="btn-plum" id="ag-save" hidden>Ajouter le rendez-vous</button></div>
       </div>
@@ -1012,7 +1012,7 @@ function parseQuick(txt){let s=' '+String(txt).replace(/[,;!?]+/g,' ').replace(/
   const title=s?s.charAt(0).toUpperCase()+s.slice(1):'';
   return {title,date:d?iso(d):'',time}}
 function fmtDay(ds){const t=iso(new Date()),tm=iso(new Date(Date.now()+864e5));if(ds===t)return "Aujourd'hui";if(ds===tm)return 'Demain';
-  const d=new Date(ds+'T12:00');return JOURS[d.getDay()].slice(0,3)+'. '+d.getDate()+' '+MOIS[d.getMonth()].slice(0,4)+'.'}
+  const d=new Date(ds+'T12:00');return JOURS[d.getDay()].slice(0,3)+'. '+d.getDate()+' '+['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'][d.getMonth()]}
 function gcal(e){const z=(ds,t)=>ds.replace(/-/g,'')+(t?'T'+t.replace(':','')+'00':'');let dates;
   if(e.time){const st=new Date(e.date+'T'+e.time);const en=new Date(st.getTime()+(e.dur||60)*6e4);dates=z(e.date,e.time)+'/'+z(iso(en),pad(en.getHours())+':'+pad(en.getMinutes()))}
   else{const n=new Date(e.date+'T12:00');n.setDate(n.getDate()+1);dates=z(e.date)+'/'+z(iso(n))}
@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.80',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.81',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.80',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.81','4 novembre 2026',['Agenda : étapes Quoi / Quand / Où cliquables, jour et heure choisis visibles, récapitulatif avant d\'ajouter','Dates lisibles (ven. 6 nov.), champs date et heure entiers','Messages d\'information : plus de bulle blanche, un cartouche sombre plat aux bords or rose']],
 ['11.80','4 novembre 2026',['Oiseau vivant : ailes repliées, vrais gestes d\'oiseau (s\'étire, bat des ailes, envol) avec toutes les images, enchaînés en douceur','Trois caractères : Discret, Moyen, Libre ; danse aux épaules calée sur le rythme','Lecteur de musique plus calme et plus classe, mêmes couleurs que l\'appli','En haut : bouton musique à gauche près du voyant internet, Perle retrouve sa place à côté de son bouton','Menu de la queue : titre puis croix dessous ; le grand menu sort de l\'oiseau et y rentre']],
 ['11.79','4 novembre 2026',['Oiseau : retour des jolies ailes roses, dressées et bien attachées','Danse en rythme : impulsion nette à chaque temps, ailes en alternance selon le style','Menu de la queue : boutons alignés proprement les uns sous les autres']],
 ['11.78','4 novembre 2026',['Oiseau : ailes dressées dans le dos comme au tout début, bien attachées','Danse calée sur le rythme : les ailes réagissent à chaque temps, plus vite et plus nettes','Mouvements d\'épaule fluides, plus d\'ouverture brusque ni de changement d\'image']],
@@ -2338,12 +2339,18 @@ if(APP.swUrl&&'serviceWorker' in navigator&&(location.protocol==='https:'||locat
 /* --- agenda en 3 étapes --- */
 let agS=1;
 function agStep(n){agS=n;[1,2,3].forEach(i=>{$('ag-s'+i).hidden=i!==n;const t=document.querySelector(`#ag-wiz [data-st="${i}"]`);if(t)t.classList.toggle('on',i<=n)});
-  $('ag-prev').style.visibility=n>1?'visible':'hidden';$('ag-next').hidden=n===3;$('ag-save').hidden=n!==3;if(n===2)renderCal()}
+  $('ag-prev').style.visibility=n>1?'visible':'hidden';$('ag-next').hidden=n===3;$('ag-save').hidden=n!==3;if(n===2)renderCal();if(n>=2)syncQuick()}
 $('ag-new').onclick=()=>{const w=$('ag-wiz');if(!w.hidden){w.hidden=true;return}w.hidden=false;agStep(1);setTimeout(()=>{$('ag-quick').focus()},60);hint('agk','Écrivez ou dictez avec le micro du clavier, par exemple « vendredi 9h coiffeur ».',5000)};
 $('ag-next').onclick=()=>{if(agS===1){quickToForm();if(!$('f-title').value.trim()&&!hwDrawn){toast('Dites ou écrivez de quoi il s\'agit');$('ag-quick').focus();return}agStep(2)}else if(agS===2){if(!$('f-date').value){toast('Choisissez le jour : touchez le calendrier ou « Aujourd\'hui », « Demain »');return}agStep(3)}};
 $('ag-prev').onclick=()=>agStep(Math.max(1,agS-1));
-document.querySelectorAll('[data-qd]').forEach(b=>b.onclick=()=>{$('f-date').value=plusDays(+b.dataset.qd);renderCal();toast(fmtDay($('f-date').value))});
-document.querySelectorAll('[data-qt]').forEach(b=>b.onclick=()=>{$('f-time').value=b.dataset.qt});
+function syncQuick(){const d=$('f-date').value,t=$('f-time').value;document.querySelectorAll('[data-qd]').forEach(b=>b.setAttribute('aria-pressed',String(d===plusDays(+b.dataset.qd))));document.querySelectorAll('[data-qt]').forEach(b=>b.setAttribute('aria-pressed',String(t===b.dataset.qt)));
+  const m=$('ag-sum');if(m)m.textContent=d?('Choisi : '+fmtDay(d)+(t?' à '+t.replace(':','h'):'')):'Aucun jour choisi pour l\u2019instant.';
+  const m3=$('ag-sum3');if(m3)m3.textContent=[$('f-title').value.trim()||'Rendez-vous',d?fmtDay(d):'',t?t.replace(':','h'):''].filter(Boolean).join(' · ')}
+document.querySelectorAll('[data-qd]').forEach(b=>b.onclick=()=>{$('f-date').value=plusDays(+b.dataset.qd);if(!$('f-time').value)$('f-time').value='14:00';renderCal();syncQuick()});
+document.querySelectorAll('[data-qt]').forEach(b=>b.onclick=()=>{$('f-time').value=b.dataset.qt;syncQuick()});
+['f-date','f-time','f-title'].forEach(i=>{$(i).addEventListener('input',syncQuick);$(i).addEventListener('change',syncQuick)});
+$('cal').addEventListener('click',()=>setTimeout(syncQuick,60));
+document.querySelectorAll('#ag-wiz .tag').forEach(t=>{t.setAttribute('role','button');t.tabIndex=0;t.setAttribute('aria-label','Aller à l\u2019étape '+t.dataset.st);const go_=()=>{const n=+t.dataset.st;if(n<agS){agStep(n);return}let g=8;while(agS<n&&g--){const b=agS;$('ag-next').click();if(agS===b)break}};t.onclick=go_;t.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go_()}}});
 /* ===================== Couleur du thème : même cuir, mêmes cadres, autre teinte ===================== */
 const THEMES={
  rose:{n:'Rose',c:'#BC878C'},
@@ -4685,6 +4692,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.80',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.81',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>

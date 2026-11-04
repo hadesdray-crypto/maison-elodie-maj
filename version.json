@@ -1,10 +1,10 @@
 {
-  "version": "11.80",
+  "version": "11.81",
   "date": "4 novembre 2026",
   "natif": 7,
   "notes": [
-    "Oiseau plus vivant : gestes réalistes, 3 caractères",
-    "Lecteur plus classe, en-tête réorganisé, Perle chez elle"
+    "Agenda plus clair et utilisable",
+    "Messages d'information plus jolis"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",
