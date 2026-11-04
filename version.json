@@ -1,9 +1,1 @@
-{
- "version": "11.69",
- "date": "4 novembre 2026",
- "natif": 7,
- "notes": "Recherche de mise à jour aussi au retour dans l'appli",
- "v": 5,
- "apk": "MaisonElodie-V5.apk",
- "minApk": "11.63"
-}
+{"version": "11.70", "date": "4 novembre 2026", "natif": 7, "notes": ["Les mises à jour s'affichent de nouveau correctement, avec la liste de ce qui change", "Oiseau sobre et élégant : danse discrète, ailes douces, sans rotations ni plumes (mode libre dans les réglages Oiseau)", "Deux touchers sur l'oiseau : petit volet de commandes ; trois touchers : le grand lecteur", "Recherche de mise à jour aussi au retour dans l'appli"], "v": 5, "apk": "MaisonElodie-V5.apk", "minApk": "11.63"}
