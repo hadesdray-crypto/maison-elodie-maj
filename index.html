@@ -1402,7 +1402,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.70',date:'3 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.71',date:'3 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1410,6 +1410,7 @@ const APP={version:'11.70',date:'3 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.71','4 novembre 2026',['Oiseau : ses ailes bougent séparément, une épaule ou un coude qui se lève, sans fondu ni flou','Ailes toujours entières à l’écran, jamais coupées','Petit volet de commandes redessiné avec les boutons bijoux']],
 ['11.70','4 novembre 2026',['Les mises à jour s’affichent de nouveau correctement, avec la liste de ce qui change']],
 ['11.69','4 novembre 2026',['Les mises à jour sont aussi recherchées quand on revient dans l’appli, plus seulement à l’ouverture']],
 ['11.68','4 novembre 2026',['Oiseau : deux touchers ouvrent un petit volet de commandes sous lui, ailes ouvertes','Trois touchers ouvrent le grand lecteur']],
@@ -3258,16 +3259,24 @@ const BIRD=(()=>{
     else if(style==='douce'){const s=S1(st.bp*PI/2);x=.12*A*s*G;y=-.025*A*S1(st.bp*PI)*S1(st.bp*PI)*G;rot=.025*A*s*G;pL=pR=1+6*A*S1(st.bp*PI/2+.6);pulse=.05*A}
     else{y=-.06*A*Math.abs(S1(st.bp*PI))*G;rot=.018*A*S1(st.bp*PI)*G;pL=pR=2+8*A*S1(st.bp*TP)*G;pulse=.08*A*kick2}
     if(!free)st.tw=0;if(st.tw>0){st.tw+=dt*st.bpm/60/2;rot+=TP*sm(0,1,st.tw);if(st.tw>=1)st.tw=0}
-    /* ailes : repliées avec de petites ouvertures sur les temps forts, ou à demi ouvertes et détendues (jamais grand ouvertes) */
-    const base=st.wmOpen?(free?.7:.5):0.02;const oa=Math.min(free?1:.62,base+(st.wmOpen?pulse*.5:pulse));
-    const rest=st.wmOpen?-4:-30;
-    T.x=x;T.y=y;T.rot=rot;T.oL=T.oR=oa;T.pL=rest+pL+(free?4:0);T.pR=rest+pR+(free?4:0);T.lift=0}
+    /* ailes indépendantes : chacune a sa propre dérive lente et son accent ; de temps en temps une seule aile soulève son coude */
+    const sc=free?14:10,dr=(f,ph)=>Math.sin(now*f+ph);
+    const bL=Math.max(0,pL-2)/sc*(.72+.28*dr(.7,0)),bR=Math.max(0,pR-2)/sc*(.72+.28*dr(.53,2.1));
+    if(!st.eg||now>st.eg.end){if(!st.eg||now>st.eg.end+rnd(free?2:4,free?5:9))st.eg={side:Math.random()<.5?-1:1,t0:now,end:now+rnd(1.1,1.8)}}
+    let gL=0,gR=0;if(st.eg&&now<st.eg.end){const u=(now-st.eg.t0)/(st.eg.end-st.eg.t0),g=Math.pow(Math.sin(Math.PI*u),2);if(st.eg.side<0)gL=g;else gR=g}
+    const drL=.5+.5*dr(.31,.4),drR=.5+.5*dr(.27,3.3);
+    if(st.wmOpen){const base=free?.7:.5,mx=free?1:.62;
+      T.oL=Math.min(mx,base+(pulse*.5)*(.6+.4*drL)+.1*gL-.04*gR);T.oR=Math.min(mx,base+(pulse*.5)*(.6+.4*drR)+.1*gR-.04*gL);
+      T.pL=-4+pL*(.8+.4*drL)+(free?4:0);T.pR=-4+pR*(.8+.4*drR)+(free?4:0)}
+    else{/* ailes repliées : elles montent et descendent depuis leur attache dans le dos, une à une */
+      const mx=free?.34:.25;T.oL=Math.min(mx,.03+.11*bL+.05*drL*(.4+bL)+(free?.12:.1)*gL);T.oR=Math.min(mx,.03+.11*bR+.05*drR*(.4+bR)+(free?.12:.1)*gR);T.pL=T.pR=-30}
+    T.lift=0}
   function update(dt,now){
     const E=(window.MUSEN?window.MUSEN():{lo:.3,bass:.3,treb:.3,bpm:0,conf:0,onsetT:0,lvl:.3});const D=DC();
     const T={x:0,y:0,rot:0,oL:0,oR:0,pL:-80,pR:-80,lift:0};
     if(singing){st.ev=null;
       if(D.on&&on())dance(dt,now,E,D,T);
-      else{st.styleName='';const t=now*1;T.oL=T.oR=.4;T.pL=T.pR=-12+5*Math.sin(t);T.rot=Math.sin(t)*.01}
+      else{st.styleName='';const t=now*1;T.oL=.03+.05*(.5+.5*Math.sin(t*.8));T.oR=.03+.05*(.5+.5*Math.sin(t*.8+1.7));T.pL=T.pR=-30;T.rot=Math.sin(t)*.008}
       if(D.free||D.fx)spawn(dt,E,now)}
     else{st.styleName='';
       if(st.ev){const ev=EVS[st.ev.n];st.ev.t+=dt;const u=st.ev.t/ev.d;if(u>=1){st.ev=null;st.nextEv=now+(st.lastEv==='etire'?rnd(60,120):rnd(9,22))}else{const r=ev.f(u);T.oL=T.oR=r.o||0;T.pL=T.pR=r.p==null?-80:r.p;T.lift=r.lift||0;T.rot=r.rot||0;T.y=r.y||0}}
@@ -3279,21 +3288,25 @@ const BIRD=(()=>{
     moveParts(dt)}
   function dragging(){const b=document.getElementById('mus-bead');return !!(b&&b._drag)}
   function drawFrame(c,im,i,ang,alpha){if(!im.complete||!im.naturalWidth||alpha<=.01)return;const d=INFO[i];c.save();c.globalAlpha=alpha;c.rotate(ang);c.drawImage(im,-d.px*c._s,-d.py*c._s,d.w*c._s,d.h*c._s);c.restore()}
-  /* une aile : toujours opaque (jamais de fantôme). La pose repliée reste dessous tant que l'aile n'est pas tout à fait ouverte. */
-  function wing(c,side,o,phi){c.save();c.scale(side,1);
-    const open=sm(.02,.34,o);const eff=-80+(phi+80)*sm(0,.85,o);
-    if(open<.999)drawFrame(c,IM[0],0,0,1);
-    if(open>.01){let lo=OPEN[0],hi=OPEN[OPEN.length-1];for(let k=0;k<OPEN.length-1;k++){if(eff>=OPEN[k].phi&&eff<=OPEN[k+1].phi){lo=OPEN[k];hi=OPEN[k+1];break}}
-      const w=hi.phi===lo.phi?0:Math.max(0,Math.min(1,(eff-lo.phi)/(hi.phi-lo.phi)));const rd=x=>(eff-x.phi)*Math.PI/180;
-      drawFrame(c,IM[lo.i],lo.i,rd(lo),open);if(w>.02)drawFrame(c,IM[hi.i],hi.i,rd(hi),open*w)}
+  /* une aile : fermée, elle se soulève sans changer d'image (comme un coude qui monte) ; ouverte, on change de pose par un très court fondu
+     où l'ancienne pose reste opaque dessous (jamais de transparence ni de flou durable) */
+  const WS=[{c:-1,p:-1,t0:0},{c:-1,p:-1,t0:0}];
+  function wing(c,side,o,phi,k){const w=WS[k],now=performance.now();c.save();c.scale(side,1);
+    let want,eff=0,sh=0;
+    if(o<.35){want=-1;sh=sm(0,.35,o)*34*Math.PI/180}
+    else{eff=-80+(phi+80)*sm(.3,.9,o);let bi=0,bd=1e9;for(let j=0;j<OPEN.length;j++){const d=Math.abs(eff-OPEN[j].phi)-(j===w.c?7:0);if(d<bd){bd=d;bi=j}}want=bi}
+    if(want!==w.c&&now-w.t0>60){w.p=w.c;w.c=want;w.t0=now}
+    const f=Math.min(1,(now-w.t0)/150);
+    const one=(s_,al)=>{if(s_<0){c.save();c.translate(0,-sh*7*c._s);drawFrame(c,IM[0],0,sh,al);c.restore()}else{const fr=OPEN[s_];drawFrame(c,IM[fr.i],fr.i,(eff-fr.phi)*Math.PI/180,al)}};
+    if(f<1&&w.p!==w.c&&w.p>=-1&&(w.p>=0||w.c>=0||true)){one(w.p,1);one(w.c,sm(0,1,f))}else one(w.c,1);
     c.restore()}
   function paint(cv){if(!cv.isConnected)return false;const r=cv.getBoundingClientRect();if(!r.width)return true;const dpr=Math.min(2,devicePixelRatio||1);
     const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
     const c=cv.getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,W,H);
-    const D=W*(cv._k==='bead'?.27:.28),R=D/2;c._s=R*2*1.45/231;const k2=cv._k==='bead'?1:2.2;
-    const cx=W/2+st.x*R,cy=H*.56+st.lift*dpr*k2+st.y*R;const br=1+.008*Math.sin(performance.now()/1400);
+    const D=W*(cv._k==='bead'?.27:.28),R=D/2;c._s=Math.min(R*2*1.45/231,(W/2-.78*R-R*.1-3)/231);const k2=cv._k==='bead'?1:2.2;
+    const cx=W/2+st.x*R,cy=Math.max(R*1.12,Math.min(H*.56,H-4-185*c._s+.05*R-R*.12))+st.lift*dpr*k2+st.y*R;const br=1+.008*Math.sin(performance.now()/1400);
     c.save();c.translate(cx,cy);c.rotate(st.rot);c.scale(br,br);
-    c.save();c.translate(-R*.78,-R*.05);wing(c,1,st.oL,st.pL);c.restore();c.save();c.translate(R*.78,-R*.05);wing(c,-1,st.oR,st.pR);c.restore();
+    c.save();c.translate(-R*.78,-R*.05);wing(c,1,st.oL,st.pL,0);c.restore();c.save();c.translate(R*.78,-R*.05);wing(c,-1,st.oR,st.pR,1);c.restore();
     if(BALL.complete&&BALL.naturalWidth)c.drawImage(BALL,-R,-R,D,D*BALL.naturalHeight/BALL.naturalWidth);c.restore();return true}
   function origin(){const v=cvs.filter(c=>c.isConnected);const cv=v.find(c=>c._k==='panel')||v.find(c=>c._k==='bead');if(!cv)return null;const r=cv.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height*.55,w:r.width}}
   function burst(n){if(!on())return;const o=origin();if(!o)return;for(let i=0;i<n;i++)add(o,'f',true)}
@@ -3343,12 +3356,12 @@ const MUS=(()=>{
   function toggleFav(id){const l=LS();id=String(id);const f=l[0];const i=f.ids.indexOf(id);if(i>=0)f.ids.splice(i,1);else f.ids.unshift(id);lsSave(l);return i<0}
   
 const _mc=document.createElement('style');_mc.textContent=`
-.mus-mini{position:fixed;z-index:47;width:116px;padding:6px 6px 7px;border-radius:0 0 16px 16px;background:linear-gradient(#5a1f2f,#2c0d17);border:1px solid #d9a38f;border-top:0;box-shadow:0 8px 16px rgba(0,0,0,.5);overflow:hidden;transform-origin:50% 0;transform:scaleY(0);opacity:0;transition:transform .35s cubic-bezier(.3,.9,.3,1),opacity .25s}
+.mus-mini{position:fixed;z-index:47;width:136px;box-sizing:border-box;padding:3px 2px 4px;border:12px solid transparent;border-image:url(skins/mus/plaque.webp) 20 fill/12px stretch;border-top-width:6px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.55));overflow:visible;transform-origin:50% 0;transform:scaleY(0);opacity:0;transition:transform .45s cubic-bezier(.25,.9,.3,1),opacity .3s}
 .mus-mini.on{transform:scaleY(1);opacity:1}
-.mus-mini .mm-t{font-size:10px;line-height:1.2;color:#f3d9cf;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 4px}
-.mus-mini .mm-r{display:flex;justify-content:space-between;gap:2px}
-.mus-mini button{width:22px;height:22px;padding:0;border:0;background:none;border-radius:50%;flex:none}.mus-mini button svg,.mus-mini button img{width:100%;height:100%}
-.mus-mini button.big{width:28px;height:28px;margin-top:-3px}
+.mus-mini .mm-t{font-size:10px;line-height:1.2;color:#f3d9cf;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 3px;letter-spacing:.02em}
+.mus-mini .mm-r{display:flex;justify-content:space-between;align-items:center;gap:1px}
+.mus-mini button{width:26px;height:26px;padding:0;border:0;background:none;border-radius:50%;flex:none;-webkit-tap-highlight-color:transparent}.mus-mini button img{width:100%;height:100%;display:block;pointer-events:none}
+.mus-mini button.big{width:32px;height:32px}.mus-mini button:active{filter:brightness(1.25)}
 .mus-bead{position:fixed;z-index:48;width:140px;height:92px;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
 .mus-bead[hidden]{display:none}
 .wbx{position:relative;isolation:isolate;display:block;width:100%;height:100%}.wbx.big{width:min(86vw,300px);height:calc(min(86vw,300px)*.68);margin:0 auto}
@@ -3405,9 +3418,9 @@ const _mc=document.createElement('style');_mc.textContent=`
   let mini=null,minOff=null;
   function closeMini(){if(!mini)return;const m=mini;mini=null;BIRD.hold(false);m.classList.remove('on');setTimeout(()=>m.remove(),360);document.removeEventListener('pointerdown',minOff,true);clearTimeout(m._t)}
   function openMini(){if(mini||!bead)return;const m=mini=document.createElement('div');m.className='mus-mini';m.setAttribute('role','group');m.setAttribute('aria-label','Commandes du lecteur');
-    const c=cur();m.innerHTML=`<p class="mm-t" id="mm-t">${esc(c?c.title:'Aucune musique')}</p><div class="mm-r"><button id="mm-pv" aria-label="Titre précédent">${ico('prev')}</button><button id="mm-pp" class="big" aria-label="Lecture ou pause">${ico(!au.paused&&c?'pause':'play')}</button><button id="mm-nx" aria-label="Titre suivant">${ico('next')}</button><button id="mm-st" aria-label="Arrêter">${ico('stop')}</button></div>`;
-    document.body.appendChild(m);const br=bead.getBoundingClientRect();const w=116;let x=br.left+br.width/2-w/2;x=Math.max(4,Math.min(innerWidth-w-4,x));let y=br.top+br.height*.78;if(y+70>innerHeight)y=Math.max(4,br.top-48);m.style.left=x+'px';m.style.top=y+'px';
-    const q=i=>m.querySelector(i);q('#mm-pp').onclick=()=>{toggle();q('#mm-pp').innerHTML=ico(!au.paused&&cur()?'pause':'play');q('#mm-t').textContent=cur()?cur().title:'Aucune musique'};q('#mm-pv').onclick=()=>{prev();setTimeout(()=>{q('#mm-t')&&(q('#mm-t').textContent=cur()?cur().title:'')},300)};q('#mm-nx').onclick=()=>{next();setTimeout(()=>{q('#mm-t')&&(q('#mm-t').textContent=cur()?cur().title:'')},300)};q('#mm-st').onclick=()=>{stop();q('#mm-pp').innerHTML=ico('play')};
+    const c=cur();const mi=n=>`<img src="skins/mus/b-${n}.webp" alt="">`;m.innerHTML=`<p class="mm-t" id="mm-t">${esc(c?c.title:'Aucune musique')}</p><div class="mm-r"><button id="mm-pv" aria-label="Titre précédent">${mi('prev')}</button><button id="mm-pp" class="big" aria-label="Lecture ou pause">${mi(!au.paused&&c?'pause':'play')}</button><button id="mm-nx" aria-label="Titre suivant">${mi('next')}</button><button id="mm-st" aria-label="Arrêter">${mi('stop')}</button></div>`;
+    document.body.appendChild(m);const br=bead.getBoundingClientRect();const w=136;let x=br.left+br.width/2-w/2;x=Math.max(4,Math.min(innerWidth-w-4,x));let y=br.top+br.height*.78;if(y+70>innerHeight)y=Math.max(4,br.top-48);m.style.left=x+'px';m.style.top=y+'px';
+    const q=i=>m.querySelector(i);q('#mm-pp').onclick=()=>{toggle();q('#mm-pp').innerHTML=mi(!au.paused&&cur()?'pause':'play');q('#mm-t').textContent=cur()?cur().title:'Aucune musique'};q('#mm-pv').onclick=()=>{prev();setTimeout(()=>{q('#mm-t')&&(q('#mm-t').textContent=cur()?cur().title:'')},300)};q('#mm-nx').onclick=()=>{next();setTimeout(()=>{q('#mm-t')&&(q('#mm-t').textContent=cur()?cur().title:'')},300)};q('#mm-st').onclick=()=>{stop();q('#mm-pp').innerHTML=mi('play')};
     BIRD.hold(true);requestAnimationFrame(()=>m.classList.add('on'));
     minOff=e=>{if(m.contains(e.target)||(bead&&bead.contains(e.target)))return;closeMini()};setTimeout(()=>document.addEventListener('pointerdown',minOff,true),50);m._t=setTimeout(closeMini,12000)}
   function buildBead(){if(bead)return;bead=document.createElement('div');bead.className='mus-bead';bead.id='mus-bead';bead.setAttribute('role','button');bead.setAttribute('tabindex','0');bead.setAttribute('aria-label','Lecteur de musique. Toucher : lecture ou pause. Deux fois : les commandes. Trois fois : le grand menu. Glisser : déplacer.');
@@ -4565,6 +4578,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.70',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.71',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
