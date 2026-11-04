@@ -1,1 +1,9 @@
-{"version": "11.66", "date": "4 novembre 2026", "natif": 7, "notes": ["Musique : nouvelle section « Aide » dans le lecteur et carte « Musique et aide » dans les réglages. Perle explique à voix haute comment ça marche : la bulle, le bouton haut-parleur, ma musique, favoris et playlists, égaliseur, lumière, oiseau qui danse. On peut écouter chaque partie ou tout écouter d'un coup."], "v": 5, "apk": "MaisonElodie-V5.apk", "minApk": "11.63"}
+{
+ "version": "11.67",
+ "date": "4 novembre 2026",
+ "natif": 7,
+ "notes": "Oiseau sobre et réaliste, lumière plus fluide",
+ "v": 5,
+ "apk": "MaisonElodie-V5.apk",
+ "minApk": "11.63"
+}
