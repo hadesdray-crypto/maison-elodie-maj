@@ -1,11 +1,11 @@
 {
-  "version": "11.90",
+  "version": "11.91",
   "date": "5 novembre 2026",
   "natif": 7,
   "notes": [
-    "Pages à feuilleter : on glisse de droite à gauche (ou l'inverse) pour changer de page, comme sur Android ou iPhone",
-    "Ordre : Accueil, Infos, Agenda, Pro, Regarder, Musique, Jeux, Cuisine ; l'accueil reste comme avant",
-    "Nouvelles pages Infos (actualités) et Musique ; la barre du bas suit la page et défile"
+    "Glissé entre les pages plus naturel : démarre dès les premiers millimètres, suit le doigt, finit selon la vitesse du geste",
+    "Les pages voisines sont préparées d'avance pour éviter les à-coups ; la barre du bas suit pendant le glissé",
+    "On peut reprendre un glissé pendant qu'il se termine"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",
