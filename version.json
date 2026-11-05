@@ -1,9 +1,11 @@
 {
-  "version": "11.89",
+  "version": "11.90",
   "date": "5 novembre 2026",
   "natif": 7,
   "notes": [
-    "Menu du charm plus attrayant : grandes cartes avec aperçu de chaque charm qui se balance"
+    "Pages à feuilleter : on glisse de droite à gauche (ou l'inverse) pour changer de page, comme sur Android ou iPhone",
+    "Ordre : Accueil, Infos, Agenda, Pro, Regarder, Musique, Jeux, Cuisine ; l'accueil reste comme avant",
+    "Nouvelles pages Infos (actualités) et Musique ; la barre du bas suit la page et défile"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

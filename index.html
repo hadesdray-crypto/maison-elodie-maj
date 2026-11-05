@@ -113,6 +113,13 @@ label{font-size:.85rem;color:var(--muted);display:block;margin-bottom:4px}
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:linear-gradient(#4A292D,#3A2023);border-top:2px solid transparent;border-image:var(--metal) 1;box-shadow:0 -10px 24px -12px rgba(0,0,0,.8);
   padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
 .tabbar .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+.tabbar .in{display:flex!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.tabbar .in::-webkit-scrollbar{display:none}
+.tabbar .tab{flex:0 0 calc(100%/5.5);scroll-snap-align:center}
+html.kid .tabbar .in{display:flex!important}
+main,main *{touch-action:pan-y}
+main .chips,main .vw-sc,main [data-hscroll],main input[type=range],main textarea,main input{touch-action:manipulation}
+.pg-drag{will-change:transform;margin:0!important;background:inherit}
 .tab{font-size:.74rem;padding:6px 0}
 .tab{border:0;background:none;border-radius:14px;flex-direction:column;gap:3px;font-size:.82rem;font-weight:500;color:var(--muted);padding:6px 2px;min-height:62px;justify-content:center}
 .tab svg{width:26px;height:26px}
@@ -682,22 +689,6 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
       </div>
     </div>
 
-    <div class="jewel stack">
-      <div class="row" style="justify-content:space-between"><p class="eyebrow">Mes infos</p><div class="row"><button class="pill" id="news-read"><img class="bj" src="skins/bijou/ic-son.webp" alt="">Lire les titres</button><button class="pill" id="news-edit">Mes sujets</button></div></div>
-      <div class="chips" id="news"></div>
-      <div id="news-form" hidden class="row"><input id="news-in" class="grow" placeholder="Sujets séparés par des virgules" aria-label="Sujets d'info"><button id="news-save">OK</button></div>
-      <div class="list" id="news-list"></div>
-      <p class="small muted" id="news-st"></p>
-      <div class="row">
-        <button class="pill" id="news-more">Voir plus de titres</button>
-        <a class="btn pill" id="news-open" href="https://news.google.com/home?hl=fr&gl=FR&ceid=FR:fr" target="_blank" rel="noopener">Ouvrir toutes les infos</a>
-      </div>
-      <div class="row">
-        <a class="btn btn-gold pill" href="https://www.radiofrance.fr/franceinfo" target="_blank" rel="noopener">Écouter franceinfo en direct</a>
-        <a class="btn pill" href="https://www.radiofrance.fr/franceinter" target="_blank" rel="noopener">France Inter</a>
-      </div>
-    </div>
-
     <div class="jewel">
       <div class="row" style="justify-content:space-between"><p class="eyebrow">Aujourd'hui et demain</p><a href="#agenda" class="small">Agenda</a></div>
       <div class="list" id="soon" style="margin-top:6px"></div>
@@ -717,6 +708,26 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
     </details>
   </section>
 
+  <!-- INFOS -->
+  <section class="view stack" id="v-infos" hidden>
+    <div><p class="eyebrow">Aujourd'hui</p><h2>Les infos</h2></div>
+    <div class="jewel stack">
+      <div class="row" style="justify-content:space-between"><p class="eyebrow">Mes infos</p><div class="row"><button class="pill" id="news-read"><img class="bj" src="skins/bijou/ic-son.webp" alt="">Lire les titres</button><button class="pill" id="news-edit">Mes sujets</button></div></div>
+      <div class="chips" id="news"></div>
+      <div id="news-form" hidden class="row"><input id="news-in" class="grow" placeholder="Sujets séparés par des virgules" aria-label="Sujets d'info"><button id="news-save">OK</button></div>
+      <div class="list" id="news-list"></div>
+      <p class="small muted" id="news-st"></p>
+      <div class="row">
+        <button class="pill" id="news-more">Voir plus de titres</button>
+        <a class="btn pill" id="news-open" href="https://news.google.com/home?hl=fr&gl=FR&ceid=FR:fr" target="_blank" rel="noopener">Ouvrir toutes les infos</a>
+      </div>
+      <div class="row">
+        <a class="btn btn-gold pill" href="https://www.radiofrance.fr/franceinfo" target="_blank" rel="noopener">Écouter franceinfo en direct</a>
+        <a class="btn pill" href="https://www.radiofrance.fr/franceinter" target="_blank" rel="noopener">France Inter</a>
+      </div>
+    </div>
+  </section>
+
   <!-- JEUX -->
   <section class="view stack" id="v-jeux" hidden>
     <div><p class="eyebrow">Le salon de jeux</p><h2>Jouer</h2></div>
@@ -730,9 +741,14 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
   <!-- VIDÉOS -->
   <section class="view stack" id="v-videos" hidden>
     <div><p class="eyebrow">Regarder</p><h2>Vidéos</h2></div>
-    <div class="jewel stack" id="mus-host"></div>
     <div class="jewel stack"><p class="sec-title">Que voulez-vous regarder ?</p><div class="vcats" id="vcats"></div></div>
     <div class="jewel stack" id="vsub" hidden><p class="sec-title" id="vsub-h"></p><p class="small muted" id="vsub-d" style="text-align:center"></p><div class="chips" id="vsub-chips"></div><p class="small warn" id="vsub-off" hidden></p><div class="vlist2" id="vsub-list"></div></div>
+  </section>
+
+  <!-- MUSIQUE -->
+  <section class="view stack" id="v-musique" hidden>
+    <div><p class="eyebrow">Écouter</p><h2>Musique</h2></div>
+    <div class="jewel stack" id="mus-host"></div>
   </section>
 
   <section class="view stack" id="v-cuisine" hidden></section>
@@ -886,10 +902,12 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
 <nav class="tabbar" aria-label="Sections">
   <div class="in">
     <button class="tab" data-v="accueil"><span class="ico" style="background-image:var(--ic-home)" aria-hidden="true"></span>Accueil</button>
-    <button class="tab" data-v="jeux"><span class="ico" style="background-image:var(--ic-diamond)" aria-hidden="true"></span>Jeux</button>
-    <button class="tab" data-v="videos"><span class="ico" style="background-image:var(--ic-play)" aria-hidden="true"></span>Regarder</button>
+    <button class="tab" data-v="infos"><span class="ico" style="background-image:url(skins/bijou/ic-son.webp)" aria-hidden="true"></span>Infos</button>
     <button class="tab" data-v="agenda"><span class="ico" style="background-image:var(--ic-calendar)" aria-hidden="true"></span>Agenda</button>
     <button class="tab" data-v="pro"><span class="ico" style="background-image:var(--ic-briefcase)" aria-hidden="true"></span>Pro</button>
+    <button class="tab" data-v="videos"><span class="ico" style="background-image:var(--ic-play)" aria-hidden="true"></span>Regarder</button>
+    <button class="tab" data-v="musique"><span class="ico" style="background-image:url(skins/mus/disque.webp)" aria-hidden="true"></span>Musique</button>
+    <button class="tab" data-v="jeux"><span class="ico" style="background-image:var(--ic-diamond)" aria-hidden="true"></span>Jeux</button>
     <button class="tab" data-v="cuisine"><span class="ico" style="background-image:url(skins/bijou/ic-toque.webp)" aria-hidden="true"></span>Cuisine</button>
   </div>
 </nav>
@@ -907,13 +925,46 @@ const JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 
 /* ---------- navigation ---------- */
-const VIEWS=['accueil','jeux','videos','agenda','pro','cuisine','courses'];
+const VIEWS=['accueil','infos','agenda','pro','videos','musique','jeux','cuisine','courses'];const PAGES=['accueil','infos','agenda','pro','videos','musique','jeux','cuisine'];
 function show(){const v=VIEWS.includes(window.__v)?window.__v:(VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'accueil');
   if(!window.__v){window.__v=v;try{if(!history.state)history.replaceState({mb:0,v},'')}catch(_){}}
   VIEWS.forEach(x=>$('v-'+x).hidden=x!==v);
-  document.querySelectorAll('.tab').forEach(b=>{if(b.dataset.v===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  document.querySelectorAll('.tab').forEach(b=>{if(b.dataset.v===v){b.setAttribute('aria-current','page');try{const r=b.parentElement;r.scrollTo({left:b.offsetLeft-(r.clientWidth-b.clientWidth)/2,behavior:'smooth'})}catch(_){}}else b.removeAttribute('aria-current')});
   window.scrollTo(0,0)}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{location.hash=b.dataset.v});
+
+/* ---------- pages qu'on feuillette en glissant (comme Android / iPhone) ---------- */
+(function(){const main=document.querySelector('main');if(!main)return;let st=null,busy=false;
+  const list=()=>PAGES.filter(v=>{const t=document.querySelector('.tab[data-v="'+v+'"]');return v==='accueil'||!t||getComputedStyle(t).display!=='none'});
+  const blocked=t=>{if(BACK.length||document.querySelector('.sheet-ov.on,.mini-ov,#mus-player'))return true;
+    if(window.__v==='jeux'&&$('game-area')&&!$('game-area').hidden)return true;if(window.__v==='cuisine'&&window.__cooking)return true;
+    for(let e=t;e&&e!==main;e=e.parentElement){if(e.dataset&&e.dataset.noswipe!==undefined)return true;const n=e.nodeName;if(n==='INPUT'||n==='TEXTAREA'||n==='SELECT'||n==='CANVAS'||n==='VIDEO'||n==='IFRAME')return true;
+      if(e.scrollWidth>e.clientWidth+2){const o=getComputedStyle(e).overflowX;if(o==='auto'||o==='scroll')return true}}return false};
+  const W=()=>innerWidth;
+  function prep(){const L=list(),i=L.indexOf(window.__v);if(i<0)return false;const cur=$('v-'+L[i]),r=cur.getBoundingClientRect(),sy=scrollY;
+    st.L=L;st.i=i;st.cur=cur;st.sy=sy;st.box={l:r.left,w:r.width,t:r.top+sy};
+    cur.classList.add('pg-drag');cur.style.cssText+=';position:fixed;left:'+r.left+'px;width:'+r.width+'px;top:'+r.top+'px;z-index:2';
+    document.documentElement.style.overflowX='hidden';return true}
+  function nb(dir){const j=st.i+dir;if(j<0||j>=st.L.length)return null;if(st.nb&&st.nbDir===dir)return st.nb;if(st.nb){st.nb.hidden=true;st.nb.classList.remove('pg-drag');st.nb.style.cssText=''}
+    const n=$('v-'+st.L[j]);n.hidden=false;n.classList.add('pg-drag');n.style.cssText+=';position:fixed;left:'+st.box.l+'px;width:'+st.box.w+'px;top:'+st.box.t+'px;z-index:1';st.nb=n;st.nbDir=dir;st.j=j;return n}
+  function put(dx){const w=W(),dir=dx<0?1:-1,n=nb(dir);let x=dx;if(!n)x=dx*.3;st.cur.style.transform='translateX('+x+'px)';
+    if(st.nb){const base=st.nbDir===1?w:-w;st.nb.style.transform='translateX('+(base+x)+'px)'}
+    if(st.nb&&st.nbDir!==dir){st.nb.style.transform='translateX('+((st.nbDir===1?w:-w)+x)+'px)'}}
+  function clean(){[st.cur,st.nb].forEach(e=>{if(!e)return;e.classList.remove('pg-drag');e.style.cssText=''});document.documentElement.style.overflowX=''}
+  function end(commit){busy=true;const w=W(),dir=st.nbDir||0,cur=st.cur,n=st.nb,tr='transform .26s cubic-bezier(.22,.8,.25,1)';
+    cur.style.transition=tr;if(n)n.style.transition=tr;
+    if(commit&&n){cur.style.transform='translateX('+(-dir*w)+'px)';n.style.transform='translateX(0)'}else{cur.style.transform='translateX(0)';if(n)n.style.transform='translateX('+(dir*w)+'px)'}
+    setTimeout(()=>{const tgt=commit&&n?st.L[st.j]:null;if(!tgt){if(n)n.hidden=true;clean();window.scrollTo(0,st.sy)}else{clean();cur.hidden=true;go(tgt)}st=null;busy=false},290)}
+  const P=e=>e.touches&&e.touches[0]||e.changedTouches&&e.changedTouches[0];
+  main.addEventListener('touchstart',e=>{if(busy||e.touches.length!==1)return;const t=P(e);if(t.clientX<18||t.clientX>W()-18)return;if(blocked(e.target))return;st={x:t.clientX,y:t.clientY,mode:null,pts:[[t.clientX,performance.now()]]}},{passive:true});
+  main.addEventListener('touchmove',e=>{if(!st||busy)return;const t=P(e),dx=t.clientX-st.x,dy=t.clientY-st.y;
+    if(!st.mode){if(Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.5){if(!prep()){st=null;return}st.mode='h';try{document.activeElement&&document.activeElement.blur()}catch(_){}}else if(Math.abs(dy)>10){st=null;return}else return}
+    if(e.cancelable)e.preventDefault();st.dx=dx;st.pts.push([t.clientX,performance.now()]);if(st.pts.length>5)st.pts.shift();put(dx)},{passive:false});
+  const up=e=>{if(!st)return;if(st.mode!=='h'){st=null;return}const dx=st.dx||0,p=st.pts,a=p[0],b=p[p.length-1],v=(b[0]-a[0])/Math.max(16,b[1]-a[1]);
+    const dir=dx<0?1:-1,ok=!!nb(dir)&&(Math.abs(dx)>W()*.3||Math.abs(v)>.45&&Math.sign(v)===Math.sign(dx));end(ok)};
+  main.addEventListener('touchend',up);main.addEventListener('touchcancel',up);
+  document.addEventListener('click',e=>{if(st&&st.mode==='h'||busy)e.stopPropagation()},true);
+})();
 
 
 /* ---------- voix ---------- */
@@ -1415,7 +1466,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.89',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.90',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1423,6 +1474,7 @@ const APP={version:'11.89',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.90','5 novembre 2026',["Pages à feuilleter : on glisse de droite à gauche (ou l'inverse) pour changer de page, comme sur Android ou iPhone", "Ordre : Accueil, Infos, Agenda, Pro, Regarder, Musique, Jeux, Cuisine ; l'accueil reste comme avant", "Nouvelles pages Infos (actualités) et Musique ; la barre du bas suit la page et défile"]],
 ['11.89','5 novembre 2026',["Menu du charm plus attrayant : grandes cartes avec aperçu de chaque charm qui se balance"]],
 ['11.88','4 novembre 2026',["Météo : la recherche de ville trouve mieux (accents, villes homonymes à choisir, message si introuvable, touche Entrée)", "Vidéos : plus de choix dans chaque spécialisation"]],
 ['11.87','4 novembre 2026',["Perle parle quand on la touche une fois (phrases variées) et deux fois (elle annonce son menu)", "Si Perle ne peut pas parler, un message affiche la raison au lieu de rester muette"]],
@@ -4786,6 +4838,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.89',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.90',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
