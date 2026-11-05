@@ -1,11 +1,9 @@
 {
-  "version": "11.92",
+  "version": "11.93",
   "date": "5 novembre 2026",
   "natif": 7,
   "notes": [
-    "Météo : toutes les villes du monde sont intégrées, même sans connexion (Louviers et les autres)",
-    "Recherche pendant la frappe ; plusieurs sources en ligne en renfort (communes de France, codes postaux)",
-    "Bouton « Ma position » ; mes dernières villes gardées ; météo gardée en mémoire et affichée hors connexion"
+    "Accueil : en descendant après les grands encarts, on trouve directement l'agenda du jour puis les premiers titres des infos, puis la météo comme avant"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

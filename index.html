@@ -648,6 +648,16 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
     </nav>
 
     <div class="jewel">
+      <div class="row" style="justify-content:space-between"><p class="eyebrow">Aujourd'hui et demain</p><a href="#agenda" class="small">Agenda</a></div>
+      <div class="list" id="soon" style="margin-top:6px"></div>
+    </div>
+
+    <div class="jewel stack" id="news-prev-card">
+      <div class="row" style="justify-content:space-between"><p class="eyebrow">Les infos</p><a class="pill" href="#infos">Toutes les infos</a></div>
+      <div class="list" id="news-prev"></div>
+    </div>
+
+    <div class="jewel">
       <div class="row" style="justify-content:space-between">
         <p class="eyebrow row" style="gap:10px">Météo <span class="ico" style="width:32px;height:32px;background-image:var(--ic-cloud)" aria-hidden="true"></span></p>
         <button class="pill" id="wx-refresh">Actualiser</button>
@@ -689,10 +699,6 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
       </div>
     </div>
 
-    <div class="jewel">
-      <div class="row" style="justify-content:space-between"><p class="eyebrow">Aujourd'hui et demain</p><a href="#agenda" class="small">Agenda</a></div>
-      <div class="list" id="soon" style="margin-top:6px"></div>
-    </div>
 
     <details class="jewel" id="charm-set"><summary>Le charm et les mots doux</summary>
       <div class="stack" style="margin-top:10px">
@@ -1099,7 +1105,7 @@ const INFOS=(()=>{
     $('news-open').href=cur==='À la une'?'https://news.google.com/home?hl=fr&gl=FR&ceid=FR:fr':'https://news.google.com/search?hl=fr&gl=FR&ceid=FR:fr&q='+encodeURIComponent(cur)}
   function paintList(){const l=$('news-list');const n=all?items.length:6;
     l.innerHTML=items.slice(0,n).map((i,k)=>`<div class="item"><span class="when" style="min-width:34px;font-size:1rem">${k+1}</span><span class="grow"><p style="font-family:var(--body);font-size:1.02rem;line-height:1.35">${esc(i.t)}</p><small class="muted">${esc(i.s)}${i.s&&i.d?' · ':''}${i.d?ago(i.d):''}</small>${i.u?`<div class="row" style="margin-top:6px"><a class="btn pill" href="${esc(i.u)}" target="_blank" rel="noopener">Lire l'article</a></div>`:''}</span></div>`).join('')||'<p class="small muted">Aucun titre pour ce sujet.</p>';
-    $('news-more').hidden=items.length<=6||all}
+    $('news-more').hidden=items.length<=6||all;try{const pv=$('news-prev');if(pv)pv.innerHTML=items.slice(0,3).map((i,k)=>`<div class="item"><span class="when" style="min-width:34px;font-size:1rem">${k+1}</span><span class="grow"><p style="font-family:var(--body);font-size:1rem;line-height:1.35">${esc(i.t)}</p><small class="muted">${esc(i.s)}</small></span></div>`).join('')||'<p class="small muted">Les titres arrivent dès que le téléphone a du réseau.</p>'}catch(_){}}
   async function load(force){paintChips();if(!topics().includes(cur)){cur=topics()[0]||'À la une'}
     const cache=S.get('newsCache',{})[cur];const fresh=cache&&Date.now()-cache.at<20*60000;
     if(cache){items=cache.items;paintList();$('news-st').textContent='Titres de '+ago(cache.at)}
@@ -1522,7 +1528,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.92',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.93',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1530,6 +1536,7 @@ const APP={version:'11.92',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.93','5 novembre 2026',["Accueil : en descendant après les grands encarts, on trouve directement l'agenda du jour puis les premiers titres des infos, puis la météo comme avant"]],
 ['11.92','5 novembre 2026',["Météo : toutes les villes du monde sont intégrées, même sans connexion (Louviers et les autres)", "Recherche pendant la frappe ; plusieurs sources en ligne en renfort (communes de France, codes postaux)", "Bouton « Ma position » ; mes dernières villes gardées ; météo gardée en mémoire et affichée hors connexion"]],
 ['11.91','5 novembre 2026',["Glissé entre les pages plus naturel : démarre dès les premiers millimètres, suit le doigt, finit selon la vitesse du geste", "Les pages voisines sont préparées d'avance pour éviter les à-coups ; la barre du bas suit pendant le glissé", "On peut reprendre un glissé pendant qu'il se termine"]],
 ['11.90','5 novembre 2026',["Pages à feuilleter : on glisse de droite à gauche (ou l'inverse) pour changer de page, comme sur Android ou iPhone", "Ordre : Accueil, Infos, Agenda, Pro, Regarder, Musique, Jeux, Cuisine ; l'accueil reste comme avant", "Nouvelles pages Infos (actualités) et Musique ; la barre du bas suit la page et défile"]],
@@ -4896,6 +4903,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.92',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.93',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
