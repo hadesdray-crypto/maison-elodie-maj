@@ -1,11 +1,11 @@
 {
-  "version": "11.91",
+  "version": "11.92",
   "date": "5 novembre 2026",
   "natif": 7,
   "notes": [
-    "Glissé entre les pages plus naturel : démarre dès les premiers millimètres, suit le doigt, finit selon la vitesse du geste",
-    "Les pages voisines sont préparées d'avance pour éviter les à-coups ; la barre du bas suit pendant le glissé",
-    "On peut reprendre un glissé pendant qu'il se termine"
+    "Météo : toutes les villes du monde sont intégrées, même sans connexion (Louviers et les autres)",
+    "Recherche pendant la frappe ; plusieurs sources en ligne en renfort (communes de France, codes postaux)",
+    "Bouton « Ma position » ; mes dernières villes gardées ; météo gardée en mémoire et affichée hors connexion"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

@@ -991,23 +991,69 @@ $('notes-save').onclick=()=>{S.set('notes',$('notes-in').value.split('\n').map(s
 
 /* météo */
 const WMO=c=>c===0?'Grand soleil':c<=2?'Éclaircies':c===3?'Ciel couvert':c<=48?'Brouillard':c<=57?'Bruine':c<=67?'Pluie':c<=77?'Neige':c<=82?'Averses':c<=86?'Averses de neige':'Orages';
-async function wxAt(lat,lon,name){const u=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1`;
-  const r=await fetch(u);const j=await r.json();
-  $('wx-t').textContent=Math.round(j.current.temperature_2m)+'°';
-  $('wx-d').textContent=WMO(j.current.weather_code)+(name?' · '+name:'');
-  const p=j.daily.precipitation_probability_max[0];
-  $('wx-m').textContent=`Min ${Math.round(j.daily.temperature_2m_min[0])}° · Max ${Math.round(j.daily.temperature_2m_max[0])}° · Pluie ${p}%`+(p>=50?' · Prenez un parapluie':'')}
-function wxFail(){$('wx-t').textContent='—';$('wx-d').innerHTML='Météo indisponible dans cet aperçu.';$('wx-m').innerHTML='<a href="https://meteofrance.com" target="_blank" rel="noopener">Voir Météo-France</a>'}
-async function wxFind(q){const n=q.replace(/\s+\d{5}$/,'').replace(/^\d{5}\s+/,'').trim()||q;let out=[];
-  for(const name of [n,n.normalize('NFD').replace(/[\u0300-\u036f]/g,'')]){try{const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?count=15&language=fr&name='+encodeURIComponent(name));const j=await r.json();if(j.results&&j.results.length){out=j.results;break}}catch(_){}}
-  out.sort((a,b)=>(b.country_code==='FR')-(a.country_code==='FR')||(b.population||0)-(a.population||0));return out}
-async function wxCity(c,g){const sug=$('wx-sug');if(sug)sug.innerHTML='';
-  try{if(!g){$('wx-d').textContent='Recherche de « '+c+' »…';const L=await wxFind(c);if(!L.length){$('wx-t').textContent='—';$('wx-d').textContent='Ville introuvable : « '+c+' ».';$('wx-m').textContent='Vérifiez l\'orthographe ou essayez une ville voisine.';return}
-      g=L[0];if(sug&&L.length>1){sug.innerHTML='<div class="small muted" style="margin:6px 0 4px">Plusieurs résultats, touchez la bonne :</div>'+L.slice(0,6).map((x,i)=>`<button class="pill" data-i="${i}" style="margin:0 6px 6px 0">${x.name}${x.admin1?' · '+x.admin1:''}${x.country_code&&x.country_code!=='FR'?' · '+x.country_code:''}</button>`).join('');sug.querySelectorAll('button').forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];S.set('city',x.name);S.set('cityGeo',{lat:x.latitude,lon:x.longitude,name:x.name});wxCity(x.name,x)})}}
-    S.set('city',g.name);S.set('cityGeo',{lat:g.latitude,lon:g.longitude,name:g.name});await wxAt(g.latitude,g.longitude,g.name)}catch(e){wxFail()}}
-function loadWx(){if(navigator.onLine===false){$('wx-t').textContent='—';$('wx-d').textContent='Hors connexion';$('wx-m').textContent='La météo revient dès que le téléphone a du réseau.';return}const gg=S.get('cityGeo',null);if(gg){wxAt(gg.lat,gg.lon,gg.name).catch(wxFail);return}const c=S.get('city',null);if(c){wxCity(c);return}
+/* ---- météo : toutes les villes, hors connexion, position, favoris ---- */
+const wxNorm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’']/g,' ').replace(/[-_]/g,' ').replace(/\s+/g,' ').trim();
+let wxIdx=null,wxIdxP=null;
+function wxLoadIdx(){if(wxIdx)return Promise.resolve(wxIdx);if(wxIdxP)return wxIdxP;
+  wxIdxP=fetch('data/villes.txt').then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{const L=t.split('\n'),A=new Array(L.length);for(let i=0;i<L.length;i++){const p=L[i].split('|');A[i]={n:p[0],k:wxNorm(p[0]),cc:p[1],lat:+p[2],lon:+p[3],dep:p[4]||''}}wxIdx=A;return A}).catch(()=>{wxIdxP=null;wxIdx=null;return[]});return wxIdxP}
+const wxLabel=g=>g.name+(g.dep?' · '+g.dep:'')+(g.cc&&g.cc!=='FR'?' · '+g.cc:'');
+function wxLocal(q){const k=wxNorm(q.replace(/\b\d{5}\b/g,'')),A=wxIdx;if(!A||k.length<2)return[];const ex=[],st=[],ct=[];
+  for(let i=0;i<A.length;i++){const c=A[i],j=c.k;if(j===k)ex.push(c);else if(j.startsWith(k))st.push(c);else if(k.length>=3&&j.includes(k))ct.push(c)}
+  const rk=a=>a.sort((x,y)=>(y.cc==='FR')-(x.cc==='FR')||x.n.length-y.n.length);return[...rk(ex),...rk(st),...rk(ct)].slice(0,8).map(c=>({name:c.n,lat:c.lat,lon:c.lon,cc:c.cc,dep:c.dep}))}
+const wxTO=(p,ms)=>Promise.race([p,new Promise((_,r)=>setTimeout(()=>r('t'),ms))]);
+async function wxOnline(q){const out=[];const cp=(q.match(/\b\d{5}\b/)||[])[0],nm=q.replace(/\b\d{5}\b/g,'').trim();
+  const jobs=[
+    wxTO(fetch('https://geocoding-api.open-meteo.com/v1/search?count=8&language=fr&name='+encodeURIComponent(nm||q)).then(r=>r.json()).then(j=>(j.results||[]).forEach(x=>out.push({name:x.name,lat:x.latitude,lon:x.longitude,cc:x.country_code,dep:x.admin2||x.admin1||''}))),6000),
+    wxTO(fetch('https://geo.api.gouv.fr/communes?fields=nom,centre,codeDepartement&boost=population&limit=8&'+(cp?'codePostal='+cp:'nom='+encodeURIComponent(nm||q))).then(r=>r.json()).then(j=>(j||[]).forEach(x=>x.centre&&out.push({name:x.nom,lat:x.centre.coordinates[1],lon:x.centre.coordinates[0],cc:'FR',dep:x.codeDepartement||''}))),6000),
+    wxTO(fetch('https://nominatim.openstreetmap.org/search?format=json&limit=6&accept-language=fr&addressdetails=1&q='+encodeURIComponent(q)).then(r=>r.json()).then(j=>(j||[]).forEach(x=>{const a=x.address||{};out.push({name:a.city||a.town||a.village||a.municipality||x.display_name.split(',')[0],lat:+x.lat,lon:+x.lon,cc:(a.country_code||'').toUpperCase(),dep:''})})),7000)];
+  await Promise.allSettled(jobs);return out}
+function wxMerge(a){const seen=new Set(),o=[];a.forEach(g=>{const key=wxNorm(g.name)+'|'+g.cc+'|'+g.lat.toFixed(1)+'|'+g.lon.toFixed(1);if(seen.has(key))return;seen.add(key);o.push(g)});return o}
+function wxRender(d,g,old){if(!d||!d.current)return;const t=Math.round(d.current.temperature_2m);$('wx-t').textContent=t+'°';
+  $('wx-d').textContent=WMO(d.current.weather_code)+(g&&g.name?' · '+g.name:'');const p=d.daily.precipitation_probability_max[0];
+  $('wx-m').textContent=`Min ${Math.round(d.daily.temperature_2m_min[0])}° · Max ${Math.round(d.daily.temperature_2m_max[0])}° · Pluie ${p}%`+(p>=50?' · Prenez un parapluie':'')+(old?' · Dernière mise à jour '+old:'')}
+function wxAgo(ts){const m=Math.round((Date.now()-ts)/60000);if(m<2)return "à l'instant";if(m<60)return 'il y a '+m+' min';const h=Math.round(m/60);if(h<24)return 'il y a '+h+' h';return 'il y a '+Math.round(h/24)+' j'}
+async function wxAt(lat,lon,name){const g={lat,lon,name:name||''};
+  try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1`;
+    const r=await wxTO(fetch(u),9000);const j=await r.json();if(!j.current)throw 0;wxRender(j,g);S.set('wxCache',{lat,lon,name:g.name,t:Date.now(),d:j});return true}
+  catch(e){const c=S.get('wxCache',null);if(c&&c.d&&Math.abs(c.lat-lat)<.3&&Math.abs(c.lon-lon)<.3){wxRender(c.d,{name:c.name||g.name},wxAgo(c.t)+' (hors connexion)');return true}
+    $('wx-t').textContent='—';$('wx-d').textContent=(g.name?g.name+' : ':'')+'météo indisponible pour le moment.';$('wx-m').textContent="Elle reviendra dès que le téléphone aura du réseau. La ville est bien enregistrée.";return false}}
+function wxFail(){const c=S.get('wxCache',null);if(c&&c.d){wxRender(c.d,{name:c.name},wxAgo(c.t)+' (hors connexion)');return}$('wx-t').textContent='—';$('wx-d').innerHTML='Météo indisponible pour le moment.';$('wx-m').innerHTML='<a href="https://meteofrance.com" target="_blank" rel="noopener">Voir Météo-France</a>'}
+function wxChoose(g){S.set('city',g.name);S.set('cityGeo',{lat:g.lat,lon:g.lon,name:g.name});
+  const f=S.get('wxFav',[]).filter(x=>!(x.name===g.name&&Math.abs(x.lat-g.lat)<.05&&Math.abs(x.lon-g.lon)<.05));f.unshift({name:g.name,lat:g.lat,lon:g.lon,cc:g.cc||'',dep:g.dep||''});S.set('wxFav',f.slice(0,6));
+  const sug=$('wx-sug');if(sug)wxFavs();$('wx-city').value='';return wxAt(g.lat,g.lon,g.name)}
+function wxFavs(){const sug=$('wx-sug');if(!sug)return;const f=S.get('wxFav',[]);
+  sug.innerHTML=(f.length?'<div class="small muted" style="margin:8px 0 4px">Mes villes</div>'+f.map((x,i)=>`<button class="pill" data-f="${i}" style="margin:0 6px 6px 0">${esc(x.name)}</button>`).join(''):'');
+  sug.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{const x=f[+b.dataset.f];wxChoose(x)})}
+function wxShowSug(list,note){const sug=$('wx-sug');if(!sug)return;
+  sug.innerHTML=(list.length?'':'')+list.map((g,i)=>`<button class="pill" data-i="${i}" style="margin:6px 6px 0 0;min-height:44px">${esc(wxLabel(g))}</button>`).join('')+(note?`<p class="small muted" style="margin:8px 2px 0">${note}</p>`:'');
+  sug.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>wxChoose(list[+b.dataset.i]))}
+let wxSeq=0,wxT=0;
+async function wxSearch(q,final){q=q.trim();const id=++wxSeq;if(q.length<2){wxFavs();return[]}
+  await wxLoadIdx();let list=wxLocal(q);if(id!==wxSeq)return list;
+  wxShowSug(list,list.length?'':(navigator.onLine===false?'Aucune ville trouvée hors connexion.':'Recherche en ligne…'));
+  if(navigator.onLine!==false&&(final||list.length<8||q.length>=3)){const on=await wxOnline(q);if(id!==wxSeq)return list;
+    const first=new Set(list.map(g=>wxNorm(g.name)));const add=on.sort((x,y)=>(y.cc==='FR')-(x.cc==='FR'));list=wxMerge([...list,...add]).slice(0,10);
+    wxShowSug(list,list.length?'':'Aucune ville trouvée. Vérifiez l\'orthographe ou essayez le code postal.')}
+  return list}
+async function wxCity(c){const L=await wxSearch(c,true);if(L.length===1||(L[0]&&wxNorm(L[0].name)===wxNorm(c.replace(/\b\d{5}\b/g,'')))){await wxChoose(L[0]);return}
+  if(L.length){$('wx-d').textContent='Plusieurs villes : touchez la bonne ci-dessous.';return}
+  $('wx-t').textContent='—';$('wx-d').textContent='Ville introuvable : « '+c+' ».';$('wx-m').textContent='Vérifiez l\'orthographe ou essayez le code postal.'}
+function wxHere(){if(!navigator.geolocation){toast("La position n'est pas disponible sur ce téléphone.",3000);return}
+  $('wx-d').textContent='Recherche de ma position…';
+  navigator.geolocation.getCurrentPosition(async p=>{const lat=p.coords.latitude,lon=p.coords.longitude;await wxLoadIdx();let best=null,bd=1e9;(wxIdx||[]).forEach(c=>{const d=(c.lat-lat)**2+((c.lon-lon)*Math.cos(lat*Math.PI/180))**2;if(d<bd){bd=d;best=c}});
+      const g={name:best&&bd<.04?best.n:'Ma position',lat,lon,cc:best?best.cc:'',dep:best?best.dep:''};S.set('cityGeo',{lat,lon,name:g.name});S.set('city',g.name);S.set('wxHere',true);await wxAt(lat,lon,g.name)},
+    ()=>{toast("Impossible de trouver votre position. Autorisez-la dans les réglages du téléphone ou choisissez une ville.",4500);loadWx()},{timeout:9000,maximumAge:600000})}
+function loadWx(){const gg=S.get('cityGeo',null);
+  if(gg){wxAt(gg.lat,gg.lon,gg.name);return}
+  const c=S.get('city',null);if(c&&navigator.onLine!==false){wxCity(c);return}
+  if(navigator.onLine===false){wxFail();return}
   if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>wxAt(p.coords.latitude,p.coords.longitude,'').catch(wxFail),()=>wxCity('Paris'),{timeout:6000})}else wxCity('Paris')}
-$('wx-refresh').onclick=loadWx;addEventListener('online',loadWx);$('wx-city-go').onclick=()=>{const c=$('wx-city').value.trim();if(c)wxCity(c)};$('wx-city').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('wx-city-go').click()}});
+$('wx-refresh').onclick=loadWx;addEventListener('online',loadWx);
+$('wx-city-go').onclick=()=>{const c=$('wx-city').value.trim();if(c)wxCity(c)};
+$('wx-city').addEventListener('input',()=>{clearTimeout(wxT);const q=$('wx-city').value;wxT=setTimeout(()=>wxSearch(q,false),180)});
+$('wx-city').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('wx-city-go').click()}});
+$('wx-city').addEventListener('focus',()=>{wxLoadIdx();if(!$('wx-city').value)wxFavs()});
+(function(){const d=document.querySelector('#wx-city')&&document.querySelector('#wx-city').closest('details');if(d){d.addEventListener('toggle',()=>{if(d.open){wxLoadIdx();wxFavs()}});const row=$('wx-city').parentElement;if(row&&!$('wx-here')){const b=document.createElement('button');b.id='wx-here';b.className='pill';b.innerHTML='<span class="ico" style="width:24px;height:24px;background-image:var(--ic-pin)" aria-hidden="true"></span> Ma position';b.onclick=wxHere;d.appendChild(b);b.style.margin='8px 0 0'}}})();
 
 /* itinéraire */
 function route(dest){dest=dest.trim();if(!dest)return;$('route-in').value=dest;$('route-dest').textContent=dest;
@@ -1476,7 +1522,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.91',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.92',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1484,6 +1530,7 @@ const APP={version:'11.91',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.92','5 novembre 2026',["Météo : toutes les villes du monde sont intégrées, même sans connexion (Louviers et les autres)", "Recherche pendant la frappe ; plusieurs sources en ligne en renfort (communes de France, codes postaux)", "Bouton « Ma position » ; mes dernières villes gardées ; météo gardée en mémoire et affichée hors connexion"]],
 ['11.91','5 novembre 2026',["Glissé entre les pages plus naturel : démarre dès les premiers millimètres, suit le doigt, finit selon la vitesse du geste", "Les pages voisines sont préparées d'avance pour éviter les à-coups ; la barre du bas suit pendant le glissé", "On peut reprendre un glissé pendant qu'il se termine"]],
 ['11.90','5 novembre 2026',["Pages à feuilleter : on glisse de droite à gauche (ou l'inverse) pour changer de page, comme sur Android ou iPhone", "Ordre : Accueil, Infos, Agenda, Pro, Regarder, Musique, Jeux, Cuisine ; l'accueil reste comme avant", "Nouvelles pages Infos (actualités) et Musique ; la barre du bas suit la page et défile"]],
 ['11.89','5 novembre 2026',["Menu du charm plus attrayant : grandes cartes avec aperçu de chaque charm qui se balance"]],
@@ -4849,6 +4896,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.91',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+</script><script>(function(){var V='11.92',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
 try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
