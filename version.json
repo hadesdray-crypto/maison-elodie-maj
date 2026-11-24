@@ -1,9 +1,14 @@
 {
-  "version": "11.93",
-  "date": "5 novembre 2026",
+  "version": "11.94",
+  "date": "24 novembre 2026",
   "natif": 7,
   "notes": [
-    "Accueil : en descendant après les grands encarts, on trouve directement l'agenda du jour puis les premiers titres des infos, puis la météo comme avant"
+    "Sauvegarde fiable : le fichier est vraiment enregistré ou partagé avant d'annoncer « c'est fait », et il contient maintenant aussi les photos, vocaux et skins",
+    "Restauration plus sûre : on choisit Remplacer ou Fusionner, une copie de secours permet d'annuler, rien n'est écrasé si le téléphone manque de place",
+    "Mises à jour plus fiables : plus de vieux fichiers gardés en mémoire",
+    "Cuisine : minuteur juste même écran éteint, quantités en ⅓ ⅔ ⅛ (jamais « 0 »), recherche de recettes plus précise",
+    "Agenda : dates justes les nuits de changement d'heure, bouton d'agenda au libellé honnête ; horloge à la minute ; météo et infos remises à jour toutes les 30 minutes",
+    "Vidéos : message clair et bouton « Ouvrir dans YouTube » quand les serveurs sans pub ne répondent pas"
   ],
   "v": 5,
   "apk": "MaisonElodie-V5.apk",

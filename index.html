@@ -793,7 +793,7 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
         <div class="row" style="justify-content:space-between"><button class="pill back" id="ag-prev" style="visibility:hidden">← Retour</button><button class="btn-plum" id="ag-next">Suivant →</button><button class="btn-plum" id="ag-save" hidden>Ajouter le rendez-vous</button></div>
       </div>
     </div>
-    <p class="small muted">Le bouton « Agenda du téléphone » recopie le rendez-vous dans l'agenda d'Android, avec les rappels.</p>
+    <p class="small muted">Le bouton sous chaque rendez-vous le prépare dans un agenda : Google Agenda (internet et compte Google nécessaires) ou, dans un navigateur Android, l'agenda du téléphone.</p>
   </section>
 
   <!-- PRO -->
@@ -923,10 +923,15 @@ a.btn-plum{display:inline-flex;align-items:center;justify-content:center;text-al
 const $=id=>document.getElementById(id);
 const S={get(k,d){try{const v=localStorage.getItem('me_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('me_'+k,JSON.stringify(v));return true}catch(e){return false}}};
 addEventListener('error',e=>{try{console.warn('Maison Élodie :',e.message)}catch(_){}});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let tt;function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3200)}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* un lien ne s'ouvre que s'il commence par http:// ou https:// (jamais javascript: ni data:) ; une note manuscrite n'est affichée que si c'est bien une image */
+const safeUrl=u=>{u=String(u==null?'':u).trim();return /^https?:\/\//i.test(u)?u:''};
+const hwOk=h=>typeof h==='string'&&h.length<1500000&&/^data:image\/(webp|png|jpeg);base64,[A-Za-z0-9+\/=]+$/.test(h);
+let tt;function toast(m,ms){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,Math.min(12000,Math.max(1200,+ms||3200)))}
 const pad=n=>String(n).padStart(2,'0');
 const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+/* date (aaaa-mm-jj) d'aujourd'hui + n jours, calculée sur le calendrier : sûre aussi les nuits de changement d'heure */
+const dayPlus=n=>{const d=new Date();return iso(new Date(d.getFullYear(),d.getMonth(),d.getDate()+n,12))};
 const JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 
@@ -1048,12 +1053,14 @@ function wxHere(){if(!navigator.geolocation){toast("La position n'est pas dispon
   $('wx-d').textContent='Recherche de ma position…';
   navigator.geolocation.getCurrentPosition(async p=>{const lat=p.coords.latitude,lon=p.coords.longitude;await wxLoadIdx();let best=null,bd=1e9;(wxIdx||[]).forEach(c=>{const d=(c.lat-lat)**2+((c.lon-lon)*Math.cos(lat*Math.PI/180))**2;if(d<bd){bd=d;best=c}});
       const g={name:best&&bd<.04?best.n:'Ma position',lat,lon,cc:best?best.cc:'',dep:best?best.dep:''};S.set('cityGeo',{lat,lon,name:g.name});S.set('city',g.name);S.set('wxHere',true);await wxAt(lat,lon,g.name)},
-    ()=>{toast("Impossible de trouver votre position. Autorisez-la dans les réglages du téléphone ou choisissez une ville.",4500);loadWx()},{timeout:9000,maximumAge:600000})}
+    err=>{toast(err&&err.code===1?"La position n'est pas autorisée pour Maison Élodie. Pour l'activer : Réglages du téléphone, Applications, Maison Élodie, Autorisations, Position. Sinon, choisissez une ville.":"Impossible de trouver votre position pour le moment. Vérifiez que la localisation du téléphone est activée, ou choisissez une ville.",7000);loadWx()},{timeout:12000,maximumAge:600000})}
 function loadWx(){const gg=S.get('cityGeo',null);
   if(gg){wxAt(gg.lat,gg.lon,gg.name);return}
   const c=S.get('city',null);if(c&&navigator.onLine!==false){wxCity(c);return}
   if(navigator.onLine===false){wxFail();return}
-  if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>wxAt(p.coords.latitude,p.coords.longitude,'').catch(wxFail),()=>wxCity('Paris'),{timeout:6000})}else wxCity('Paris')}
+  wxParis()}
+/* ville par défaut : Paris, sans charger l'index des villes (4,5 Mo) ; « Ma position » ou la recherche servent à en changer */
+function wxParis(){const g={name:'Paris',lat:48.8566,lon:2.3522,cc:'FR',dep:'75'};S.set('city',g.name);S.set('cityGeo',{lat:g.lat,lon:g.lon,name:g.name});if(!S.get('wxFav',[]).length)S.set('wxFav',[g]);return wxAt(g.lat,g.lon,g.name)}
 $('wx-refresh').onclick=loadWx;addEventListener('online',loadWx);
 $('wx-city-go').onclick=()=>{const c=$('wx-city').value.trim();if(c)wxCity(c)};
 $('wx-city').addEventListener('input',()=>{clearTimeout(wxT);const q=$('wx-city').value;wxT=setTimeout(()=>wxSearch(q,false),180)});
@@ -1104,7 +1111,7 @@ const INFOS=(()=>{
     $('news').querySelectorAll('[data-nt]').forEach(b=>b.onclick=()=>{cur=b.dataset.nt;S.set('newsCur',cur);all=false;load()});$('news-in').value=t.join(', ');
     $('news-open').href=cur==='À la une'?'https://news.google.com/home?hl=fr&gl=FR&ceid=FR:fr':'https://news.google.com/search?hl=fr&gl=FR&ceid=FR:fr&q='+encodeURIComponent(cur)}
   function paintList(){const l=$('news-list');const n=all?items.length:6;
-    l.innerHTML=items.slice(0,n).map((i,k)=>`<div class="item"><span class="when" style="min-width:34px;font-size:1rem">${k+1}</span><span class="grow"><p style="font-family:var(--body);font-size:1.02rem;line-height:1.35">${esc(i.t)}</p><small class="muted">${esc(i.s)}${i.s&&i.d?' · ':''}${i.d?ago(i.d):''}</small>${i.u?`<div class="row" style="margin-top:6px"><a class="btn pill" href="${esc(i.u)}" target="_blank" rel="noopener">Lire l'article</a></div>`:''}</span></div>`).join('')||'<p class="small muted">Aucun titre pour ce sujet.</p>';
+    l.innerHTML=items.slice(0,n).map((i,k)=>`<div class="item"><span class="when" style="min-width:34px;font-size:1rem">${k+1}</span><span class="grow"><p style="font-family:var(--body);font-size:1.02rem;line-height:1.35">${esc(i.t)}</p><small class="muted">${esc(i.s)}${i.s&&i.d?' · ':''}${i.d?ago(i.d):''}</small>${safeUrl(i.u)?`<div class="row" style="margin-top:6px"><a class="btn pill" href="${esc(safeUrl(i.u))}" target="_blank" rel="noopener">Lire l'article</a></div>`:''}</span></div>`).join('')||'<p class="small muted">Aucun titre pour ce sujet.</p>';
     $('news-more').hidden=items.length<=6||all;try{const pv=$('news-prev');if(pv)pv.innerHTML=items.slice(0,3).map((i,k)=>`<div class="item"><span class="when" style="min-width:34px;font-size:1rem">${k+1}</span><span class="grow"><p style="font-family:var(--body);font-size:1rem;line-height:1.35">${esc(i.t)}</p><small class="muted">${esc(i.s)}</small></span></div>`).join('')||'<p class="small muted">Les titres arrivent dès que le téléphone a du réseau.</p>'}catch(_){}}
   async function load(force){paintChips();if(!topics().includes(cur)){cur=topics()[0]||'À la une'}
     const cache=S.get('newsCache',{})[cur];const fresh=cache&&Date.now()-cache.at<20*60000;
@@ -1137,20 +1144,20 @@ function parseQuick(txt){let s=' '+String(txt).replace(/[,;!?]+/g,' ').replace(/
   let prev;do{prev=s;s=s.replace(/^(rdv|rendez-vous|ajoute[rz]?|note[rz]?|j'ai|il y a|un|une|le|la|les|à|a|au|de|du|pour)\s+/i,'').replace(/\s+(à|a|le|la|de|pour)$/i,'')}while(s!==prev);
   const title=s?s.charAt(0).toUpperCase()+s.slice(1):'';
   return {title,date:d?iso(d):'',time}}
-function fmtDay(ds){const t=iso(new Date()),tm=iso(new Date(Date.now()+864e5));if(ds===t)return "Aujourd'hui";if(ds===tm)return 'Demain';
+function fmtDay(ds){const t=iso(new Date()),tm=dayPlus(1);if(ds===t)return "Aujourd'hui";if(ds===tm)return 'Demain';
   const d=new Date(ds+'T12:00');return JOURS[d.getDay()].slice(0,3)+'. '+d.getDate()+' '+['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'][d.getMonth()]}
 function gcal(e){const z=(ds,t)=>ds.replace(/-/g,'')+(t?'T'+t.replace(':','')+'00':'');let dates;
   if(e.time){const st=new Date(e.date+'T'+e.time);const en=new Date(st.getTime()+(e.dur||60)*6e4);dates=z(e.date,e.time)+'/'+z(iso(en),pad(en.getHours())+':'+pad(en.getMinutes()))}
   else{const n=new Date(e.date+'T12:00');n.setDate(n.getDate()+1);dates=z(e.date)+'/'+z(iso(n))}
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&ctz=Europe/Paris&text='+encodeURIComponent(e.title)+'&dates='+dates+'&location='+encodeURIComponent(e.lieu||'')+'&details='+encodeURIComponent([e.who,e.notes].filter(Boolean).join('\n'))}
-function evRow(e,withActions){return `<div class="item"><div class="when">${e.time||'Journée'}</div><span class="dot"></span><div class="grow"><p>${esc(e.title)}</p>
-  <p class="small muted">${fmtDay(e.date)}${e.lieu?' · '+esc(e.lieu):''}${e.who?' · '+esc(e.who):''}</p>${e.hw?`<img class="hwimg" src="${e.hw}" alt="Note manuscrite">`:''}
-  ${withActions?`<div class="row" style="margin-top:6px"><a class="btn pill" href="${calLink(e)}">Agenda du téléphone</a>${e.lieu?`<a class="btn pill" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(e.lieu)}">Y aller</a>`:''}<button class="pill" data-del="${e.id}">Supprimer</button></div>`:''}</div><span class="tag">${esc(e.cat||'Perso')}</span></div>`}
+function evRow(e,withActions){return `<div class="item"><div class="when">${esc(e.time||'Journée')}</div><span class="dot"></span><div class="grow"><p>${esc(e.title)}</p>
+  <p class="small muted">${fmtDay(e.date)}${e.lieu?' · '+esc(e.lieu):''}${e.who?' · '+esc(e.who):''}</p>${hwOk(e.hw)?`<img class="hwimg" src="${e.hw}" alt="Note manuscrite">`:''}
+  ${withActions?`<div class="row" style="margin-top:6px"><a class="btn pill" href="${esc(calLink(e))}">${calLabel()}</a>${e.lieu?`<a class="btn pill" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(e.lieu)}">Y aller</a>`:''}<button class="pill" data-del="${esc(e.id)}">Supprimer</button></div>`:''}</div><span class="tag">${esc(e.cat||'Perso')}</span></div>`}
 function sortedEvents(){const t=iso(new Date());return S.get('events',[]).filter(e=>e.date>=t).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))}
 function renderAgenda(){const ev=sortedEvents();renderCal();
   $('ag-list').innerHTML=ev.length?ev.map(e=>evRow(e,true)).join(''):'<p class="muted" style="padding:10px 0">Aucun rendez-vous. Dictez ou écrivez le premier juste en dessous.</p>';
   $('ag-list').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{S.set('events',S.get('events',[]).filter(e=>e.id!==b.dataset.del));renderAgenda()});
-  const t=iso(new Date()),tm=iso(new Date(Date.now()+864e5));const soon=ev.filter(e=>e.date===t||e.date===tm);
+  const t=iso(new Date()),tm=dayPlus(1);const soon=ev.filter(e=>e.date===t||e.date===tm);
   $('soon').innerHTML=soon.length?soon.map(e=>evRow(e,false)).join(''):'<p class="muted small" style="padding:8px 0">Rien de prévu. Profitez-en.</p>'}
 function quickToForm(){const p=parseQuick($('ag-quick').value);if(p.title)$('f-title').value=p.title;if(p.date)$('f-date').value=p.date;if(p.time)$('f-time').value=p.time;
   renderCal();$('ag-preview').innerHTML=p.title?`Compris : <strong>${esc(p.title)}</strong> · ${p.date?fmtDay(p.date):'date à préciser'}${p.time?' à '+p.time:''}`:''}
@@ -1528,7 +1535,7 @@ function renderTodo(){const l=S.get('todo',TODO0);$('todo').innerHTML=l.map((x,i
 $('todo-add').onclick=()=>{const v=$('todo-in').value.trim();if(!v)return;S.set('todo',[...S.get('todo',TODO0),{t:v,d:false}]);$('todo-in').value='';renderTodo()};
 
 /* ===================== v11 : socle ===================== */
-const APP={version:'11.93',date:'4 novembre 2026',natif:7,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
+const APP={version:'11.94',date:'24 novembre 2026',natif:8,bundleUrl:'https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie-www.zip',
   /* Préparation GitHub : quand l'appli sera publiée, il suffira de renseigner ces deux adresses. */
   updateUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/version.json',   /* fichier version.json publié sur GitHub */
   htmlUrl:'https://raw.githubusercontent.com/hadesdray-crypto/maison-elodie-maj/main/index.html',
@@ -1536,6 +1543,7 @@ const APP={version:'11.93',date:'4 novembre 2026',natif:7,bundleUrl:'https://git
   swUrl:'sw.js'   /* service worker : hors-ligne et mises à jour */
 };
 const CHANGELOG=[
+['11.94','24 novembre 2026',["Sauvegarde fiable : le fichier est vraiment enregistré ou partagé avant d'annoncer « c'est fait » ; il contient aussi les photos, vocaux et skins", "Restauration plus sûre : Remplacer ou Fusionner, copie de secours pour annuler", "Mises à jour plus fiables ; position approximative pour la météo (nouvelle APK)", "Cuisine : minuteur juste même écran éteint, quantités en ⅓ ⅔ ⅛, recherche de recettes plus précise", "Agenda : dates justes aux changements d'heure ; horloge à la minute ; météo et infos remises à jour", "Vidéos : message clair et bouton « Ouvrir dans YouTube » en cas de panne"]],
 ['11.93','5 novembre 2026',["Accueil : en descendant après les grands encarts, on trouve directement l'agenda du jour puis les premiers titres des infos, puis la météo comme avant"]],
 ['11.92','5 novembre 2026',["Météo : toutes les villes du monde sont intégrées, même sans connexion (Louviers et les autres)", "Recherche pendant la frappe ; plusieurs sources en ligne en renfort (communes de France, codes postaux)", "Bouton « Ma position » ; mes dernières villes gardées ; météo gardée en mémoire et affichée hors connexion"]],
 ['11.91','5 novembre 2026',["Glissé entre les pages plus naturel : démarre dès les premiers millimètres, suit le doigt, finit selon la vitesse du geste", "Les pages voisines sont préparées d'avance pour éviter les à-coups ; la barre du bas suit pendant le glissé", "On peut reprendre un glissé pendant qu'il se termine"]],
@@ -1618,7 +1626,8 @@ document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)
 /* --- taille du texte --- */
 function applyFont(){const f=S.get('font',0);document.documentElement.dataset.fs=f}
 
-/* --- agenda du téléphone (sans compte Google à saisir) --- */
+/* --- ajouter à un agenda : dans un navigateur Android, l'agenda du téléphone ; dans l'appli installée, Google Agenda sur internet (il faut une connexion et un compte Google) --- */
+const calLabel=()=>(ANDROID&&!NATIVE)?'Agenda du téléphone':'Ajouter à Google Agenda';
 function calLink(e){const st=e.time?new Date(e.date+'T'+e.time):new Date(e.date+'T09:00');const en=new Date(st.getTime()+(e.time?(e.dur||60):24*60)*6e4);
   if(!ANDROID||NATIVE)return gcal(e);const enc=v=>encodeURIComponent(v||'');
   return 'intent://#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title='+enc(e.title)+';S.eventLocation='+enc(e.lieu)+';S.description='+enc([e.who,e.notes].filter(Boolean).join(' – '))+';l.beginTime='+st.getTime()+';l.endTime='+en.getTime()+(e.time?'':';B.allDay=true')+';S.browser_fallback_url='+enc(gcal(e))+';end'}
@@ -1890,7 +1899,7 @@ const Pearl=(()=>{
   function act(k){({expliquer:()=>explain(),visite:()=>tour(),son:()=>soundSheet(),agenda:readAgenda,motdoux:()=>say(($('note')&&$('note').textContent)||'Je pense à vous.','calin'),
     jeux:gameHelp,reglages:()=>openSettings(),ranger:()=>{say('Je me range. Touchez la petite perle en haut pour me rappeler.','dort');setTimeout(()=>setOn(false),1800)}})[k]()}
   function toggleSound(){const c=cfg();if(c.mute){S.set('voice',Object.assign(S.get('voice',{}),{mute:false}));say('Me revoilà, j\'ai retrouvé ma voix.','joie')}else{say('D\'accord, je me tais. Touchez Son pour que je reparle.','doux',null,true);setTimeout(()=>{S.set('voice',Object.assign(S.get('voice',{}),{mute:true}));shut()},300)}}
-  function readAgenda(){const t=iso(new Date()),tm=iso(new Date(Date.now()+864e5));const ev=sortedEvents();const a=ev.filter(e=>e.date===t),b=ev.filter(e=>e.date===tm);
+  function readAgenda(){const t=iso(new Date()),tm=dayPlus(1);const ev=sortedEvents();const a=ev.filter(e=>e.date===t),b=ev.filter(e=>e.date===tm);
     const f=l=>l.map(e=>(e.time?e.time.replace(':','h')+', ':'')+e.title).join(' ; ');
     say((a.length?"Aujourd'hui : "+f(a)+'. ':"Rien de prévu aujourd'hui. ")+(b.length?'Demain : '+f(b)+'.':'Demain est libre.'),'pense')}
   function gameHelp(){const h=document.querySelector('#game-area:not([hidden]) .howto');if(h){say(h.textContent.replace(/^La règle/,'La règle : '),'pense');return}
@@ -1899,7 +1908,7 @@ const Pearl=(()=>{
   const STEPS={accueil:[['.hero',"Ici, l'heure, la date et votre mot doux du jour."],['.tiles',"Ces quatre plaques ouvrent les rubriques : jouer, regarder, l'agenda et le travail."],['#wx-t',"La météo de votre ville. Changez de ville avec « Choisir une ville »."],['#route-in',"Écrivez ou dictez une adresse, puis lancez le GPS en un toucher."],['#news',"Vos sujets d'info préférés, en un toucher."],['#soon',"Vos rendez-vous d'aujourd'hui et de demain."],['#net',"Ici, l'état de la connexion. Touchez-le pour régler internet."],['.tabbar',"En bas, les cinq onglets pour aller partout."]],
     jeux:[['#defi',"Le défi du jour : un jeu choisi pour vous chaque jour."],['#game-menu .gamecard',"Touchez un jeu pour y jouer. La règle est toujours expliquée en haut."],['#online-games',"Ici, des jeux gratuits sur internet, sans compte à créer."]],
     videos:[['#vcats',"Tout est rangé ici : Marion Caméléon en premier, puis Crime, Documentaires, Beauté, Histoire, Monde, Cuisine, Voyage, Musique, et vos propres chaînes."],['#vsub',"Choisissez un thème, puis touchez une vidéo pour la regarder."]],
-    agenda:[['#cal',"Le calendrier : touchez un jour pour voir ce qui est prévu."],['#ag-new',"Ce gros bouton ajoute un rendez-vous, en trois petites étapes."],['#ag-list',"Vos prochains rendez-vous. « Agenda du téléphone » les recopie dans l'agenda d'Android."]],
+    agenda:[['#cal',"Le calendrier : touchez un jour pour voir ce qui est prévu."],['#ag-new',"Ce gros bouton ajoute un rendez-vous, en trois petites étapes."],['#ag-list',"Vos prochains rendez-vous. Le bouton d'agenda les prépare dans Google Agenda (internet nécessaire)."]],
     pro:[['.kpis',"Vos chiffres du moment : missions, candidats et placements du mois."],['#pro-alerts',"Les alertes : relances à faire et fiches à supprimer pour le RGPD."],['#pro-menu',"Chaque plaque ouvre un outil : fiche de poste, sourcing, candidats, entretiens, clients, objectifs, messages et outils."],['#todo',"Vos tâches du jour, à cocher quand c'est fait."]]};
   const vis=e=>e&&e.offsetParent!==null&&e.getBoundingClientRect().height>0;
   function curView(){return VIEWS.includes(window.__v)?window.__v:'accueil'}
@@ -1953,15 +1962,46 @@ const PRO_HELP={fiche:"Collez le texte d'une annonce. Je trouve l'intitulé, les
 const STATUTS=['À contacter','Contacté','Entretien','Présenté au client','Placé'];
 let curPro='',candFilter='all';
 const DAY=864e5;const today0=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
-const plusDays=n=>iso(new Date(today0().getTime()+n*DAY));
+const plusDays=n=>dayPlus(n);
 const frDate=ds=>{if(!ds)return'';const d=new Date(ds+'T12:00');return JOURS[d.getDay()]+' '+d.getDate()+' '+MOIS[d.getMonth()]};
-const ago=ts=>{if(!ts)return'jamais';const n=Math.floor((today0()-new Date(new Date(ts).setHours(0,0,0,0)))/DAY);return n<=0?"aujourd'hui":n===1?'hier':'il y a '+n+' jours'};
+const ago=ts=>{if(!ts)return'jamais';const n=Math.round((today0()-new Date(new Date(ts).setHours(0,0,0,0)))/DAY);return n<=0?"aujourd'hui":n===1?'hier':'il y a '+n+' jours'};
 const sameMonth=ts=>{const a=new Date(ts),b=new Date();return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()};
 function getCands(){const c=S.get('cands',[]);let ch=false;c.forEach(x=>{if(!x.added){x.added=Date.now();ch=true}if(!x.hist){x.hist=[];ch=true}});if(ch)S.set('cands',c);return c}
 const setCands=c=>S.set('cands',c);
 const dueList=()=>getCands().filter(x=>x.s<4&&x.relance&&x.relance<=iso(new Date()));
 const rgpdList=()=>getCands().filter(x=>Date.now()-(x.last||x.added)>730*DAY);
-function download(name,text,type){try{const b=new Blob([text],{type:type||'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast('Fichier « '+name+' » enregistré dans Téléchargements',4500)}catch(e){toast("Le téléphone n'a pas pu enregistrer le fichier")}}
+/* --- enregistrer un fichier : dans l'APK, écriture + partage ; dans un navigateur, téléchargement. « Enregistré » n'est dit qu'après un vrai succès. --- */
+const FSAVE=(()=>{
+  const msg=e=>String((e&&(e.message||e.errorMessage||e.code))||e||'erreur inconnue').slice(0,140);
+  const cancelled=e=>/cancel|annul|dismiss/i.test(msg(e));
+  const unimpl=e=>!!(e&&(e.code==='UNIMPLEMENTED'||/not implemented|unimplemented/i.test(msg(e))));
+  const clean=n=>String(n).replace(/[\\\/:*?"<>|]+/g,'-').slice(0,120);
+  /* produce(emit) appelle emit(texte) autant de fois que nécessaire ; chaque morceau est un fragment complet (jamais coupé au milieu d'un caractère) */
+  async function native(name,produce){
+    const Fs=Capacitor.registerPlugin('Filesystem'),Sh=Capacitor.registerPlugin('Share');
+    name=clean(name);let first=true,buf='',total=0;
+    const flush=async()=>{if(!buf)return;const d=buf;buf='';if(first){first=false;await Fs.writeFile({path:name,data:d,directory:'CACHE',encoding:'utf8'})}else await Fs.appendFile({path:name,data:d,directory:'CACHE',encoding:'utf8'})};
+    try{await produce(async s=>{s=String(s);buf+=s;total+=s.length;if(buf.length>1200000)await flush()});await flush();if(first)throw new Error('fichier vide')}
+    catch(e){if(unimpl(e))return null;return{ok:false,stage:'write',err:msg(e)}}
+    let uri='';try{uri=(await Fs.getUri({path:name,directory:'CACHE'})).uri}catch(e){return{ok:false,stage:'write',err:msg(e)}}
+    try{await Sh.share({title:name,url:uri,dialogTitle:'Enregistrer ou envoyer le fichier'});return{ok:true,how:'share',size:total}}
+    catch(e){if(cancelled(e))return{ok:false,cancelled:true};
+      try{await Fs.copy({from:name,directory:'CACHE',to:name,toDirectory:'DOCUMENTS'});return{ok:true,how:'docs',size:total}}catch(e2){return{ok:false,stage:'share',err:msg(e)}}}}
+  async function web(name,produce,mime){
+    const parts=[];let total=0;
+    try{await produce(async s=>{s=String(s);parts.push(s);total+=s.length})}catch(e){return{ok:false,stage:'write',err:msg(e)}}
+    try{const b=new Blob(parts,{type:mime||'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=clean(name);document.body.appendChild(a);a.click();setTimeout(()=>{try{URL.revokeObjectURL(a.href);a.remove()}catch(_){}},4000);return{ok:true,how:'web',size:total}}
+    catch(e){return{ok:false,stage:'write',err:msg(e)}}}
+  async function save(name,produce,mime){
+    if(NATIVE){const r=await native(name,produce);if(r)return r}
+    return web(name,produce,mime)}
+  return{save,msg}})();
+async function download(name,text,type){
+  const r=await FSAVE.save(name,async emit=>{await emit(text)},type);
+  if(r.ok)toast(r.how==='share'?'Fichier « '+name+' » prêt : choisissez où le ranger (Drive, Fichiers, e-mail…).':r.how==='docs'?'Fichier « '+name+' » enregistré dans Documents.':'Téléchargement lancé : « '+name+' » (dossier Téléchargements).',5000);
+  else if(r.cancelled)toast("Envoi annulé : le fichier n'a pas été gardé.",3500);
+  else toast('Le fichier « '+name+" » n'a pas pu être enregistré ("+r.err+"). Rien n'a été gardé.",7000);
+  return !!r.ok}
 
 function renderProMenu(){$('pro-menu').innerHTML=PRO_SECTIONS.map(([k,n,d,ic])=>`<button class="pplaque" data-pro="${k}"><span class="pico" style="background-image:var(--pi-${ic})" aria-hidden="true"></span><span class="grow"><b>${n}</b><small>${d}</small></span></button>`).join('');
   $('pro-menu').querySelectorAll('[data-pro]').forEach(b=>b.onclick=()=>openPro(b.dataset.pro))}
@@ -2203,8 +2243,7 @@ const DEADV=S.get('deadv',{});
 async function vidAlive(id){if(DEADV[id])return false;try{const c=new AbortController();const t=setTimeout(()=>c.abort(),5000);const r=await fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id),{signal:c.signal});clearTimeout(t);if(r.status===401||r.status===403||r.status===404){DEADV[id]=1;S.set('deadv',DEADV);return false}}catch(_){}return true}
 function playVideo(id,title){const seen=S.get('seen',[]);if(!seen.includes(id)){seen.unshift(id);S.set('seen',seen.slice(0,300))}
   if(!netGate())return;
-  vidAlive(id).then(ok=>{if(!ok){toast('Cette vidéo n\'est plus disponible : je cherche la même.',3500);setTimeout(()=>videoSearch(title),300);return}try{PIP.open(id,title)}catch(e){console.warn('Flottant',e);toast('La vidéo ne peut pas démarrer. Réessayez.',3500)}});return;
-  toast('La vidéo s\'ouvre dans YouTube…',2500);setTimeout(()=>openYT('https://www.youtube.com/watch?v='+id),250)}
+  vidAlive(id).then(ok=>{if(!ok){toast('Cette vidéo n\'est plus disponible : je cherche la même.',3500);setTimeout(()=>videoSearch(title),300);return}try{PIP.open(id,title)}catch(e){console.warn('Flottant',e);toast('La vidéo ne peut pas démarrer. Réessayez.',3500)}})}
 
 /* ===================== Nouveaux jeux ===================== */
 const MOTS5=('AIMER ARBRE BALLE BELLE BLANC BOIRE CALME CANNE CHAIR CHAMP CHANT CHAUD CHIEN CIRER CLAIR COEUR CORPS COTON COUPE CRABE CRAIE CREME CYGNE DANSE DOIGT DROLE ECRIN EPICE ETOILE FABLE FARCE FEMME FETES FIBRE FLEUR FOIRE FORET FORME FRAIS FRUIT GALET GATER GENOU GLACE GOMME GRAIN GRAND GRAVE HERBE HIVER HOTEL IDEAL IVOIRE JAMBE JARDIN JAUNE JOUER JUPON LAINE LAMPE LARGE LEGER LIVRE LOUPE LUNES MAGIE MAINS MANGE MARGE MATIN MERCI MIROIR MONDE MOTIF MUSEE NACRE NEIGE NOBLE NUAGE OCEAN OMBRE ONGLE ORAGE ORGUE PAGNE PAIRE PALME PAPIER PARFUM PATTE PECHE PERLE PETAL PHARE PIANO PLAGE PLUIE PLUME POEME POIRE POMME PORTE POUCE PRIER PRUNE RADIO RAYON REINE REVER RICHE RIVET ROBES ROSES ROUGE RUBAN RUCHE SABLE SAINT SALON SAUGE SCENE SIGNE SOEUR SOLDE SONGE SOURIS SUCRE TABLE TALON TANGO TERRE TIGRE TISSU TITRE TOILE TRAIN TRESOR TULLE VALSE VELOURS VENTS VERRE VIGNE VILLE VIOLON VOILE ZESTE ANGES BIJOU CADRE CERFS DOUCE FAUVE GIVRE HALTE LILAS LOTUS MAUVE OPALE ORCHIS PAPAYE SATIN SOLEIL TOPAZE').split(' ').filter(w=>w.length===5);
@@ -2302,9 +2341,9 @@ function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),
     <button class="pill" id="st-orient">Tourner l'écran : portrait / paysage</button>
     <button class="pill" id="st-charm">Le charm et les mots doux</button></div></details>
   <details class="setg" ${focus==='backup'?'open':''}><summary>Sauvegarde</summary><div class="stack">
-    <p class="small">Tout est gardé dans ce téléphone. Une sauvegarde dans un fichier protège vos données si Chrome est vidé ou si vous changez de téléphone.</p>
+    <p class="small">Tout est gardé dans ce téléphone. Une sauvegarde dans un fichier protège vos données si Chrome est vidé ou si vous changez de téléphone. Elle contient aussi vos photos, vocaux et skins.</p>
     <p class="small muted">Dernière sauvegarde : ${lb?new Date(lb).toLocaleDateString('fr-FR'):'jamais'}</p>
-    <button class="btn-plum" id="st-bk">Enregistrer mes données dans un fichier</button><label class="btn pill" for="st-rs" style="justify-content:center">Restaurer depuis un fichier</label><input type="file" id="st-rs" accept=".json,application/json" hidden></div></details>
+    <button class="btn-plum" id="st-bk">Enregistrer mes données dans un fichier</button><label class="btn pill" for="st-rs" style="justify-content:center">Restaurer depuis un fichier</label><input type="file" id="st-rs" accept=".json,application/json" hidden>${bkUndoInfo()?'<button class="pill" id="st-undo">Annuler la dernière restauration</button>':''}</div></details>
   <details class="setg" ${focus==='skins'?'open':''}><summary>Skins</summary><div class="stack">
     <p class="small">Habillez l'appli avec vos propres images : elles remplacent le fond des gros boutons, de la barre du bas ou des fenêtres. Envoyez une image par endroit — elle est gardée dans le téléphone.</p>
     ${[['btn','Gros boutons'],['bar','Barre du bas'],['sheet','Fenêtres de validation']].map(([k,l])=>`<div class="skin-slot"><img id="sk-p-${k}" alt="" hidden><label class="btn pill" for="sk-f-${k}" style="justify-content:center;flex:1">${l} : choisir l'image</label><input type="file" id="sk-f-${k}" accept="image/*" hidden><button class="pill" id="sk-x-${k}">✕</button></div>`).join('')}
@@ -2342,7 +2381,7 @@ function openSettings(focus){const v=Object.assign({},VOICE0,S.get('voice',{})),
   q('#st-fixed').onchange=e=>{S.set('keepFixed',e.target.checked);Orient.reset()};
   q('#st-orient').onclick=()=>{try{Orient.toggle()}catch(_){}};
   q('#st-charm').onclick=()=>{popBack();setTimeout(()=>{go('accueil');const d=$('charm-set');if(d){d.open=true;setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'start'}),200)}},80)};
-  q('#st-bk').onclick=backupFile;q('#st-rs').onchange=e=>restoreFile(e.target.files&&e.target.files[0]);
+  q('#st-bk').onclick=backupFile;q('#st-rs').onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value='';restoreFile(f)};{const u=q('#st-undo');if(u)u.onclick=bkUndo}
   const fwSet=(sel,key)=>{b.querySelectorAll(sel).forEach(x=>x.onclick=()=>{const o={};o[key]=x.dataset.fwt||x.dataset.fwh||x.dataset.fwg||x.dataset.fwm;FEN.save(o);b.querySelectorAll(sel).forEach(y=>y.setAttribute('aria-pressed',y===x))})};
   fwSet('[data-fwt]','top');fwSet('[data-fwh]','hero');fwSet('[data-fwg]','gesture');fwSet('[data-fwm]','mstyle');
   const fwH=q('#fw-hard'),fwHv=q('#fw-hardv'),fwHl=['','Très doux','Doux','Souple','Normal','Ferme','Dur','Très dur','Comme du séché'];
@@ -2420,12 +2459,140 @@ function wireVoice(b){const q=s=>b.querySelector(s);const pct=x=>Math.round(x*10
       const v=list[i++],row=document.createElement('div');row.className='row';row.innerHTML=`<span class="small grow">${esc(v.name)} (${esc(v.lang)})</span><b class="small">…</b>`;res.appendChild(row);
       Pearl.testVoice(v,'Bonjour, voici la voix numéro '+i+'.',r=>{const bb=row.querySelector('b');bb.textContent=r==='ok'?'répond':'muette';if(r==='ok'){const ch=document.createElement('button');ch.className='chip';ch.textContent='Choisir';ch.onclick=()=>{S.set('voice',Object.assign(S.get('voice',{}),{voice:v.name}));S.set('voiceOk',v.name);fillVoices();paint();toast('Voix choisie : '+v.name)};row.appendChild(ch)}setTimeout(next,r==='ok'?3200:300)})};next()}}
 /* --- sauvegarde --- */
-function allData(){const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('me_')&&k!=='me__auto')o[k]=localStorage.getItem(k)}}catch(_){}return o}
-function backupFile(){const d={app:'Maison Élodie',version:APP.version,date:new Date().toISOString(),data:allData()};download('Maison Élodie sauvegarde '+iso(new Date())+'.json',JSON.stringify(d),'application/json');S.set('lastBackup',Date.now())}
-function restoreFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||d.app!=='Maison Élodie'||!d.data)throw 0;
-    if(!confirm('Restaurer la sauvegarde du '+new Date(d.date).toLocaleDateString('fr-FR')+' ? Les données actuelles seront remplacées.'))return;
-    try{localStorage.setItem('me__auto',JSON.stringify(allData()))}catch(_){}Object.entries(d.data).forEach(([k,v])=>{try{localStorage.setItem(k,v)}catch(_){}});toast('Sauvegarde restaurée, redémarrage…');setTimeout(()=>location.reload(),1200)}
-    catch(_){toast("Ce fichier n'est pas une sauvegarde de Maison Élodie",5000)}};r.readAsText(f)}
+/* Clés de l'appli : « me_… ». On laisse de côté ce qui est propre à l'appareil (mise à jour sur place) et la copie de secours. */
+const bkSkip=k=>k==='me__auto'||/^me_ota/.test(k)||k==='me_updTry';
+function allData(){const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('me_')&&!bkSkip(k))o[k]=localStorage.getItem(k)}}catch(_){}return o}
+const bkAllKeys=()=>{const a=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('me_')&&!bkSkip(k))a.push(k)}}catch(_){}return a};
+/* petit accès direct à IndexedDB (photos, vocaux, skins, musiques ajoutées) pour la sauvegarde */
+const IDBX={
+  open:(name,store)=>new Promise((ok,ko)=>{try{const r=indexedDB.open(name,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(store))r.result.createObjectStore(store)};r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)}catch(e){ko(e)}}),
+  keys:(db,store)=>new Promise((ok,ko)=>{try{const q=db.transaction(store).objectStore(store).getAllKeys();q.onsuccess=()=>ok(q.result||[]);q.onerror=()=>ko(q.error)}catch(e){ko(e)}}),
+  get:(db,store,k)=>new Promise((ok,ko)=>{try{const q=db.transaction(store).objectStore(store).get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>ko(q.error)}catch(e){ko(e)}}),
+  put:(db,store,k,v)=>new Promise((ok,ko)=>{try{const t=db.transaction(store,'readwrite');t.objectStore(store).put(v,k);t.oncomplete=()=>ok();t.onerror=t.onabort=()=>ko(t.error||new Error('écriture'))}catch(e){ko(e)}})};
+const BK_MAX=24*1048576; /* au plus ~24 Mo de photos, vocaux et musiques dans le fichier (les musiques passent en dernier) */
+const bkB64=bl=>new Promise((ok,ko)=>{const f=new FileReader();f.onload=()=>ok(String(f.result).split(',')[1]||'');f.onerror=()=>ko(f.error);f.readAsDataURL(bl)});
+const bkBlob=(b64,type)=>{const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:type||''})};
+const fmtMo=n=>(n/1048576).toFixed(n>=10485760?0:1).replace('.',',')+' Mo';
+/* fabrique le fichier de sauvegarde (format 2 : textes + photos/vocaux/skins/musiques) ; une ancienne sauvegarde (format 1, sans « idb ») se restaure toujours */
+async function bkBuild(emit){
+  const st={n:0,bytes:0,musique:0,gros:0,erreurs:0,idb:true};
+  await emit('{"app":"Maison Élodie","format":2,"version":'+JSON.stringify(APP.version)+',"date":'+JSON.stringify(new Date().toISOString())+',"data":'+JSON.stringify(allData())+',"idb":{');
+  let sep='';
+  const add=async(key,rec)=>{await emit(sep+JSON.stringify(key)+':'+JSON.stringify(rec));sep=',';st.n++};
+  try{
+    const db=await IDBX.open('me_blobs','b');const ks=(await IDBX.keys(db,'b')).filter(k=>typeof k==='string');
+    const ordre=ks.filter(k=>k.indexOf('mus_f_')!==0).concat(ks.filter(k=>k.indexOf('mus_f_')===0));
+    for(const k of ordre){const mus=k.indexOf('mus_f_')===0;
+      try{const v=await IDBX.get(db,'b',k);if(v==null)continue;
+        const isB=(typeof Blob!=='undefined')&&v instanceof Blob,sz=isB?v.size:(typeof v==='string'?v.length:0);if(!sz&&!isB)continue;
+        if(st.bytes+sz>BK_MAX){if(mus)st.musique++;else st.gros++;continue}
+        await add('b:'+k,isB?{t:'blob',type:v.type||'',b64:await bkB64(v)}:{t:'str',v});st.bytes+=sz}
+      catch(_){st.erreurs++}}
+    try{db.close()}catch(_){}
+  }catch(_){st.idb=false}
+  try{const db=await IDBX.open('me_photos','p');const ks=await IDBX.keys(db,'p');
+    for(const k of ks){try{const v=await IDBX.get(db,'p',k);if(typeof v!=='string')continue;if(st.bytes+v.length>BK_MAX){st.gros++;continue}await add('p:'+k,{t:'str',v});st.bytes+=v.length}catch(_){st.erreurs++}}
+    try{db.close()}catch(_){}}catch(_){}
+  await emit('},"bilan":'+JSON.stringify({elements:st.n,musiquesIgnorees:st.musique,tropVolumineux:st.gros})+'}');
+  return st}
+let bkBusy=false;
+async function backupFile(){
+  if(bkBusy)return;bkBusy=true;
+  const name='Maison Élodie sauvegarde '+iso(new Date())+'.json';let st=null;
+  toast('Préparation de la sauvegarde…');
+  try{
+    const r=await FSAVE.save(name,async emit=>{st=await bkBuild(emit)},'application/json');
+    if(r.ok){S.set('lastBackup',Date.now());
+      const notes=[];
+      if(st&&st.musique)notes.push(st.musique+' fichier(s) de musique ajoutés à la main ne sont pas dans la sauvegarde (trop volumineux) : il faudra les rajouter.');
+      if(st&&st.gros)notes.push(st.gros+' élément(s) (photos, vocaux…) ont été laissés de côté : la sauvegarde aurait été trop lourde.');
+      if(st&&st.erreurs)notes.push(st.erreurs+" élément(s) n'ont pas pu être lus.");
+      if(st&&!st.idb)notes.push("Les photos, vocaux et musiques n'ont pas pu être lus : seuls vos textes et réglages sont sauvegardés.");
+      sheet('Sauvegarde',`<p>${r.how==='share'?"Le fichier de sauvegarde a été transmis à l'application que vous avez choisie. Vérifiez qu'il y est bien arrivé.":r.how==='docs'?'Le fichier de sauvegarde est enregistré dans le dossier <b>Documents</b> du téléphone.':'Le téléchargement du fichier a été lancé (dossier Téléchargements).'}</p><p class="small">Contenu : vos données, ${st?st.n:0} photo(s), vocal(aux) ou fichier(s), environ ${fmtMo(r.size||0)}.</p>${notes.map(x=>'<p class="small muted">'+esc(x)+'</p>').join('')}`)}
+    else if(r.cancelled)toast("Sauvegarde annulée : aucun fichier n'a été gardé.",4000);
+    else sheet('Sauvegarde impossible',`<p>La sauvegarde n'a <b>pas</b> été enregistrée.</p><p class="small">Raison : ${esc(r.err||'inconnue')}</p><p class="small muted">Vos données sur le téléphone n'ont pas changé. Libérez de la place sur le téléphone, puis réessayez.</p>`)}
+  catch(e){sheet('Sauvegarde impossible',`<p>La sauvegarde n'a <b>pas</b> été enregistrée.</p><p class="small">Raison : ${esc(FSAVE.msg(e))}</p>`)}
+  finally{bkBusy=false}}
+/* --- restauration sûre --- */
+/* un rendez-vous venu d'un fichier est vérifié champ par champ avant d'être gardé */
+function bkCleanEvents(s){let a;try{a=JSON.parse(s)}catch(_){return null}if(!Array.isArray(a))return null;const out=[],seen=new Set(),tx=(v,n)=>String(v==null?'':v).slice(0,n);
+  for(const e of a){if(!e||typeof e!=='object'||Array.isArray(e))continue;
+    const date=String(e.date||'');if(!/^\d{4}-\d{2}-\d{2}$/.test(date))continue;
+    let id=String(e.id==null?'':e.id);if(!/^[A-Za-z0-9_-]{1,40}$/.test(id)||seen.has(id))id=uid();seen.add(id);
+    out.push({id,date,time:/^\d{1,2}:\d{2}$/.test(String(e.time||''))?String(e.time):'',dur:Math.max(0,Math.min(+e.dur||0,1440)),title:tx(e.title,300),lieu:tx(e.lieu,300),who:tx(e.who,300),notes:tx(e.notes,2000),cat:tx(e.cat,40),
+      hw:(typeof e.hw==='string'&&e.hw.length<1500000&&/^data:image\/(webp|png|jpeg);base64,[A-Za-z0-9+\/=]+$/.test(e.hw))?e.hw:''})}
+  return JSON.stringify(out)}
+/* lit et vérifie le contenu d'un fichier de sauvegarde (ancien format 1 ou format 2) sans rien écrire */
+function bkParse(text){
+  let d;try{d=JSON.parse(text)}catch(_){return{ok:false,err:"Ce fichier n'est pas lisible : ce n'est pas une sauvegarde complète de Maison Élodie."}}
+  if(!d||typeof d!=='object'||Array.isArray(d)||d.app!=='Maison Élodie'||!d.data||typeof d.data!=='object'||Array.isArray(d.data))return{ok:false,err:"Ce fichier n'est pas une sauvegarde de Maison Élodie."};
+  const ls={};let ignores=0;
+  for(const[k,v]of Object.entries(d.data)){
+    if(!/^me_[A-Za-z0-9_.:\-]{1,120}$/.test(k)||bkSkip(k)||typeof v!=='string'||v.length>8e6){ignores++;continue}
+    try{JSON.parse(v)}catch(_){ignores++;continue}
+    ls[k]=v}
+  if(ls.me_events!==undefined){const c=bkCleanEvents(ls.me_events);if(c===null){ignores++;delete ls.me_events}else ls.me_events=c}
+  const idb={};let ni=0;
+  if(d.idb&&typeof d.idb==='object'&&!Array.isArray(d.idb)){
+    for(const[k,r]of Object.entries(d.idb)){const i=k.indexOf(':'),st=k.slice(0,i),key=k.slice(i+1),ty=r&&typeof r==='object'?String(r.type||''):'';
+      const okKey=i>0&&((st==='b'&&/^(b_|v_|mus_)[A-Za-z0-9_.\-]{1,160}$/.test(key))||(st==='p'&&/^[A-Za-z0-9_.\-]{1,160}$/.test(key)));
+      const okRec=!!r&&typeof r==='object'&&((r.t==='blob'&&st==='b'&&typeof r.b64==='string'&&/^[A-Za-z0-9+\/=]*$/.test(r.b64)&&(ty===''||/^(image|audio|video)\//.test(ty)||ty==='application/json'))||(r.t==='str'&&typeof r.v==='string'&&(st==='b'||/^data:image\//.test(r.v))));
+      if(!okKey||!okRec){ignores++;continue}
+      idb[k]=r;ni++}}
+  if(!Object.keys(ls).length&&!ni)return{ok:false,err:"Cette sauvegarde ne contient rien que l'appli puisse restaurer."};
+  return{ok:true,d,ls,idb,nIdb:ni,ignores}}
+/* « fusionner » : on garde ce que l'on a ; les listes sont complétées avec ce qui manque */
+function bkMerge(local,back){if(local==null)return back;
+  try{const a=JSON.parse(local),b=JSON.parse(back);
+    if(Array.isArray(a)&&Array.isArray(b)){const kk=x=>x&&typeof x==='object'&&x.id!=null?'i'+x.id:'j'+JSON.stringify(x);const seen=new Set(a.map(kk));const add=b.filter(x=>{const k=kk(x);if(seen.has(k))return false;seen.add(k);return true});return add.length?JSON.stringify(a.concat(add)):null}}catch(_){}
+  return null}
+function bkUndoInfo(){try{const o=JSON.parse(localStorage.getItem('me__auto')||'null');if(o&&typeof o==='object'&&typeof o.at==='number'&&o.data&&typeof o.data==='object')return o}catch(_){}return null}
+/* écrit tout, ou rien : en cas d'échec (place insuffisante…) les données d'avant sont remises */
+async function bkApply(p,mode){
+  const cur=allData(),res={ls:0,idb:0,idbErr:0,idbSkip:0,undo:false,fail:null};
+  try{localStorage.setItem('me__auto',JSON.stringify({at:Date.now(),data:cur}));res.undo=true}catch(_){try{localStorage.removeItem('me__auto')}catch(_){}}
+  const rollback=()=>{try{bkAllKeys().forEach(k=>localStorage.removeItem(k));Object.entries(cur).forEach(([k,v])=>localStorage.setItem(k,v))}catch(_){}};
+  const writeAll=()=>{let n=0;if(mode==='replace')bkAllKeys().forEach(k=>{if(!(k in p.ls))localStorage.removeItem(k)});
+    for(const[k,v]of Object.entries(p.ls)){let w=v;if(mode==='merge'){w=bkMerge(localStorage.getItem(k),v);if(w===null)continue}localStorage.setItem(k,w);n++}return n};
+  try{res.ls=writeAll()}catch(e1){rollback();
+    if(res.undo){try{localStorage.removeItem('me__auto')}catch(_){}res.undo=false;try{res.ls=writeAll()}catch(e2){rollback();res.fail=FSAVE.msg(e2)}}else res.fail=FSAVE.msg(e1)}
+  if(res.fail)return res;
+  if(Object.keys(p.idb).length){
+    let dbB=null,dbP=null;try{dbB=await IDBX.open('me_blobs','b')}catch(_){}try{dbP=await IDBX.open('me_photos','p')}catch(_){}
+    for(const[k,r]of Object.entries(p.idb)){const i=k.indexOf(':'),st=k.slice(0,i),key=k.slice(i+1),db=st==='b'?dbB:dbP;
+      if(!db){res.idbErr++;continue}
+      try{if(mode==='merge'){const ex=await IDBX.get(db,st,key);if(ex!=null){res.idbSkip++;continue}}
+        await IDBX.put(db,st,key,r.t==='blob'?bkBlob(r.b64,r.type):r.v);res.idb++}catch(_){res.idbErr++}}
+    try{dbB&&dbB.close();dbP&&dbP.close()}catch(_){}}
+  return res}
+function bkDone(res){
+  if(res.fail){sheet('Restauration annulée',`<p>La restauration a été <b>annulée</b> : vos données n'ont pas changé.</p><p class="small">Raison probable : pas assez de place dans le téléphone (${esc(res.fail)}).</p>`,{closeLabel:'Fermer'});return}
+  const L=[];L.push(`<p>Vos données sont restaurées (${res.ls} liste(s) ou réglage(s)${res.idb?', '+res.idb+' photo(s), vocal(aux) ou fichier(s)':''}).</p>`);
+  if(res.idbSkip)L.push(`<p class="small muted">${res.idbSkip} élément(s) déjà présents ont été gardés tels quels.</p>`);
+  if(res.idbErr)L.push(`<p class="small"><b>${res.idbErr}</b> photo(s), vocal(aux) ou fichier(s) n'ont pas pu être restaurés (place insuffisante ?).</p>`);
+  L.push(res.undo?`<p class="small muted">Une copie de vos données d'avant est gardée : Réglages, Sauvegarde, « Annuler la dernière restauration ».</p>`:`<p class="small muted">Pas assez de place pour garder une copie de vos données d'avant.</p>`);
+  sheet('Sauvegarde restaurée',L.join(''),{closeLabel:"Redémarrer l'appli",onClose:()=>{setTimeout(()=>location.reload(),150)}})}
+function bkChoose(p){
+  const dt=p.d.date?new Date(p.d.date):null,lab=dt&&!isNaN(dt)?dt.toLocaleDateString('fr-FR'):'date inconnue',nk=Object.keys(p.ls).length;
+  const b=sheet('Restaurer une sauvegarde',`<p>Sauvegarde du <b>${esc(lab)}</b> : ${nk} liste(s) ou réglage(s)${p.nIdb?', '+p.nIdb+' photo(s), vocal(aux) ou fichier(s)':''}.</p>
+    <p class="small"><b>Remplacer</b> : vos données actuelles laissent la place à celles de la sauvegarde.<br><b>Fusionner</b> : vous gardez ce que vous avez et on ajoute ce qui manque (rendez-vous, candidats…).</p>
+    <p class="small muted">Dans les deux cas, une copie de vos données actuelles est gardée pour pouvoir annuler.</p>${p.ignores?`<p class="small muted">${p.ignores} élément(s) non reconnus seront ignorés.</p>`:''}
+    <button class="btn-plum" id="rs-rep" style="justify-content:center">Remplacer mes données</button><button class="btn pill" id="rs-mer" style="justify-content:center">Fusionner avec mes données</button>`,{closeLabel:'Annuler'});
+  const go=mode=>async()=>{closeSh(b.querySelector('#rs-rep'));await wait(300);toast('Restauration en cours…');let res;try{res=await bkApply(p,mode)}catch(e){res={fail:FSAVE.msg(e)}}bkDone(res)};
+  b.querySelector('#rs-rep').onclick=go('replace');b.querySelector('#rs-mer').onclick=go('merge')}
+function restoreFile(f){if(!f)return;
+  if(f.size>250*1048576){toast("Ce fichier est trop gros pour être une sauvegarde de Maison Élodie. Rien n'a été modifié.",6000);return}
+  const r=new FileReader();
+  r.onerror=()=>toast("Le fichier n'a pas pu être lu. Rien n'a été modifié.",5000);
+  r.onload=()=>{const p=bkParse(String(r.result||''));if(!p.ok){toast(p.err+" Rien n'a été modifié.",6500);return}bkChoose(p)};
+  r.readAsText(f)}
+function bkUndo(){const o=bkUndoInfo();if(!o){toast("Il n'y a pas de copie à retrouver.",3000);return}
+  const b=sheet('Annuler la dernière restauration',`<p>Revenir à vos données telles qu'elles étaient le <b>${esc(new Date(o.at).toLocaleString('fr-FR'))}</b> ?</p><p class="small muted">Ce qui a été ajouté depuis sera perdu. Les photos et vocaux restaurés restent en place.</p><button class="btn-plum" id="un-go" style="justify-content:center">Revenir en arrière</button>`,{closeLabel:'Non, laisser comme c\'est'});
+  b.querySelector('#un-go').onclick=()=>{const cur=allData();
+    try{bkAllKeys().forEach(k=>localStorage.removeItem(k));Object.entries(o.data).forEach(([k,v])=>{if(/^me_/.test(k)&&!bkSkip(k)&&typeof v==='string')localStorage.setItem(k,v)});localStorage.removeItem('me__auto');toast('Vos données d\'avant sont revenues, redémarrage…',3000);setTimeout(()=>location.reload(),1200)}
+    catch(e){try{bkAllKeys().forEach(k=>localStorage.removeItem(k));Object.entries(cur).forEach(([k,v])=>localStorage.setItem(k,v))}catch(_){}toast("Le retour en arrière n'a pas pu se faire (place insuffisante). Rien n'a changé.",6000)}}}
+/* la copie de secours n'est gardée que si elle est récente et au bon format ; les anciennes copies, jamais relues, ne servaient qu'à occuper la place */
+try{if(localStorage.getItem('me__auto')){const o=bkUndoInfo();if(!o||Date.now()-o.at>30*864e5)localStorage.removeItem('me__auto')}}catch(_){}
 /* --- mises à jour (prêtes pour GitHub) --- */
 /* ===================== Mise à jour sur place (sans réinstaller l'APK) : téléchargement du paquet complet, puis l'appli redémarre dessus ===================== */
 let APKI={name:'',code:0};const APKP=(async()=>{try{if(NATIVE&&Capacitor.Plugins&&Capacitor.Plugins.Perms&&Capacitor.Plugins.Perms.apkInfo){const r=await Capacitor.Plugins.Perms.apkInfo();if(r&&r.name)APKI={name:String(r.name),code:+r.code||0}}}catch(_){}})();
@@ -2473,12 +2640,17 @@ const UPD={newer(a,b){const x=String(a).split('.').map(Number),y=String(b).split
       <a class="btn-plum" style="display:flex!important;width:100%;font-size:.95rem;padding:14px 12px!important;margin-top:8px" href="${APP.apkBase}${i.apk||'MaisonElodie.apk'}" download="${i.apk||'MaisonElodie.apk'}">Télécharger la mise à jour V${i.v||''}</a></div>`,{closeLabel:'Plus tard',onClose:()=>{UPD.on=false}});return}const tried=(()=>{try{return NATIVE&&OTA.ok()?null:localStorage.getItem('me_updTry')}catch(_){return null}})();if(tried===i.version){this.on=true;sheet('Mise à jour',`<p>La version <b>${esc(i.version)}</b> est prête, mais elle ne s'installe pas toute seule sur ce téléphone.</p><p>Installez simplement le fichier APK : vos données sont conservées.</p><a class="btn-plum" style="justify-content:center" href="https://github.com/hadesdray-crypto/maison-elodie-maj/raw/main/MaisonElodie.apk">Télécharger la dernière version</a>`,{closeLabel:'Plus tard',onClose:()=>{UPD.on=false}});return}this.on=true;const b=sheet('Mise à jour Élodie V'+(i.v||''),`<p>La version <b>${esc(i.version)}</b>${i.date?' du '+esc(i.date):''} est prête.</p>${(i.notes||[]).length?'<p class="eyebrow">Ce qui change</p><ul>'+(Array.isArray(i.notes)?i.notes:[String(i.notes)]).map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':''}<p class="small muted">Vos données sont sauvegardées avant la mise à jour.</p><div id="up-pg" hidden class="stack"><p id="up-st"></p><div class="bar"><i id="up-bar" style="width:0"></i></div></div><button class="btn-plum" id="up-go" style="justify-content:center">Mettre à jour maintenant</button>`,{closeLabel:'Plus tard',onClose:()=>{UPD.on=false}});
     b.querySelector('#up-go').onclick=()=>this.run(b,i.version)},
   async run(b,i_v){const st=b.querySelector('#up-st'),bar=b.querySelector('#up-bar');b.querySelector('#up-pg').hidden=false;b.querySelector('#up-go').hidden=true;const set=(t,p)=>{st.textContent=t;bar.style.width=p+'%'};
-    set('Sauvegarde de vos données…',15);try{localStorage.setItem('me__auto',JSON.stringify(allData()))}catch(_){}await wait(600);
+    set('Vos données restent en place…',15);await wait(600);
     if(NATIVE&&OTA.ok()){try{await OTA.install(i_v,set);return}catch(e){console.warn('OTA',e);set('La mise à jour sur place a échoué ('+((e&&e.message)||e)+'). Je vous propose le fichier complet.',0);await wait(1800);const o=b.closest('.sheet-ov');if(o)o.querySelector('.sheet-x').click();UPD.on=false;setTimeout(()=>{UPD.on=true;sheet('Mise à jour',`<p>La mise à jour automatique n'a pas abouti. Installez le fichier complet, vos données sont conservées.</p><a class="btn-plum" style="justify-content:center" href="${APP.apkUrl}">Télécharger la dernière version</a>`,{closeLabel:'Plus tard',onClose:()=>{UPD.on=false}})},300);return}}
-    set('Téléchargement de la nouvelle version…',45);let okd=false;try{const r=await fetch(APP.htmlUrl+'?t='+Date.now(),{cache:'no-store'});const h=await r.text();if(r.ok&&/<title>Maison Élodie/.test(h)&&h.length>500000){const c=await caches.open('me-shell');const mk=()=>new Response(h,{headers:{'content-type':'text/html;charset=utf-8'}});await c.put('index.html',mk());await c.put('./',mk());okd=true}}catch(_){}
+    set('Téléchargement de la nouvelle version…',45);let okd=false;try{const r=await fetch(APP.htmlUrl+'?t='+Date.now(),{cache:'no-store'});const h=await r.text();if(r.ok&&/<title>Maison Élodie/.test(h)&&h.length>500000){const mk=()=>new Response(h,{headers:{'content-type':'text/html;charset=utf-8'}});const noms=await shellNames();for(const nm of noms){const c=await caches.open(nm);await c.put('index.html',mk());await c.put('./',mk());okd=true}}}catch(_){}
     if(!okd){set("Le téléchargement a échoué. Rien n'a changé, réessayez avec internet.",0);await wait(2200);const o=b.closest('.sheet-ov');if(o)o.querySelector('.sheet-x').click();return}await wait(500);
     try{localStorage.setItem('me_updTry',i_v)}catch(_){}set('Installation…',80);await wait(700);set('Redémarrage…',100);await wait(600);location.reload()}};
-if(APP.swUrl&&'serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){try{navigator.serviceWorker.register(APP.swUrl).catch(()=>{})}catch(_){}}
+/* noms des caches « me-shell… » existants (le service worker les nomme par version) */
+async function shellNames(){try{const ks=(await caches.keys()).filter(k=>/^me-shell/.test(k));return ks.length?ks:['me-shell-'+APP.version]}catch(_){return[]}}
+if(NATIVE){ /* l'APK contient déjà tous les fichiers : pas de service worker. On retire l'ancien service worker et son cache (rien à retirer ensuite). */
+  try{if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>{try{r.unregister()}catch(_){}})).catch(()=>{})}catch(_){}
+  try{if(window.caches)caches.keys().then(ks=>ks.filter(k=>/^me-shell/.test(k)).forEach(k=>caches.delete(k))).catch(()=>{})}catch(_){}
+}else if(APP.swUrl&&'serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){try{navigator.serviceWorker.register(APP.swUrl).catch(()=>{})}catch(_){}}
 
 /* --- agenda en 3 étapes --- */
 let agS=1;
@@ -3007,7 +3179,12 @@ function askMotion(){if(!chAsked&&window.DeviceOrientationEvent&&typeof DeviceOr
   document.querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>{setCharm(b.dataset.ch)})})();
 /* ---------- démarrage ---------- */
 applyFont();
-setInterval(()=>{try{tick()}catch(e){}},10000);
+(function alignTick(){const d=new Date();setTimeout(()=>{try{tick()}catch(e){}alignTick()},(60-d.getSeconds())*1000-d.getMilliseconds()+30)})();
+/* météo et infos : remises à jour de temps en temps si l'appli reste ouverte et que le réseau est là */
+let lastRef=Date.now();
+const refreshLive=()=>{lastRef=Date.now();if(!NET.ok())return;try{if(S.get('cityGeo',null)||S.get('city',null))loadWx()}catch(_){}try{INFOS.load(false)}catch(_){}};
+setInterval(()=>{if(!document.hidden&&Date.now()-lastRef>=30*60000)refreshLive()},5*60000);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)return;try{tick()}catch(_){}if(Date.now()-lastRef>=30*60000)refreshLive()});
 [tick,renderNote,renderFavs,renderNews,loadWx,renderAgenda,renderVcats,gameMenu,buildQ,renderBases,renderMsgs,renderTodo,renderProMenu,renderProHome,()=>{const t=S.get('ficheTxt','');if(t)$('fp-in').value=t},()=>NET.paint(),show,()=>Pearl.build(),()=>{agStep(1)}].forEach(f=>{try{f()}catch(e){console.warn('Démarrage',f.name,e)}});
 $('net').onclick=()=>openSettings('net');$('gear').onclick=()=>openSettings();$('pearl-btn').onclick=()=>Pearl.toggle();
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>go(b.dataset.v));
@@ -3278,10 +3455,11 @@ const durF=n=>{n=+n||0;const h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=n%60
 function vidList(title,intro,items){const b=sheet(title,`<p class="small">${esc(intro)}</p><div class="stack" id="vl-l"></div>`,{closeLabel:'Fermer'});
   b.querySelector('#vl-l').innerHTML=items.slice(0,20).map(v=>`<button class="vid" data-vid="${esc(v.videoId)}" data-t="${esc(v.title||'')}"><span class="vth" style="background-image:url(${ytThumb(v.videoId)})"><i class="playb" aria-hidden="true"></i></span><span class="grow"><b>${esc(v.title||'')}</b><small>${esc(v.author||'')}${v.lengthSeconds?' · '+durF(v.lengthSeconds):''}</small></span></button>`).join('');
   b.querySelectorAll('[data-vid]').forEach(x=>x.onclick=()=>{closeSh(b);setTimeout(()=>playVideo(x.dataset.vid,x.dataset.t),250)});return b}
-async function videoSearch(q){if(!netGate())return;const b=sheet('Recherche','<p class="small" id="vs-m">Je cherche les vidéos sans pub…</p><div class="row"><button class="pill" id="vs-r" hidden style="min-height:44px">Réessayer</button></div>',{closeLabel:'Fermer'});
-  const m=b.querySelector('#vs-m'),r=b.querySelector('#vs-r');const go=async()=>{r.hidden=true;m.textContent='Je cherche les vidéos sans pub…';const l=await MIR.search(q);if(!document.body.contains(b))return;
+async function videoSearch(q){if(!netGate())return;const b=sheet('Recherche','<p class="small" id="vs-m">Je cherche les vidéos sans pub…</p><div class="row"><button class="pill" id="vs-r" hidden style="min-height:44px">Réessayer</button><button class="pill" id="vs-y" hidden style="min-height:44px">Ouvrir dans YouTube</button></div>',{closeLabel:'Fermer'});
+  const m=b.querySelector('#vs-m'),r=b.querySelector('#vs-r'),y=b.querySelector('#vs-y');y.onclick=()=>openYT('https://www.youtube.com/results?search_query='+encodeURIComponent(q));
+  const go=async()=>{r.hidden=true;y.hidden=true;m.textContent='Je cherche les vidéos sans pub…';let l=null;try{l=await MIR.search(q)}catch(_){}if(!document.body.contains(b))return;
     if(l){const v=l.filter(x=>x.type==='video'||x.videoId);closeSh(b);setTimeout(()=>vidList(q,'Touchez une vidéo : elle se lit ici, sans pub.',v),250)}
-    else{m.textContent="Je n'ai pas pu joindre les serveurs sans pub pour l'instant. Réessayez dans un moment.";r.hidden=false}};r.onclick=go;go()}
+    else{m.textContent="Je n'ai pas pu joindre les serveurs sans pub pour l'instant (ils tombent parfois en panne). Réessayez dans un moment, ou ouvrez la recherche directement dans YouTube.";r.hidden=false;y.hidden=false}};r.onclick=go;go()}
 async function channelOpen(id,name){if(!netGate())return;toast('Je cherche la chaîne…',2000);let cid=id;
   if(!/^UC/.test(cid||'')){const l=await MIR.search(String(cid||name).replace(/^@/,''),'channel');cid=l&&l[0]&&l[0].authorId}
   const v=cid&&await MIR.channel(cid);if(!v){toast("Je n'ai pas pu ouvrir cette chaîne pour l'instant. Réessayez dans un moment.",4500);return}
@@ -3312,13 +3490,13 @@ const PIP=(()=>{
    yt:'<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5H5V6h5"/></svg>',x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
   const cmd=(func,args)=>{try{fr&&fr.contentWindow.postMessage(JSON.stringify({event:'command',func,args:args||[]}),'*')}catch(_){}};
   const st=(h,btn)=>{const s=el.querySelector('.pip-s');if(!h){s.hidden=true;return}s.hidden=false;
-    s.innerHTML=`<span>${h}</span>`+(btn?`<button class="btn-gold" data-p="retry">Réessayer</button>`:'');bind(s)};
+    s.innerHTML=`<span>${h}</span>`+(btn?`<button class="btn-gold" data-p="retry">Réessayer</button><button class="btn-gold" data-p="yt">Ouvrir dans YouTube</button>`:'');bind(s)};
   function bind(root){root.querySelectorAll('[data-p]').forEach(b=>b.onclick=e=>{e.stopPropagation();act(b.dataset.p,b)})}
   function act(k,b){
     if(k==='play'){if(mode==='video'){if(vd.paused){vd.play();playing=true}else{vd.pause();playing=false}}else{playing=!playing;cmd(playing?'playVideo':'pauseVideo')};b.innerHTML=playing?I.pause:I.play;b.setAttribute('aria-label',playing?'Mettre en pause':'Reprendre la lecture')}
     else if(k==='back')relSeek(-10);else if(k==='fwd')relSeek(10);
     else if(k==='size'){big=!big;el.classList.toggle('big',big);clampIn()}
-    else if(k==='retry')open(curId,title);else if(k==='chan'){(async()=>{let a=curAuth;if(!a||!a.id){const r=await MIR.info(curId);a=r&&{id:r.j.authorId,name:r.j.author};curAuth=a}if(a&&a.id)channelOpen(a.id,a.name);else toast('La chaîne de cette vidéo est introuvable pour l\'instant.',3500)})()}
+    else if(k==='retry')open(curId,title);else if(k==='yt'){openYT('https://www.youtube.com/watch?v='+encodeURIComponent(curId))}else if(k==='chan'){(async()=>{let a=curAuth;if(!a||!a.id){const r=await MIR.info(curId);a=r&&{id:r.j.authorId,name:r.j.author};curAuth=a}if(a&&a.id)channelOpen(a.id,a.name);else toast('La chaîne de cette vidéo est introuvable pour l\'instant.',3500)})()}
     else if(k==='x')close()}
   function build(){el=document.createElement('div');el.id='pip';el.setAttribute('role','region');el.setAttribute('aria-label','Vidéo flottante');
     el.innerHTML=`<div class="pip-h"><span class="pip-t"></span><button data-p="x" aria-label="Fermer la vidéo">${I.x}</button></div>
@@ -3337,7 +3515,7 @@ const PIP=(()=>{
       if(m.event==='onError'||(m.info&&m.info.error!=null)){fail(m.info&&m.info.error!=null?m.info.error:m.info)}
       }catch(_){}})}
   function fail(code){clearTimeout(tmo);ready=false;try{DEADV[curId]=1;S.set('deadv',DEADV)}catch(_){}
-    const m=(code==100||code==101||code==150||code==2||code==5)?"Cette vidéo n'est plus disponible ici.":"La vidéo ne démarre pas.";st(m+' Touchez Réessayer.',true)}
+    const m=(code==100||code==101||code==150||code==2||code==5)?"Cette vidéo n'est plus disponible ici.":"La vidéo ne démarre pas.";st(m+' Touchez Réessayer, ou ouvrez-la directement dans YouTube.',true)}
   function relSeek(s){if(mode==='video'){try{vd.currentTime=Math.max(0,vd.currentTime+s)}catch(_){}return}const t=Math.max(0,(window.__pipT||0)+s);cmd('seekTo',[t,true]);window.__pipT=t}
   function place(l,t){const r=el.getBoundingClientRect();l=Math.max(4,Math.min(innerWidth-r.width-4,l));t=Math.max(4,Math.min(innerHeight-r.height-4,t));el.style.left=l+'px';el.style.top=t+'px'}
   function clampIn(){if(el)place(el.offsetLeft,el.offsetTop)}
@@ -3356,7 +3534,7 @@ const PIP=(()=>{
     MIR.stream(id).then(r=>{if(curId!==id||el.hidden)return;if(r)startVideo(id,r);else embed(id)}).catch(()=>{if(curId===id)embed(id)});
     el.hidden=false;clampIn()}
   function hide(){clearTimeout(tmo);if(!el)return;try{fr.src='about:blank';vd.pause();vd.removeAttribute('src')}catch(_){}mode='';el.hidden=true;playing=false}
-  function close(){const f=pipB;pipB=null;hide();if(f)dropBack(f);return;clearTimeout(tmo);if(!el)return;try{fr.src='about:blank';vd.pause();vd.removeAttribute('src')}catch(_){}mode='';el.hidden=true;playing=false}
+  function close(){const f=pipB;pipB=null;hide();if(f)dropBack(f)}
   function pause(byApp){if(!el||el.hidden||!playing)return;if(mode==='video')vd.pause();else cmd('pauseVideo');if(byApp){pausedByApp=true}else playing=false}
   function resume(){if(!el||el.hidden||!pausedByApp)return;pausedByApp=false;if(mode==='video')vd.play();else cmd('playVideo')}
   const on=()=>!!(el&&!el.hidden);
@@ -3984,11 +4162,20 @@ const CUIS=(()=>{
   const chef=k=>'skins/chef/'+k+'.webp';
   const $$=(id)=>document.getElementById(id);
   async function load(){if(R.length)return R;try{R=await fetch('recettes.json').then(r=>r.json())}catch(e){R=[];console.warn('Recettes',e)}try{R=R.concat(mine())}catch(_){}try{await phLoad()}catch(_){}return R}
-  const fmtQ=(q,pers,base)=>{let v=q*pers/base;if(v>=10)v=Math.round(v);else v=Math.round(v*4)/4;const e=Math.floor(v),f=v-e;const fr={0.25:'¼',0.5:'½',0.75:'¾'}[+f.toFixed(2)];return (e||!fr?e:'')+(fr||'')||String(v)};
+  /* quantité proportionnelle au nombre de personnes : fractions usuelles, « une pointe de » quand c'est presque rien (jamais « 0 ») */
+  const FRAC=[[0,''],[1/8,'⅛'],[1/4,'¼'],[1/3,'⅓'],[1/2,'½'],[2/3,'⅔'],[3/4,'¾'],[1,'']];
+  const fmtQ=(q,pers,base)=>{const v=q*pers/base;if(!(v>0)||!isFinite(v))return '';if(v>=10)return String(Math.round(v));
+    let e=Math.floor(v),f=v-e,b=0,bd=9;for(let k=0;k<FRAC.length;k++){const d=Math.abs(f-FRAC[k][0]);if(d<bd){bd=d;b=k}}
+    if(b===FRAC.length-1){e+=1;b=0}
+    if(e===0&&b===0)return 'une pointe de';
+    return (e?String(e):'')+FRAC[b][1]};
+  /* quantité + unité ; « une pointe de » remplace les deux */
+  const qU=(i,pers,base,h)=>{const q=fmtQ(i.q,pers,base);return q==='une pointe de'?q:(q+' '+(h?esc(i.u):i.u)).trim()};
   const dur=m=>m>=60?Math.floor(m/60)+' h'+(m%60?' '+(m%60):''):m+' min';
   const nz=t=>String(t).toLowerCase().replace(/œ/g,'oe').replace(/æ/g,'ae').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
   const lev=(a,b)=>{if(Math.abs(a.length-b.length)>2)return 9;const d=[];for(let i=0;i<=a.length;i++){d[i]=[i]}for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]};
-  function qmatch(q,hay){const h=nz(hay),ws=h.split(' ');return nz(q).split(' ').filter(Boolean).every(t=>h.includes(t)||(t.length>=4&&ws.some(w=>lev(t,w)<=(t.length>6?2:1))))}
+  /* fuzzy : tolère une faute de frappe (mots de 5 lettres ou plus, même première lettre) ; sinon le mot doit apparaître tel quel */
+  function qmatch(q,hay,fuzzy){const h=nz(hay),ws=h.split(' ');return nz(q).split(' ').filter(Boolean).every(t=>h.includes(t)||(!!fuzzy&&t.length>=5&&ws.some(w=>w.charAt(0)===t.charAt(0)&&lev(t,w)<=(t.length>6?2:1))))}
   /* ---- visuels des ingrédients (96 images dessinées) ---- */
   const ING_R=[[/vermicelle/,'vermicelles'],[/nouilles|pates de riz/,'nouilles'],[/feuilles? de (brick|filo)|feuilles de pate/,'feuilles-brick'],[/lasagne/,'lasagne'],[/galettes? de riz/,'galette-riz'],[/pate (brisee|sablee|feuilletee)|pate a tarte|fond de tarte/,'fond-tarte'],[/pate a (pizza|pain|brioche)|pate a crepes? ?$/,'pate-boule'],[/macaroni|coquillette|penne|torti|farfalle|fusilli/,'macaroni'],[/spaghetti|tagliatelle|linguine|capellini|pates?$|pates /,'spaghetti'],[/riz (rond|a risotto|pour risotto)|riz au lait/,'riz-rond'],[/\briz\b/,'riz'],[/perles?|tapioca/,'perles'],[/semoule|polenta|boulgour|couscous/,'polenta'],[/pain de mie|brioche|tranches? de pain/,'pain-mie'],[/baguette|\bpain\b|pain (complet|rassis)/,'pain'],[/chapelure|panure/,'chapelure'],[/boudoirs?|biscuits? a la cuill/,'boudoirs'],[/^cafe|cafe (soluble|moulu|fort|noir|froid)/,'cafe-tasse'],[/\bvin\b|vin (blanc|rouge)|porto|madere/,'vin-blanc'],[/bouillon|cubes? de/,'bouillon-cube'],[/\beau\b|eau (chaude|froide|tiede|bouillante)/,'verre-eau'],[/confiture|gelee de/,'confiture'],[/echalote/,'oignon'],[/laitue|mesclun/,'salade'],[/blancs? de poulet/,'poulet-blanc'],[/cuisses?|pilons|hauts de cuisse/,'poulet-cuisse'],[/ailes de poulet/,'poulet-ailes'],[/poulet/,'poulet'],[/boeuf hache|boeuf/,'boeuf-hache'],[/porc hache|porc/,'porc-hache'],[/lardons|pancetta/,'lardons'],[/jambon/,'jambon'],[/merguez/,'merguez'],[/chair a saucisse|saucisse/,'chair-saucisse'],[/crevette/,'crevettes'],[/calamar/,'calamars'],[/morue/,'morue'],[/saumon/,'saumon'],[/parmesan|pecorino/,'parmesan'],[/fromage rape|gruyere rape/,'fromage-rape'],[/gruyere|emmental|comte|fromage \(/,'gruyere'],[/mozzarella/,'mozzarella'],[/feta/,'feta'],[/fromage de chevre|chevre/,'chevre'],[/mascarpone/,'mascarpone'],[/yaourt|lait fermente/,'yaourt'],[/fromage frais/,'fromage-frais'],[/safran/,'safran'],[/gelatine/,'gelatine'],[/jaunes? d.?oeuf|blancs? d.?oeuf/,'oeuf-casse'],[/oeuf/,'oeuf'],[/farine/,'farine'],[/sucre glace/,'sucre-glace'],[/sucre vanille/,'sucre-vanille'],[/cassonade/,'cassonade'],[/^sucre|sucre /,'sucre'],[/beurre/,'beurre'],[/lait de coco/,'lait-coco'],[/^lait|lait /,'lait'],[/creme fraiche/,'creme-fraiche'],[/creme/,'creme-liquide'],[/huile d.?olive/,'huile-olive'],[/huile/,'huile'],[/^sel$|^sel /,'sel'],[/poivron rouge/,'poivron-rouge'],[/poivron vert/,'poivron-vert'],[/poivron jaune/,'poivron-jaune'],[/poivron/,'poivron-rouge'],[/poivre/,'poivre'],[/levure/,'levure'],[/bicarbonate/,'bicarbonate'],[/maizena/,'maizena'],[/vanille/,'vanille'],[/miel/,'miel'],[/pepites/,'pepites'],[/chocolat/,'chocolat'],[/cacao/,'cacao'],[/cannelle/,'cannelle'],[/muscade/,'muscade'],[/paprika/,'paprika'],[/cumin/,'cumin'],[/curry/,'curry'],[/curcuma/,'curcuma'],[/piment/,'piment'],[/herbes de provence/,'herbes-provence'],[/oignons? nouveaux?/,'oignons-nouveaux'],[/oignons? rouges?/,'oignon-rouge'],[/oignon/,'oignon'],[/^ail|ail /,'ail'],[/gingembre/,'gingembre'],[/persil/,'persil'],[/coriandre/,'coriandre'],[/basilic/,'basilic'],[/menthe/,'menthe'],[/thym/,'thym'],[/romarin/,'romarin'],[/ciboulette/,'ciboulette'],[/bouquet garni/,'bouquet-garni'],[/moutarde/,'moutarde'],[/vinaigre/,'vinaigre'],[/sauce soja/,'sauce-soja'],[/nuoc/,'nuoc-mam'],[/tomates? concassees/,'tomates-concassees'],[/tomates? cerises/,'tomates-cerises'],[/tomate/,'tomate'],[/carotte/,'carotte'],[/patate douce/,'patate-douce'],[/pommes? de terre/,'pomme-de-terre'],[/courgette/,'courgette'],[/aubergine/,'aubergine'],[/concombre/,'concombre'],[/champignon/,'champignon'],[/poireau/,'poireau'],[/haricots verts/,'haricots-verts'],[/petits pois/,'petits-pois'],[/betterave/,'betterave'],[/panais/,'panais'],[/navet/,'navet'],[/avocat/,'avocat'],[/salade/,'salade'],[/pousses de soja/,'pousses-soja'],[/citron vert/,'citron-vert'],[/citron confit/,'citron-confit'],[/citron/,'citron'],[/orange/,'orange'],[/pommes?$|^pommes? |pomme /,'pomme'],[/poire/,'poire'],[/banane/,'banane'],[/kiwi/,'kiwi'],[/cerise/,'cerises'],[/fraise/,'fraises'],[/fruits rouges|framboise|myrtille/,'fruits-rouges'],[/raisin/,'raisin'],[/noix de coco|noix.* coco/,'noix-coco'],[/noisette/,'noisettes'],[/amande/,'amandes'],[/cacahuete/,'cacahuetes'],[/noix/,'noix'],[/olives? vertes?/,'olives-vertes'],[/olive/,'olives-noires'],[/pois chiches secs/,'pois-chiches-secs'],[/pois chiches/,'pois-chiches'],[/haricots rouges/,'haricots-rouges'],[/mais/,'mais']];
   const GEST=[[/epluch/,'eplucher'],[/\blav(e|ez)\b|rincez/,'laver'],[/blancs? en neige|montez les blancs/,'fouetter-blanc'],[/emince|rondelles|tranches fines/,'emincer'],[/hach/,'hacher'],[/rap(e|ez)\b/,'raper'],[/zest/,'zester'],[/presse|pressez|jus d/,'presser'],[/separ/,'separer'],[/cass(e|ez)|ouvrez les oeufs/,'casser'],[/fouett/,'fouetter-jaune'],[/incorpor/,'incorporer'],[/petri/,'petrir'],[/etal|abaiss/,'etaler'],[/garniss|foncez|beurrez le moule|beurrez et farinez/,'garnir'],[/prechauff|thermostat/,'regler-four'],[/enfourn/,'enfourner'],[/retourn/,'retourner'],[/saisi|faites dorer|faites colorer/,'saisir'],[/deglac/,'deglacer'],[/revenir|suer|faites fondre/,'revenir'],[/mijot|frémi|fremi/,'mijoter'],[/bouillir|ebullition|bouillante|eau sal|cuire.*(eau|pates|spaghetti|riz)|cuisez.*(eau|pates|spaghetti|riz)/,'bouillir'],[/egoutt/,'egoutter'],[/nappe/,'napper'],[/saupoudr|parsem/,'saupoudrer'],[/gout|rectifiez/,'gouter'],[/filtr|passez au chinois|tamis/,'filtrer'],[/piquez/,'piquer'],[/refroid|grille|tiede/,'refroidir'],[/pesez/,'peser'],[/laissez (reposer|lever|infuser)|repos|patientez/,'sablier'],[/tranch|decoup|coupez en deux/,'trancher'],[/coupez|detaill/,'couper-des'],[/salez|poivrez|assaison/,'assaisonner'],[/versez/,'verser'],[/remuez|melangez/,'melanger'],[/dressez|servez|disposez/,'dresser']];
@@ -3999,8 +4186,10 @@ const CUIS=(()=>{
   const ingKey=n=>{const t=nz(n);const r=ING_R.find(x=>x[0].test(t));return r?r[1]:null};
   function ingLi(i,pers,rp){const k=ingKey(i.n);const qq=(+i.q||0)*pers/(rp||pers||1);const nb=(!i.u&&qq>=1&&qq<=6)?Math.round(qq):1;
     const ph=k?`<span class="ing-ph" aria-hidden="true">${Array(nb).fill(`<img src="ing/${k}.webp" alt="">`).join('')}</span>`:`<span class="ing-ph" aria-hidden="true"><img class="bj" src="skins/bijou/ic-cuillere.webp" alt=""></span>`;
-    return `<li class="ing-li">${ph}<span><b>${fmtQ(i.q,pers,rp)} ${esc(i.u)}</b> ${esc(i.n)}</span></li>`}
-  function liste(){const x=R.filter(r=>(!cat||r.cat===cat)&&(filtre!=='af'||r.af)&&(filtre!=='fav'||favs().includes(r.id))&&(filtre!=='mes'||r.mine)&&(!q||qmatch(q,r.nom+' '+r.pays+' '+r.ing.map(i=>i.n).join(' '))));
+    return `<li class="ing-li">${ph}<span><b>${qU(i,pers,rp,true)}</b> ${esc(i.n)}</span></li>`}
+  function liste(){const base=r=>(!cat||r.cat===cat)&&(filtre!=='af'||r.af)&&(filtre!=='fav'||favs().includes(r.id))&&(filtre!=='mes'||r.mine),txt=r=>r.nom+' '+r.pays+' '+r.ing.map(i=>i.n).join(' ');
+    let x=R.filter(r=>base(r)&&(!q||qmatch(q,txt(r),false)));
+    if(q&&!x.length)x=R.filter(r=>base(r)&&qmatch(q,txt(r),true));
     return x.sort((a,b)=>a.nom.localeCompare(b.nom,'fr'))}
   function render(){const h=$$('v-cuisine');if(!h)return;{const sub=!!(cat||q||filtre!=='tous');if(sub&&!ckF){ckF=()=>{ckF=null;cat=null;q='';filtre='tous';render()};pushBack(ckF)}else if(!sub&&ckF){const f=ckF;ckF=null;dropBack(f)}}const resume0=S.get('cook',null),resume=resume0&&resume0.t&&Date.now()-resume0.t<3*3600e3?resume0:null,rr=resume&&R.find(r=>r.id===resume.id);
     h.innerHTML=`<div><p class="eyebrow">Cuisine</p><h2>Le chef vous accompagne</h2></div>
@@ -4150,7 +4339,7 @@ const CUIS=(()=>{
       const dp=b.querySelector('#ck-delph');if(dp)dp.onclick=async()=>{await phDel(r.id);draw();const l=$$('ck-list');if(l)fillList(l)};
       const ed=b.querySelector('#ck-edit');if(ed)ed.onclick=()=>{closeSh(b);setTimeout(()=>recForm(r),300)};
       const dl=b.querySelector('#ck-del');if(dl)dl.onclick=()=>{if(dl.dataset.s!=='1'){dl.dataset.s='1';dl.textContent='Confirmer la suppression';return}S.set('ckMine',mine().filter(x=>x.id!==r.id));phDel(r.id);const i=R.findIndex(x=>x.id===r.id);if(i>=0)R.splice(i,1);closeSh(b);render();toast('Recette supprimée.',2000)}})(),b.querySelector('#ck-cook').onclick=()=>{closeSh(b);setTimeout(()=>cook(r,pers,0),200)};
-      b.querySelector('#ck-readi').onclick=()=>say('Il vous faut : '+r.ing.map(i=>fmtQ(i.q,pers,r.pers)+' '+i.u+' '+i.n).join(', ')+'.')};
+      b.querySelector('#ck-readi').onclick=()=>say('Il vous faut : '+r.ing.map(i=>qU(i,pers,r.pers)+' '+i.n).join(', ')+'.')};
     draw()}
   /* ---- voix du chef ---- */
   const voix=()=>S.get('ckVoice',true);
@@ -4215,11 +4404,12 @@ const CUIS=(()=>{
   function timerUI(e){const box=C.el.querySelector('#ck-tm');if(C.timer&&C.timer.running){return}box.hidden=!e.min;if(!e.min)return;
     box.className='cook-timer';box.innerHTML=`<span class="big">${String(e.min).padStart(2,'0')}:00</span><button class="btn-plum" id="ck-tgo" style="justify-content:center"><img class="bj" src="skins/bijou/ic-minuteur.webp" alt="">Lancer ${dur(e.min)}</button>`;
     box.querySelector('#ck-tgo').onclick=()=>startTimer(e.min)}
-  function startTimer(min){if(!C)return;if(C.timer)C.timer.stop();const box=C.el.querySelector('#ck-tm');let left=min*60,on=true,iv=null;box.hidden=false;box.className='cook-timer';
+  function startTimer(min){if(!C)return;if(C.timer)C.timer.stop();const box=C.el.querySelector('#ck-tm');let end=Date.now()+min*60000,left=min*60,on=true,iv=null,rest=0;box.hidden=false;box.className='cook-timer';
     const paint=()=>{box.innerHTML=`<span class="big">${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}</span><span class="grow small">${on?'Minuteur en cours. Vous pouvez passer à l\'étape suivante, je vous préviens.':'Minuteur en pause.'}</span><button class="pill" id="ck-tstop">Arrêter</button>`;box.querySelector('#ck-tstop').onclick=()=>{T.stop();box.hidden=true}};
-    const tick=()=>{if(!on)return;left--;if(left<=0){T.stop();box.className='cook-timer done';box.innerHTML='<span class="big">00:00</span><span class="grow">C\'est le moment !</span><button class="pill" id="ck-tok">D\'accord</button>';box.querySelector('#ck-tok').onclick=()=>{box.hidden=true};ding();try{navigator.vibrate&&navigator.vibrate([300,150,300])}catch(_){}say('Ding ! Le temps est écoulé. '+C.r.etapes[C.step].t.split('.')[0]+'.');return}paint()};
-    const T={running:true,pause(){on=false;paint()},resume(){on=true;paint()},stop(){clearInterval(iv);T.running=false;on=false}};iv=setInterval(tick,1000);C.timer=T;paint();say('Minuteur lancé, '+dur(min)+'.')}
-  function ding(){try{const A=window.AudioContext||window.webkitAudioContext;const a=new A();[0,.35,.7].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.001,a.currentTime+t);g.gain.exponentialRampToValueAtTime(.5,a.currentTime+t+.02);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t+.3);o.start(a.currentTime+t);o.stop(a.currentTime+t+.32)})}catch(_){}}
+    const tick=()=>{if(!on)return;left=Math.ceil((end-Date.now())/1000);if(left<=0){T.stop();box.className='cook-timer done';box.innerHTML='<span class="big">00:00</span><span class="grow">C\'est le moment !</span><button class="pill" id="ck-tok">D\'accord</button>';box.querySelector('#ck-tok').onclick=()=>{box.hidden=true};ding();try{navigator.vibrate&&navigator.vibrate([300,150,300])}catch(_){}say('Ding ! Le temps est écoulé. '+C.r.etapes[C.step].t.split('.')[0]+'.');return}paint()};
+    const T={running:true,pause(){rest=Math.max(0,end-Date.now());on=false;paint()},resume(){end=Date.now()+rest;on=true;paint()},stop(){clearInterval(iv);T.running=false;on=false}};iv=setInterval(tick,1000);C.timer=T;paint();say('Minuteur lancé, '+dur(min)+'.')}
+  let dingCtx=null; /* un seul contexte audio, réutilisé à chaque sonnerie (en créer un par sonnerie finit par être refusé) */
+  function ding(){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!dingCtx||dingCtx.state==='closed')dingCtx=new A();const a=dingCtx;if(a.state==='suspended')a.resume();[0,.35,.7].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.001,a.currentTime+t);g.gain.exponentialRampToValueAtTime(.5,a.currentTime+t+.02);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t+.3);o.start(a.currentTime+t);o.stop(a.currentTime+t+.32)})}catch(_){}}
   /* ---- commandes vocales ---- */
   let SRN=null,rec=null,lastCmd='';try{if(NATIVE)SRN=Capacitor.registerPlugin('SpeechRecognition')}catch(_){}
   const R_=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -4232,7 +4422,7 @@ const CUIS=(()=>{
     if(has(' retour',' précédent',' precedent',' avant'))return goStep(C.step-1);
     if(has(' minuteur',' lance le temps',' chrono')){const e=C.r.etapes[C.step];if(e.min&&!(C.timer&&C.timer.running))return startTimer(e.min)}
     if(has(' combien de temps',' temps')){const e=C.r.etapes[C.step];return say(e.min?'Cette étape prend '+dur(e.min)+'.':'Pas de temps précis pour cette étape, allez à votre rythme.')}
-    if(has(' ingrédient',' ingredient'))return say('Il vous faut : '+C.r.ing.map(i=>fmtQ(i.q,C.pers,C.r.pers)+' '+i.u+' '+i.n).join(', ')+'.');
+    if(has(' ingrédient',' ingredient'))return say('Il vous faut : '+C.r.ing.map(i=>qU(i,C.pers,C.r.pers)+' '+i.n).join(', ')+'.');
     if(has(' fini',' terminé',' termine',' c est prêt'))return fini()}
   async function ecoute(on){if(!C)return;C.ecoute=on;const b=C.el.querySelector('#ck-mic');b.setAttribute('aria-pressed',String(on));b.classList.toggle('mic-on',on);
     if(!on){try{SRN&&SRN.stop()}catch(_){}try{rec&&rec.stop()}catch(_){}rec=null;return}
@@ -4903,6 +5093,6 @@ try{console.log('[PERLE] démarrage natif='+NATIVE+' plugins='+(window.Capacitor
 try{CUIS.init()}catch(e){console.warn('Cuisine :',e)}
 try{MUS.render();MUS.initBtn()}catch(e){console.warn('Musique :',e)}try{KEEP.init()}catch(_){}
 
-</script><script>(function(){var V='11.93',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
-try{if(!window.caches||!/^https?:$/.test(location.protocol)){run();return}setTimeout(run,1800);caches.open('me-shell').then(function(c){return c.match('index.html')}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
+</script><script>(function(){var V='11.94',done=false;function run(){if(done)return;done=true;var s=document.createElement('script');s.textContent=document.getElementById('app-src').textContent;document.head.appendChild(s)}
+try{if(!window.caches||!/^https?:$/.test(location.protocol)||(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform())){run();return}setTimeout(run,1800);caches.keys().then(function(ks){var k=ks.filter(function(x){return /^me-shell/.test(x)})[0];return k?caches.open(k).then(function(c){return c.match('index.html')}):null}).then(function(r){return r?r.text():''}).then(function(t){var m=/APP=\{version:'([\d.]+)'/.exec(t||'');var n=false;if(m){var a=m[1].split('.').map(Number),b=V.split('.').map(Number);for(var i=0;i<3;i++){if((a[i]||0)>(b[i]||0)){n=true;break}if((a[i]||0)<(b[i]||0))break}}
 if(n&&!done){done=true;document.open();document.write(t);document.close();return}run()})['catch'](run)}catch(e){run()}})();</script>
